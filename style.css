@@ -1,0 +1,183 @@
+/*-----Selectores-----*//*
+#iddelobjeto {}    para seleccionar
+.clasedelobjeto {} para seleccionar
+nombredelobjeto {} para seleccionar, por ej: h1
+div nombredelobjeto {} para seleccionar
+* {} para seleccionar todos los objetos
+
+/*-----Propiedades-----*//*
+color: #color;
+border: width(10px o 5rem) #color dashed|solid|dotted|double|groove|ridge|inset|outset|none|hidden;
+border-style: dashed|solid|dotted|double|groove|ridge|inset|outset|none|hidden;
+border-color: #color;
+border-radius: radio(10px o 5rem);
+border-width: width(10px o 5rem);
+background-color: #color;
+opacity: 0-1;
+background-image: url("link de la imagen.png");
+background-size: auto|cover|contain|width(5rem) height(5rem);
+background-repeat: repeat-y|repeat-x;
+background-position:center|top|bottom|left|right;
+background: #color url("linkdelaimagen.png") repeat-x|y position / width height;
+height: 5rem;
+width: 5rem;
+margin: top(px ó rem) right(px ó rem) bottom(px ó rem) left(px ó rem)  o un unico valor para todos los lados; Fuera del elemento
+padding: top(px ó rem) right(px ó rem) bottom(px ó rem) left(px ó rem) o un unico valor para todos los lados; Dentro del elemento
+overflow: visible|hidden|scroll;
+outline: width(10px o 5rem) #color dashed|solid|dotted|double|groove|ridge|inset|outset|none|hidden;
+text-aling
+
+/*---------INDEX---------*/
+
+/*-----Head-----*/
+
+html {
+    font-family: 'Montserrat', sans-serif;
+    background-image:  url("img/bg2.png");
+    background-size: cover;
+}
+
+html, body{
+    height:100%;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+.body{
+    height: 100%;
+    background-image: url("img/bgt.png");
+    background-size: cover;
+    visibility: visible;
+    transition: all 900ms;
+    position: relative;
+    top: 0%;
+    left: 2rem;
+
+}
+
+/*-----Header-----*/
+
+#logo {
+    height: 4rem;
+    width: 8rem;
+    margin: 2rem 0 0rem 0rem;
+}
+
+/*-----Section-----*/
+
+section {
+    display:block;
+    color: white;
+    margin: 0;
+}
+
+#title {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 10rem;
+    font-size: 3.5rem;
+}
+
+#lorem {
+    margin-bottom: 4.7rem;
+    font-size: 1.3rem;
+    width: 33%;
+}
+
+#check{
+    display: none;
+}
+
+#check:checked ~ .body {
+    top: -100%;
+}
+
+#start {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    padding: 0.3rem 1.5rem;
+    width: 15rem;
+    border: 0.2rem #288d00 solid;
+    border-radius: 1rem;
+    color: white;
+    transition: all 500ms;
+}
+
+#start:hover{
+    padding: 0.5rem 2rem;
+    font-size: 1.5rem;
+}
+
+/*---------RUTINAS---------*/
+
+#bodyrutins {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position:relative;
+    background-color: #0d0d10;
+}
+
+/*-----Header-----*/
+
+#menu {
+    display: none;
+}
+
+#botonmenu {
+    margin: 1.1rem -0.5rem 0 1rem;
+    padding: .65rem .75rem .6rem .75rem;
+    float: left;
+    color: white;
+    border: 0.1 #288d00 solid;
+    border-radius: 10rem;
+}
+
+#botonmenu:hover{
+    background-color: #222325;
+}
+
+#logor {
+    height: 2rem;
+    width: 6rem;
+    margin: 1.5rem 0 0rem 1.5rem;
+}
+
+.links {
+    color:white;
+    font-size: 1rem;
+    text-align: center;
+    margin:1.75rem 2rem 0 0;
+    float: right;
+}
+
+/*-----Body-----*/
+
+#bodyrutins{
+    font-family: 'Roboto', sans-serif;
+}
+
+/*-----Section-----*/
+
+#list:hover {
+    background-color: #222325;
+}
+
+.lista {
+    padding: 0;
+    margin: 0;
+    left: 1.6rem;
+    position: relative;
+}
+
+.listitle {
+    margin-top: 2rem;
+    display: block;
+}
+
+.rutinas {
+    margin-top: 1rem;
+    display: block;
+}
