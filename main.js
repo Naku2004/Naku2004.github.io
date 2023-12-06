@@ -2,7 +2,7 @@ function cambia_de_pagina(){
     setTimeout(() => { 
         location.href="rutins.html" }, 900);
 }
-
+ 
 var button = 0
 var butonlist = document.getElementById('list');
 var butonrutinas = document.getElementById('rutinas');
