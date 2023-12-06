@@ -4,8 +4,21 @@ function cambia_de_pagina(){
 }
  
 var button = 0
-var butonlist = document.getElementById('list');
-var butonrutinas = document.getElementById('rutinas');
+var slideBoolean = false
+
+function buttonSlide(){
+    var buttonslide = document.getElementById('btnSlide');
+    var slideJS = document.getElementById('slide');
+
+    if (slideBoolean == false){
+        slideBoolean = true
+        slideJS.classList.add('on')
+    }
+    else{
+        slideBoolean = false
+        slideJS.classList.remove('on')
+    }
+}
 
 function buttonLista(){
     if (button != 1){
@@ -26,7 +39,3 @@ function buttonRutinas(){
         butonlist.classList.remove('cambiado')
     }
 }
-
-butonlist.addEventListener('click', lista)
-butonrutinas.addEventListener('click', buttonRutinas)
-

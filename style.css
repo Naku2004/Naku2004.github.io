@@ -34,6 +34,7 @@ text-aling
 html {
     font-family: 'Montserrat', sans-serif;
     background-image:  url("img/bg2.png");
+    transition: background-image 0.3s ease;
     background-size: cover;
 }
 
@@ -48,6 +49,7 @@ html, body{
 
 .body{
     height: 100%;
+    transition: background-image 0.3s ease;
     background-image: url("img/bgt.png");
     background-size: cover;
     visibility: visible;
@@ -126,7 +128,7 @@ section {
     display: none;
 }
 
-#botonmenu {
+#btnSlide {
     margin: 1.1rem -0.5rem 0 1rem;
     padding: .65rem .75rem .6rem .75rem;
     float: left;
@@ -135,7 +137,7 @@ section {
     border-radius: 10rem;
 }
 
-#botonmenu:hover{
+#btnSlide:hover{
     background-color: #222325;
 }
 
@@ -161,13 +163,17 @@ section {
 
 /*-----Section-----*/
 
-.lista {
+#slide {
     padding: 0;
     margin-top: 1.5rem;
     left:0.4rem;
     position: relative;
     width: 12rem;
+    transition: all 300ms;
+}
 
+#slide.on {
+    left: -100%
 }
 
 .listitle {
@@ -188,7 +194,7 @@ section {
     display: block;
     border-style:hidden;
     background-color: transparent;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.1s ease;
 
     border-radius:0.6rem;
     padding: 0 1.6rem;
@@ -200,9 +206,4 @@ button:hover {
 
 button.cambiado {
     background-color: #222325;
-}
-
-.rutinas {
-    margin-top: 1rem;
-    display: block;
 }

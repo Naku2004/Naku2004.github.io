@@ -16,14 +16,14 @@
 <body id="bodyrutins">
     <input type="checkbox" id="menu">
     <header>
-        <label for="menu" id="botonmenu"><i class="fa-solid fa-bars"></i></label>
+        <label for="menu" id="btnSlide" onclick="buttonSlide()"><i class="fa-solid fa-bars"></i></label>
         <img src="icons/logor.png" id="logor">
         <a class="links" href="account.html">Mi cuenta</a>
         <a class="links" href="rutins.html">Mis rutinas</a>
         <a class="links" href="index.html">Inicio</a>
     </header>
     <section>
-        <ul class="lista" >
+        <ul id="slide">
             <button id="list" class="buttonlista" onclick="buttonLista()">Lista de rutinas</button>
             <button id="rutinas" class="buttonlista" onclick="buttonRutinas()">Rutina nueva</button>
         </ul>
