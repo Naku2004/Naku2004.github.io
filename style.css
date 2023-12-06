@@ -161,20 +161,45 @@ section {
 
 /*-----Section-----*/
 
-#list:hover {
-    background-color: #222325;
-}
-
 .lista {
     padding: 0;
-    margin: 0;
-    left: 1.6rem;
+    margin-top: 1.5rem;
+    left:0.4rem;
     position: relative;
+    width: 12rem;
+
 }
 
 .listitle {
     margin-top: 2rem;
     display: block;
+}
+
+.buttonlista {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+
+    height: 48px;
+    width: 184px;
+
+    display: block;
+    border-style:hidden;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+
+    border-radius:0.6rem;
+    padding: 0 1.6rem;
+}
+
+button:hover {
+    background-color: #222325;
+}
+
+button.cambiado {
+    background-color: #222325;
 }
 
 .rutinas {

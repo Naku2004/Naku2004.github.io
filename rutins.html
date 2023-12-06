@@ -11,6 +11,7 @@
     <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
 </head>
 <body id="bodyrutins">
     <input type="checkbox" id="menu">
@@ -23,9 +24,8 @@
     </header>
     <section>
         <ul class="lista">
-            <button id="list">Lista de rutinas</button>
-            <!-- <li class="listitle"><label for="menu" id="list">Lista de rutinas</label></li> -->
-            <li class="rutinas">Rutina nueva</li>
+            <button id="list" class="buttonlista" onclick="buttonLista()">Lista de rutinas</button>
+            <button id="rutinas" class="buttonlista" onclick="buttonRutinas()">Rutina nueva</button>
         </ul>
     </section>
 </body>
