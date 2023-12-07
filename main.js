@@ -2,7 +2,8 @@ function cambia_de_pagina(){
     setTimeout(() => { 
         location.href="rutins.html" }, 900);
 }
- 
+
+var cantSemanas = 1
 var button = 0
 var slideBoolean = false
 
@@ -41,4 +42,13 @@ function buttonRutinas(){
         var butonlist = document.getElementById('list');
         butonlist.classList.remove('cambiado')
     }
+}
+
+function addSemanas(){
+    var nuevoBotonLabel = document.createElement('button')
+    cantSemanas = cantSemanas + 1 
+    nuevoBotonLabel.textContent = "Semana " + cantSemanas
+    nuevoBotonLabel.classList.add('ButtonLabel')
+    nuevoBotonLabel.setAttribute("contenteditable", "true")
+    document.getElementById("listasrutinas").appendChild(nuevoBotonLabel)
 }

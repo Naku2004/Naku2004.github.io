@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cambiar Nombre del Botón</title>
+  <style>
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+  </style>
+</head>
+<body>
+
+<button id="miBoton" contenteditable="true" oninput="handleInput()" onclick="click()" >Haz clic para cambiar el nombre</button>
+
+<script>
+    function click(){
+        alert("Hiciste click")
+    }
+
+  function handleInput() {
+    var boton = document.getElementById('miBoton');
+    var nuevoNombre = boton.innerText.trim();
+
+    // Verifica si se ingresó un nuevo nombre
+    if (nuevoNombre !== '') {
+      console.log('Nuevo nombre:', nuevoNombre);
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -253,11 +253,11 @@ section {
     padding: 0 1.6rem;
 }
 
-button:hover {
+.buttonlista:hover, .buttonlistaIcon:hover {
     background-color: #222325;
 }
 
-button.cambiado {
+.buttonlista.cambiado, .buttonlistaIcon.cambiado {
     background-color: #222325;
 }
 
@@ -287,19 +287,29 @@ hr{
     width: 90%;
 }
 
-#semana{
+.ButtonLabel{
+    margin-top: 1rem;
     display: flex;
     margin: auto;
     height: 1.5rem;
-    width: 90%;
+    width: 85%;
     
     font-family: 'Roboto', sans-serif;
     font-size: 1.05rem;
     color: white;
-    text-align: center;
+    justify-content: center;
+    white-space: pre-wrap;
 
     border-radius: 2rem;
     border-color: #17171b;
     background-color: #17171b;
     border-style:none;
+}
+
+#add {
+    margin-top: 1rem;
+    display: flex;
+    margin: auto;
+    height: 1.5rem;
+    margin-top: 1rem;
 }
