@@ -9,13 +9,16 @@ var slideBoolean = false
 function buttonSlide(){
     var buttonslide = document.getElementById('btnSlide');
     var slideJS = document.getElementById('slide');
+    var sideJS = document.getElementById('side')
 
     if (slideBoolean == false){
         slideBoolean = true
+        sideJS.classList.add('off')
         slideJS.classList.add('on')
     }
     else{
         slideBoolean = false
+        sideJS.classList.remove('off')
         slideJS.classList.remove('on')
     }
 }

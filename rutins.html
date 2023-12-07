@@ -15,18 +15,36 @@
 </head>
 <body id="bodyrutins">
     <input type="checkbox" id="menu">
-    <header>
+    <header id="headerRutins">
         <label for="menu" id="btnSlide" onclick="buttonSlide()"><i class="fa-solid fa-bars"></i></label>
         <img src="icons/logor.png" id="logor">
         <a class="links" href="account.html">Mi cuenta</a>
         <a class="links" href="rutins.html">Mis rutinas</a>
         <a class="links" href="index.html">Inicio</a>
     </header>
-    <section>
-        <ul id="slide">
-            <button id="list" class="buttonlista" onclick="buttonLista()">Lista de rutinas</button>
-            <button id="rutinas" class="buttonlista" onclick="buttonRutinas()">Rutina nueva</button>
-        </ul>
+    <section id="page">
+        <section id="slidesection">
+            <ul id="side">
+                <button id="listIcon" class="buttonlistaIcon" onclick="buttonLista()"><i class="fa-solid fa-house-chimney-window"> <label id="inicio">Inicio</label></i></button>
+                <button id="rutinasIcon" class="buttonlistaIcon" onclick="buttonRutinas()">Rutina nueva</button>
+            </ul>
+            <ul id="slide">
+                <button id="list" class="buttonlista" onclick="buttonLista()">Lista de rutinas</button>
+                <button id="rutinas" class="buttonlista" onclick="buttonRutinas()">Rutina nueva</button>
+            </ul>
+        </section>
+        <section id="listasrutinas">
+            <h1>
+                Listas de rutinas
+                <hr> 
+            </h1>
+            <form action="/my-handling-form-page" method="post">
+                <ul id="form">
+                    <input type="text" id="semana" name="list_semana"/>
+                </ul>
+              </form>
+              
+        </section>
     </section>
 </body>
 </html>
