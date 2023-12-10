@@ -3,8 +3,9 @@ function cambia_de_pagina(){
         location.href="rutins.html" }, 900);
 }
 
-var cantSemanas = 1
-var cantEjercicios = 0
+var cantSemanas = 0
+var cantSemanasText = 1
+var cantEjercicio = [0]
 var button = 0
 var slideBoolean = false
 
@@ -67,7 +68,8 @@ function buttonSemana(button){
 }
 
 function addSemanas(){
-    cantSemanas = cantSemanas + 1
+    cantSemanas = cantSemanas + 2
+    cantEjercicio.push(0)
     var NuevaSeccionSemana = document.createElement('section')
     
     var BotonSemana = document.getElementById('semana')
@@ -76,6 +78,7 @@ function addSemanas(){
     var NuevoPanelSemana = PanelSemana.cloneNode(true)
 
     NuevoBotonSemana.textContent = "Semana " + cantSemanas
+    cantSemanas = cantSemanas - 1
     NuevoBotonSemana.id = "semana" + cantSemanas
     NuevoPanelSemana.id = "pnlSemana" + cantSemanas
     NuevaSeccionSemana.id = "sectionSemana" + cantSemanas
@@ -95,35 +98,43 @@ function deleteSemanas(){
 }
 
 function addEjercicio(AddButton){
-    if(cantSemanas > 1){
-        var section = AddButton.closest('#pnlSemana' + cantSemanas)
+    var section = AddButton.closest('.PanelLabel')
+    var SectionID = section.id
+    var ID = SectionID.slice(9,10)
+    if(ID == ""){
+        ID = 0
     }
-    else{
-        var section = AddButton.closest('#pnlSemana')
-    }
+    var cantEjercicios = cantEjercicio[ID]
+    cantEjercicios = cantEjercicios + 1
+    cantEjercicio[ID] = cantEjercicios
+    //alert(cantEjercicio[ID])
+    
     var tabla = section.querySelector('table')
     var tbody2 = tabla.querySelector('tbody')
     var tbody = document.getElementById('tbody')
     var tr = tbody2.getElementsByTagName('tr')[0]
     var NuevoDataInputs = tr.cloneNode(true)
     tbody2.appendChild(NuevoDataInputs)
-    cantEjercicios = cantEjercicios + 1
 
 }
 
 function deleteEjercicio(AddButton){
+    var section = AddButton.closest('.PanelLabel')
+    var SectionID = section.id
+    var ID = SectionID.slice(9,10)
+    if(ID == ""){
+        ID = 0
+    }
+    var cantEjercicios = cantEjercicio[ID]
+
     if(cantEjercicios > 0){
-        if(cantSemanas > 1){
-            var section = AddButton.closest('#pnlSemana' + cantSemanas)
-        }
-        else{
-            var section = AddButton.closest('#pnlSemana')
-        }
+        var section = AddButton.closest('.PanelLabel')
         var tabla = section.querySelector('table')
         var tbody2 = tabla.querySelector('tbody')
         var tr = tbody2.getElementsByTagName('tr')[cantEjercicios]
         tr.remove()
         cantEjercicios = cantEjercicios - 1
+        cantEjercicio[ID] = cantEjercicios
     }
 }
 

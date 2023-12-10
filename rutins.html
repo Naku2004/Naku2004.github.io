@@ -37,6 +37,43 @@
             <section id="listasrutinas">
                 <h1>Listas de rutinas<hr></h1>
 
+                <section id="sectionSemanaIDEAL" class="SectionLabel">
+                    <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
+
+                    <section id ="pnlSemana" class="PanelLabel">
+                        <div id="Botones">
+                            <button id="Dia1" class="buttonTabla" onclick="Lunes(this)" contenteditable="true">Lunes</button>
+                            <button id="Dia2" class="buttonTabla" onclick="Martes(this)" contenteditable="true">Martes</button>
+                            <button id="Dia3" class="buttonTabla" onclick="Miercoles(this)" contenteditable="true">Miercoles</button>
+                            <button id="Dia4" class="buttonTabla" onclick="Jueves(this)" contenteditable="true">Jueves</button>
+                            <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
+                        </div>
+
+                        <table id="Tabla">
+                            <thead>
+                                <tr>
+                                   <th class="labelTabla">Nombre</th> 
+                                   <th class="labelTabla">Series</th>
+                                   <th class="labelTabla">Reps</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                <tr id="dataInputs">
+                                    <td class="td"><input type="text"  class="td" name="ejericio[]" placeholder="Ingrese el nombre del ejercicio"></td>
+                                    <td class="td"><input type="text"  class="td" name="series[]" placeholder="Ingrese las series"></td>
+                                    <td class="td"><input type="text"  class="td" name="reps[]" placeholder="Ingrese las repeticiones"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <section id="sectionAddDelete">
+                            <button id="add" class="buttonsAddDelete" onclick="addEjercicio(this)" ><i class="fa-solid fa-plus"></i></button>
+                            <button id="delete" class="buttonsAddDelete" onclick="deleteEjercicio(this)" ><i class="fa-solid fa-minus"></i></button>
+                        </section>
+                        
+                    </section>
+                </section>
+
                 <section id="sectionSemana" class="SectionLabel">
                     <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
 
