@@ -48,9 +48,12 @@ function buttonRutinas(){
 var desplegado = false;
 
 function buttonSemana(button){
+    var ButtonID = button.id
+    var ID = ButtonID.slice(6,7)
+
     var section = button.closest('section')
-    alert(section)
-    var panel = section.querySelector('#PnlSemana')
+    var panel = section.querySelector('#pnlSemana' + ID)
+    //alert(ID)
     
     if (desplegado == false){
         desplegado = true
@@ -72,6 +75,10 @@ function addSemanas(){
     var NuevoPanelSemana = PanelSemana.cloneNode(true)
 
     NuevoBotonSemana.textContent = "Semana " + cantSemanas
+    NuevoBotonSemana.id = "semana" + cantSemanas
+    NuevoPanelSemana.id = "pnlSemana" + cantSemanas
+    NuevaSeccionSemana.id = "sectionSemana" + cantSemanas
+    NuevoPanelSemana.classList.remove('cambiado')
     NuevaSeccionSemana.appendChild(NuevoBotonSemana)
     NuevaSeccionSemana.appendChild(NuevoPanelSemana)
 
@@ -88,4 +95,12 @@ function addSemanas(){
     // nuevoBotonLabel.classList.add('ButtonLabel')
     // nuevoBotonLabel.setAttribute("contenteditable", "true")
     // document.getElementById("listasrutinas").appendChild(nuevoBotonLabel)
+}
+
+function deleteSemanas(){
+    if (cantSemanas > 1){
+        var section = document.getElementById("sectionSemana" + cantSemanas)
+        section.remove()
+        cantSemanas = cantSemanas - 1
+    }
 }

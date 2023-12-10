@@ -33,17 +33,21 @@
                 <button id="rutinas" class="buttonlista" onclick="buttonRutinas()">Rutina nueva</button>
             </ul>
         </section>
-        <section id="listasrutinas">
-            <h1>Listas de rutinas<hr></h1>
-            <section id="sectionSemana">
-                <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
-                <section id ="pnlSemana" class="PanelLabel">
-                    <h1>hola</h1>
+        <div id="pagerutinas">
+            <section id="listasrutinas">
+                <h1>Listas de rutinas<hr></h1>
+                <section id="sectionSemana" class="SectionLabel">
+                    <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
+                    <section id ="pnlSemana" class="PanelLabel">
+                        <h1>hola</h1>
+                    </section>
                 </section>
             </section>
-            <button id="add" class="centrar" onclick="addSemanas()" ><i class="fa-solid fa-plus"></i></button>
-              
-        </section>
+            <section id="sectionAddDelete">
+                <button id="add" class="buttonsAddDelete" onclick="addSemanas()" ><i class="fa-solid fa-plus"></i></button>
+                <button id="delete" class="buttonsAddDelete" onclick="deleteSemanas()" ><i class="fa-solid fa-minus"></i></button>
+            </section>
+        </div>
     </section>
 </body>
 </html>
