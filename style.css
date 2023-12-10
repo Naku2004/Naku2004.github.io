@@ -29,6 +29,11 @@ text-aling
 
 /*---------INDEX---------*/
 
+#sectionSemanaIDEAL{
+    visibility: hidden;
+    position: absolute;
+}
+
 /*-----Head-----*/
 
 html {
@@ -333,7 +338,7 @@ thead, tr{
     padding-top: 0.1rem;
 }
 
-th{
+th, .td{
     padding: 0;
     padding-top: 0.1rem;
     background-color: #17171b;

@@ -57,9 +57,19 @@
                                    <th class="labelTabla">Reps</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody">
+                                <tr id="dataInputs">
+                                    <td class="td"><input type="text"  class="td" name="ejericio[]" placeholder="Ingrese el nombre del ejercicio"></td>
+                                    <td class="td"><input type="text"  class="td" name="series[]" placeholder="Ingrese las series"></td>
+                                    <td class="td"><input type="text"  class="td" name="reps[]" placeholder="Ingrese las repeticiones"></td>
+                                </tr>
                             </tbody>
                         </table>
+
+                        <section id="sectionAddDelete">
+                            <button id="add" class="buttonsAddDelete" onclick="addEjercicio(this)" ><i class="fa-solid fa-plus"></i></button>
+                            <button id="delete" class="buttonsAddDelete" onclick="deleteEjercicio(this)" ><i class="fa-solid fa-minus"></i></button>
+                        </section>
                         
                     </section>
                 </section>

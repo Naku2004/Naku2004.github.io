@@ -4,6 +4,7 @@ function cambia_de_pagina(){
 }
 
 var cantSemanas = 1
+var cantEjercicios = 0
 var button = 0
 var slideBoolean = false
 
@@ -90,6 +91,39 @@ function deleteSemanas(){
         var section = document.getElementById("sectionSemana" + cantSemanas)
         section.remove()
         cantSemanas = cantSemanas - 1
+    }
+}
+
+function addEjercicio(AddButton){
+    if(cantSemanas > 1){
+        var section = AddButton.closest('#pnlSemana' + cantSemanas)
+    }
+    else{
+        var section = AddButton.closest('#pnlSemana')
+    }
+    var tabla = section.querySelector('table')
+    var tbody2 = tabla.querySelector('tbody')
+    var tbody = document.getElementById('tbody')
+    var tr = tbody2.getElementsByTagName('tr')[0]
+    var NuevoDataInputs = tr.cloneNode(true)
+    tbody2.appendChild(NuevoDataInputs)
+    cantEjercicios = cantEjercicios + 1
+
+}
+
+function deleteEjercicio(AddButton){
+    if(cantEjercicios > 0){
+        if(cantSemanas > 1){
+            var section = AddButton.closest('#pnlSemana' + cantSemanas)
+        }
+        else{
+            var section = AddButton.closest('#pnlSemana')
+        }
+        var tabla = section.querySelector('table')
+        var tbody2 = tabla.querySelector('tbody')
+        var tr = tbody2.getElementsByTagName('tr')[cantEjercicios]
+        tr.remove()
+        cantEjercicios = cantEjercicios - 1
     }
 }
 
