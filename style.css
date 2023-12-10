@@ -291,6 +291,7 @@ hr{
     margin-top: 1rem;
     display: flex;
     margin: auto;
+    margin-top: 1rem;
     height: 1.5rem;
     width: 85%;
     
@@ -306,7 +307,18 @@ hr{
     border-style:none;
 }
 
+.PanelLabel{
+    visibility: hidden;
+    position: absolute;
+}
+
+.PanelLabel.cambiado{
+    visibility: visible;
+    position: relative;
+}
+
 #add {
+    position: relative;
     margin-top: 1rem;
     display: flex;
     margin: auto;

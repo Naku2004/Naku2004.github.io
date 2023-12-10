@@ -7,6 +7,7 @@ var cantSemanas = 1
 var button = 0
 var slideBoolean = false
 
+
 function buttonSlide(){
     var buttonslide = document.getElementById('btnSlide');
     var slideJS = document.getElementById('slide');
@@ -44,11 +45,47 @@ function buttonRutinas(){
     }
 }
 
+var desplegado = false;
+
+function buttonSemana(button){
+    var section = button.closest('section')
+    alert(section)
+    var panel = section.querySelector('#PnlSemana')
+    
+    if (desplegado == false){
+        desplegado = true
+        panel.classList.add('cambiado')
+    }
+    else{
+        desplegado = false;
+        panel.classList.remove('cambiado')
+    }
+}
+
 function addSemanas(){
-    var nuevoBotonLabel = document.createElement('button')
-    cantSemanas = cantSemanas + 1 
-    nuevoBotonLabel.textContent = "Semana " + cantSemanas
-    nuevoBotonLabel.classList.add('ButtonLabel')
-    nuevoBotonLabel.setAttribute("contenteditable", "true")
-    document.getElementById("listasrutinas").appendChild(nuevoBotonLabel)
+    cantSemanas = cantSemanas + 1
+    var NuevaSeccionSemana = document.createElement('section')
+    
+    var BotonSemana = document.getElementById('semana')
+    var PanelSemana = document.getElementById('pnlSemana')
+    var NuevoBotonSemana = BotonSemana.cloneNode(true)
+    var NuevoPanelSemana = PanelSemana.cloneNode(true)
+
+    NuevoBotonSemana.textContent = "Semana " + cantSemanas
+    NuevaSeccionSemana.appendChild(NuevoBotonSemana)
+    NuevaSeccionSemana.appendChild(NuevoPanelSemana)
+
+    document.getElementById("listasrutinas").appendChild(NuevaSeccionSemana)
+
+    // var SeccionSemana = document.getElementById('sectionSemana')
+    // var nuevaSeccionSemana = SeccionSemana.cloneNode(true)
+    // nuevaSeccionSemana
+    // document.getElementById("listasrutinas").appendChild(nuevaSeccionSemana)
+
+    // var nuevoBotonLabel = document.createElement('button')
+    // cantSemanas = cantSemanas + 1 
+    // nuevoBotonLabel.textContent = "Semana " + cantSemanas
+    // nuevoBotonLabel.classList.add('ButtonLabel')
+    // nuevoBotonLabel.setAttribute("contenteditable", "true")
+    // document.getElementById("listasrutinas").appendChild(nuevoBotonLabel)
 }
