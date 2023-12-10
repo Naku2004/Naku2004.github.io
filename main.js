@@ -83,18 +83,6 @@ function addSemanas(){
     NuevaSeccionSemana.appendChild(NuevoPanelSemana)
 
     document.getElementById("listasrutinas").appendChild(NuevaSeccionSemana)
-
-    // var SeccionSemana = document.getElementById('sectionSemana')
-    // var nuevaSeccionSemana = SeccionSemana.cloneNode(true)
-    // nuevaSeccionSemana
-    // document.getElementById("listasrutinas").appendChild(nuevaSeccionSemana)
-
-    // var nuevoBotonLabel = document.createElement('button')
-    // cantSemanas = cantSemanas + 1 
-    // nuevoBotonLabel.textContent = "Semana " + cantSemanas
-    // nuevoBotonLabel.classList.add('ButtonLabel')
-    // nuevoBotonLabel.setAttribute("contenteditable", "true")
-    // document.getElementById("listasrutinas").appendChild(nuevoBotonLabel)
 }
 
 function deleteSemanas(){
@@ -111,13 +99,14 @@ var Dia3 = false
 var Dia4 = false
 var Dia5 = false;
 
-function Lunes(){
+function Lunes(Button){
     if(Dia1 == false){
-        var ButtonLunes = document.getElementById('Dia1')
-        var ButtonMartes = document.getElementById('Dia2')
-        var ButtonMiercoles = document.getElementById('Dia3')
-        var ButtonJueves = document.getElementById('Dia4')
-        var ButtonViernes = document.getElementById('Dia5')
+        var div = Button.closest('div')
+        var ButtonLunes = div.querySelector('#Dia1')
+        var ButtonMartes = div.querySelector('#Dia2')
+        var ButtonMiercoles = div.querySelector('#Dia3')
+        var ButtonJueves = div.querySelector('#Dia4')
+        var ButtonViernes = div.querySelector('#Dia5')
         
         ButtonLunes.classList.add('cambiado');
         ButtonMartes.classList.remove('cambiado');
@@ -133,13 +122,14 @@ function Lunes(){
     }
 }
 
-function Martes(){
+function Martes(Button){
     if(Dia2 == false){
-        var ButtonLunes = document.getElementById('Dia1')
-        var ButtonMartes = document.getElementById('Dia2')
-        var ButtonMiercoles = document.getElementById('Dia3')
-        var ButtonJueves = document.getElementById('Dia4')
-        var ButtonViernes = document.getElementById('Dia5')
+        var div = Button.closest('div')
+        var ButtonLunes = div.querySelector('#Dia1')
+        var ButtonMartes = div.querySelector('#Dia2')
+        var ButtonMiercoles = div.querySelector('#Dia3')
+        var ButtonJueves = div.querySelector('#Dia4')
+        var ButtonViernes = div.querySelector('#Dia5')
         
         ButtonLunes.classList.remove('cambiado');
         ButtonMartes.classList.add('cambiado');
@@ -155,13 +145,14 @@ function Martes(){
     }
 }
 
-function Miercoles(){
+function Miercoles(Button){
     if(Dia3 == false){
-        var ButtonLunes = document.getElementById('Dia1')
-        var ButtonMartes = document.getElementById('Dia2')
-        var ButtonMiercoles = document.getElementById('Dia3')
-        var ButtonJueves = document.getElementById('Dia4')
-        var ButtonViernes = document.getElementById('Dia5')
+        var div = Button.closest('div')
+        var ButtonLunes = div.querySelector('#Dia1')
+        var ButtonMartes = div.querySelector('#Dia2')
+        var ButtonMiercoles = div.querySelector('#Dia3')
+        var ButtonJueves = div.querySelector('#Dia4')
+        var ButtonViernes = div.querySelector('#Dia5')
         
         ButtonLunes.classList.remove('cambiado');
         ButtonMartes.classList.remove('cambiado');
@@ -177,13 +168,14 @@ function Miercoles(){
     }
 }
 
-function Jueves(){
+function Jueves(Button){
     if(Dia4 == false){
-        var ButtonLunes = document.getElementById('Dia1')
-        var ButtonMartes = document.getElementById('Dia2')
-        var ButtonMiercoles = document.getElementById('Dia3')
-        var ButtonJueves = document.getElementById('Dia4')
-        var ButtonViernes = document.getElementById('Dia5')
+        var div = Button.closest('div')
+        var ButtonLunes = div.querySelector('#Dia1')
+        var ButtonMartes = div.querySelector('#Dia2')
+        var ButtonMiercoles = div.querySelector('#Dia3')
+        var ButtonJueves = div.querySelector('#Dia4')
+        var ButtonViernes = div.querySelector('#Dia5')
         
         ButtonLunes.classList.remove('cambiado');
         ButtonMartes.classList.remove('cambiado');
@@ -199,13 +191,14 @@ function Jueves(){
     }
 }
 
-function Viernes(){
+function Viernes(Button){
     if(Dia5 == false){
-        var ButtonLunes = document.getElementById('Dia1')
-        var ButtonMartes = document.getElementById('Dia2')
-        var ButtonMiercoles = document.getElementById('Dia3')
-        var ButtonJueves = document.getElementById('Dia4')
-        var ButtonViernes = document.getElementById('Dia5')
+        var div = Button.closest('div')
+        var ButtonLunes = div.querySelector('#Dia1')
+        var ButtonMartes = div.querySelector('#Dia2')
+        var ButtonMiercoles = div.querySelector('#Dia3')
+        var ButtonJueves = div.querySelector('#Dia4')
+        var ButtonViernes = div.querySelector('#Dia5')
         
         ButtonLunes.classList.remove('cambiado');
         ButtonMartes.classList.remove('cambiado');
