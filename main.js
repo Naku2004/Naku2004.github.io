@@ -258,3 +258,10 @@ function Viernes(Button){
         Dia5 = true;
     }
 }
+
+const signupForm = document.querySelector('#signup-form')
+
+signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    console.log("buen dia");
+})
