@@ -36,13 +36,35 @@
         <div id="pagerutinas">
             <section id="listasrutinas">
                 <h1>Listas de rutinas<hr></h1>
+
                 <section id="sectionSemana" class="SectionLabel">
                     <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
+
                     <section id ="pnlSemana" class="PanelLabel">
-                        <h1>hola</h1>
+                        <div id="Botones">
+                            <button id="Dia1" class="buttonTabla" onclick="Lunes()" contenteditable="true">Lunes</button>
+                            <button id="Dia2" class="buttonTabla" onclick="Martes()" contenteditable="true">Martes</button>
+                            <button id="Dia3" class="buttonTabla" onclick="Miercoles()" contenteditable="true">Miercoles</button>
+                            <button id="Dia4" class="buttonTabla" onclick="Jueves()" contenteditable="true">Jueves</button>
+                            <button id="Dia5" class="buttonTabla" onclick="Viernes()" contenteditable="true">Viernes</button>
+                        </div>
+
+                        <table id="Tabla">
+                            <thead>
+                                <tr>
+                                   <th class="labelTabla">Nombre</th> 
+                                   <th class="labelTabla">Series</th>
+                                   <th class="labelTabla">Reps</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        
                     </section>
                 </section>
             </section>
+
             <section id="sectionAddDelete">
                 <button id="add" class="buttonsAddDelete" onclick="addSemanas()" ><i class="fa-solid fa-plus"></i></button>
                 <button id="delete" class="buttonsAddDelete" onclick="deleteSemanas()" ><i class="fa-solid fa-minus"></i></button>

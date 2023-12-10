@@ -104,3 +104,119 @@ function deleteSemanas(){
         cantSemanas = cantSemanas - 1
     }
 }
+
+var Dia1 = false;
+var Dia2 = false
+var Dia3 = false
+var Dia4 = false
+var Dia5 = false;
+
+function Lunes(){
+    if(Dia1 == false){
+        var ButtonLunes = document.getElementById('Dia1')
+        var ButtonMartes = document.getElementById('Dia2')
+        var ButtonMiercoles = document.getElementById('Dia3')
+        var ButtonJueves = document.getElementById('Dia4')
+        var ButtonViernes = document.getElementById('Dia5')
+        
+        ButtonLunes.classList.add('cambiado');
+        ButtonMartes.classList.remove('cambiado');
+        ButtonMiercoles.classList.remove('cambiado');
+        ButtonJueves.classList.remove('cambiado');
+        ButtonViernes.classList.remove('cambiado');
+
+        Dia1 = true
+        Dia2 = false
+        Dia3 = false
+        Dia4 = false
+        Dia5 = false;
+    }
+}
+
+function Martes(){
+    if(Dia2 == false){
+        var ButtonLunes = document.getElementById('Dia1')
+        var ButtonMartes = document.getElementById('Dia2')
+        var ButtonMiercoles = document.getElementById('Dia3')
+        var ButtonJueves = document.getElementById('Dia4')
+        var ButtonViernes = document.getElementById('Dia5')
+        
+        ButtonLunes.classList.remove('cambiado');
+        ButtonMartes.classList.add('cambiado');
+        ButtonMiercoles.classList.remove('cambiado');
+        ButtonJueves.classList.remove('cambiado');
+        ButtonViernes.classList.remove('cambiado');
+
+        Dia1 = false
+        Dia2 = true
+        Dia3 = false
+        Dia4 = false
+        Dia5 = false;
+    }
+}
+
+function Miercoles(){
+    if(Dia3 == false){
+        var ButtonLunes = document.getElementById('Dia1')
+        var ButtonMartes = document.getElementById('Dia2')
+        var ButtonMiercoles = document.getElementById('Dia3')
+        var ButtonJueves = document.getElementById('Dia4')
+        var ButtonViernes = document.getElementById('Dia5')
+        
+        ButtonLunes.classList.remove('cambiado');
+        ButtonMartes.classList.remove('cambiado');
+        ButtonMiercoles.classList.add('cambiado');
+        ButtonJueves.classList.remove('cambiado');
+        ButtonViernes.classList.remove('cambiado');
+
+        Dia1 = false
+        Dia2 = false
+        Dia3 = true
+        Dia4 = false
+        Dia5 = false;
+    }
+}
+
+function Jueves(){
+    if(Dia4 == false){
+        var ButtonLunes = document.getElementById('Dia1')
+        var ButtonMartes = document.getElementById('Dia2')
+        var ButtonMiercoles = document.getElementById('Dia3')
+        var ButtonJueves = document.getElementById('Dia4')
+        var ButtonViernes = document.getElementById('Dia5')
+        
+        ButtonLunes.classList.remove('cambiado');
+        ButtonMartes.classList.remove('cambiado');
+        ButtonMiercoles.classList.remove('cambiado');
+        ButtonJueves.classList.add('cambiado');
+        ButtonViernes.classList.remove('cambiado');
+
+        Dia1 = false
+        Dia2 = false
+        Dia3 = false
+        Dia4 = true
+        Dia5 = false;
+    }
+}
+
+function Viernes(){
+    if(Dia5 == false){
+        var ButtonLunes = document.getElementById('Dia1')
+        var ButtonMartes = document.getElementById('Dia2')
+        var ButtonMiercoles = document.getElementById('Dia3')
+        var ButtonJueves = document.getElementById('Dia4')
+        var ButtonViernes = document.getElementById('Dia5')
+        
+        ButtonLunes.classList.remove('cambiado');
+        ButtonMartes.classList.remove('cambiado');
+        ButtonMiercoles.classList.remove('cambiado');
+        ButtonJueves.classList.remove('cambiado');
+        ButtonViernes.classList.add('cambiado');
+
+        Dia1 = false
+        Dia2 = false
+        Dia3 = false
+        Dia4 = false
+        Dia5 = true;
+    }
+}

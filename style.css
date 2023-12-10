@@ -291,10 +291,10 @@ hr{
 }
 
 .ButtonLabel{
-    margin-top: 1rem;
     display: flex;
     margin: auto;
     margin-top: 1rem;
+    margin-bottom: 0.3rem;
     height: 1.5rem;
     width: 85%;
     
@@ -318,6 +318,96 @@ hr{
 .PanelLabel.cambiado{
     visibility: visible;
     position: relative;
+}
+
+#Tabla{
+    margin: auto;
+    width: 85.35%;
+    align-items: center;
+    table-layout: fixed;
+}
+
+thead, tr{
+    height: 1.5rem;
+    padding: 0;
+    padding-top: 0.1rem;
+}
+
+th{
+    padding: 0;
+    padding-top: 0.1rem;
+    background-color: #17171b;
+}
+
+th:first-child{
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+}
+
+th:last-child{
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+
+#Botones{
+    display:flex;
+    margin: auto;
+    width: 85%;    
+    border-radius: 2rem;
+    background-color: #17171b;
+}
+
+#Dia1.cambiado{
+    color:aqua;
+}
+
+#Dia2.cambiado{
+    color:aqua;
+}
+
+#Dia3.cambiado{
+    color:aqua;
+}
+
+#Dia4.cambiado{
+    color:aqua;
+}
+
+#Dia5.cambiado{
+    color:aqua;
+}
+.buttonTabla{
+    margin: auto;
+    height: 1.5rem;
+    width: 85%;
+    
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.05rem;
+    color: white;
+    justify-content: center;
+    white-space: pre-wrap;
+
+    border-color: #17171b;
+    background-color: transparent;
+    border-style:none;
+}
+
+.buttonTabla:hover{
+    border-radius: 2rem;
+    background-color: #222325;
+}
+
+.labelTabla{
+    margin: auto;
+    height: 1.5rem;
+    padding: 0;
+    padding-top: 0.1rem;
+    width: 33.3%;
+    
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: white;
+    justify-content: center;
 }
 
 #sectionAddDelete{
