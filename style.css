@@ -336,22 +336,33 @@ thead, tr{
     height: 1.5rem;
     padding: 0;
     padding-top: 0.1rem;
+    margin-bottom: 1rem;
+    border-spacing: 1rem;
 }
 
-th, .td{
+th{
     padding: 0;
     padding-top: 0.1rem;
     background-color: #17171b;
+    border-spacing: 1rem;
+    font-weight: 100;
 }
 
 th:first-child{
-    border-top-left-radius: 2rem;
-    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 1rem;
 }
 
 th:last-child{
-    border-top-right-radius: 2rem;
-    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 1rem;
+}
+
+.dataInput{
+    font-size: 0.9rem;
+    margin-top: 0.1rem;
+    background-color: #17171b;
+    border-style: none;
+    width: 100%;
+    color: white;
 }
 
 #Botones{
@@ -359,7 +370,9 @@ th:last-child{
     margin: auto;
     width: 85%;    
     border-radius: 2rem;
+    height: 1.6rem;
     background-color: #17171b;
+    margin-bottom: 0.3rem;
 }
 
 #Dia1.cambiado{
@@ -408,6 +421,7 @@ th:last-child{
     padding: 0;
     padding-top: 0.1rem;
     width: 33.3%;
+    margin-bottom: 0.3rem;
     
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;

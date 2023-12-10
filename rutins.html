@@ -36,7 +36,7 @@
         </section>
         <div id="pagerutinas">
             <section id="listasrutinas">
-                <h1>Listas de rutinas<hr></h1>
+                <h1 class="fs-4">Listas de rutinas<hr></h1>
 
                 <section id="sectionSemanaIDEAL" class="SectionLabel">
                     <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
@@ -50,19 +50,19 @@
                             <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
                         </div>
 
-                        <table id="Tabla">
-                            <thead>
+                        <table id="Tabla" class="rounded-3 text-center">
+                            <thead class="thead-light">
                                 <tr>
-                                   <th class="labelTabla">Nombre</th> 
-                                   <th class="labelTabla">Series</th>
-                                   <th class="labelTabla">Reps</th>
+                                   <th>Nombre</th> 
+                                   <th>Series</th>
+                                   <th>Reps</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody">
                                 <tr id="dataInputs">
-                                    <td class="td"><input type="text"  class="td" name="ejericio[]" placeholder="Ingrese el nombre del ejercicio"></td>
-                                    <td class="td"><input type="text"  class="td" name="series[]" placeholder="Ingrese las series"></td>
-                                    <td class="td"><input type="text"  class="td" name="reps[]" placeholder="Ingrese las repeticiones"></td>
+                                    <td class="dataInputtd"><input class="dataInput" type="text" name="ejericio[]" placeholder="..."></td>
+                                    <td class="dataInputtd"><input class="dataInput" type="text" name="series[]" placeholder="..."></td>
+                                    <td class="dataInputtd"><input class="dataInput" type="text" name="reps[]" placeholder="..."></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -87,19 +87,19 @@
                             <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
                         </div>
 
-                        <table id="Tabla">
-                            <thead>
+                        <table id="Tabla" class="rounded-3 text-center">
+                            <thead class="thead-light">
                                 <tr>
-                                   <th class="labelTabla">Nombre</th> 
-                                   <th class="labelTabla">Series</th>
-                                   <th class="labelTabla">Reps</th>
+                                   <th>Nombre</th> 
+                                   <th>Series</th>
+                                   <th>Reps</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody">
                                 <tr id="dataInputs">
-                                    <td class="td"><input type="text"  class="td" name="ejericio[]" placeholder="Ingrese el nombre del ejercicio"></td>
-                                    <td class="td"><input type="text"  class="td" name="series[]" placeholder="Ingrese las series"></td>
-                                    <td class="td"><input type="text"  class="td" name="reps[]" placeholder="Ingrese las repeticiones"></td>
+                                    <td class="dataInputtd"><input class="dataInput" type="text" name="ejericio[]" placeholder="..."></td>
+                                    <td class="dataInputtd"><input class="dataInput" type="text" name="series[]" placeholder="..."></td>
+                                    <td class="dataInputtd"><input class="dataInput" type="text" name="reps[]" placeholder="..."></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -123,7 +123,7 @@
                   <div class="modal-content">
                     <div class="modal-header bg-dark">
                       <h1 class="modal-title fs-5" id="exampleModalLabel">Registrarse</h1>
-                      <button type="button" class="btn-close text-primary data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                      <button type="button" class="btn-close text-primary" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body bg-dark">
                       <form id="signup-form">
