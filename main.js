@@ -158,7 +158,19 @@ function deleteSemanas(){
         EjercicioyDia.pop();
         SeriesyDia.pop();
         RepsyDia.pop();
+        
+        for(let i = 0; i <= 4; i++){  
+            let cantEjer = CantEjerciciosDiaSemana[(cantSemanas + 1)][i]
+            for(let j = 0; j <= cantEjer; j++){
+                localStorage.setItem("Ejercicio" + (cantSemanas + 1) + i + j, "")
+                localStorage.setItem("Series" + (cantSemanas + 1) + i + j, "")
+                localStorage.setItem("Reps" + (cantSemanas + 1) + i + j, "")
+                localStorage.setItem("Semana" + (cantSemanas + 1) + "Dia" + i, "0")
+            }
+        }
+
         CantEjerciciosDiaSemana.pop();
+
         localStorage.setItem("CantSemanas", cantSemanas)
     }
 }
@@ -171,21 +183,30 @@ function addEjercicio(AddButton){
         IDSEMANA = 0
     }
 
-    //CantEjerciciosDiaSemana[IDSEMANA][Dia][0] = 1
     var cantEjercicios = parseInt(CantEjerciciosDiaSemana[IDSEMANA][Dia][0])
     cantEjercicios = cantEjercicios + 1
-    //alert("Semana" + IDSEMANA + "Dia" + Dia + cantEjercicios)
+
     CantEjerciciosDiaSemana[IDSEMANA][Dia][0] = cantEjercicios 
 
     localStorage.setItem("Semana" + IDSEMANA + "Dia" + Dia, cantEjercicios)
-    //alert(localStorage.getItem("Semana" + IDSEMANA + "Dia" + Dia))
 
     var tabla = section.querySelector('table')
     var tbody2 = tabla.querySelector('tbody')
     var tbody = document.getElementById('tbody')
     var tr = tbody2.getElementsByTagName('tr')[0]
-    var NuevoDataInputs = tr.cloneNode(true)
-    tbody2.appendChild(NuevoDataInputs)
+    var NuevoTr = tr.cloneNode(true)
+    var inputEjercicio = NuevoTr.querySelector('#Ejercicio' + IDSEMANA)
+    var inputSeries = NuevoTr.querySelector('#Series' + IDSEMANA)
+    var inputReps = NuevoTr.querySelector('#Reps' + IDSEMANA)
+
+    inputEjercicio.value = ""
+    inputEjercicio.name = cantEjercicios
+    inputSeries.value = ""
+    inputSeries.name = cantEjercicios
+    inputReps.value = ""
+    inputReps.name = cantEjercicios
+
+    tbody2.appendChild(NuevoTr)
 
 }
 
@@ -207,6 +228,12 @@ function deleteEjercicio(AddButton){
         tr.remove()
         cantEjercicios = cantEjercicios - 1
         CantEjerciciosDiaSemana[IDSEMANA][Dia][0] = cantEjercicios 
+        EjercicioyDia[IDSEMANA][Dia].pop()
+        SeriesyDia[IDSEMANA][Dia].pop()
+        RepsyDia[IDSEMANA][Dia].pop()
+        localStorage.setItem("Ejercicio" + IDSEMANA + Dia + (cantEjercicios + 1), "")
+        localStorage.setItem("Series" + IDSEMANA + Dia + (cantEjercicios + 1), "")
+        localStorage.setItem("Reps" + IDSEMANA + Dia + (cantEjercicios + 1), "")
         localStorage.setItem("Semana" + IDSEMANA + "Dia" + Dia, cantEjercicios)
     }
 }
@@ -480,10 +507,12 @@ function TextChanged(TextInput, event){
     //var ID = SectionID.slice(9,11)
     //(ID == ""){
     //    ID = 0
-    //}
+    //InputID = Ejercicio0 - Dia = 1 - EjercicioID = 1
+
     var InputID = TextInput.id
-    localStorage.setItem(InputID + Dia, event.target.value)
-    //alert(InputID + Dia + " " + localStorage.getItem(InputID + Dia))
+    var EjercicioID = TextInput.name
+    localStorage.setItem(InputID + Dia + EjercicioID, event.target.value)
+    //alert(InputID + Dia + EjercicioID + " " + localStorage.getItem(InputID + Dia + EjercicioID))
 }
 
 function FirstTime(){
@@ -498,6 +527,7 @@ function LoadData(){
             for (let s = 1; s <= cantSemana; s++){
                 addSemanas()   
             }
+
 
             firsttime = false
         }
@@ -525,36 +555,62 @@ function LoadData(){
                     var tbody2 = tabla.querySelector('tbody')
                     var tbody = document.getElementById('tbody')
                     var tr = tbody2.getElementsByTagName('tr')[0]
-                    var NuevoDataInputs = tr.cloneNode(true)
-                    tbody2.appendChild(NuevoDataInputs)
+                    var NuevoTr = tr.cloneNode(true)
+                    var inputEjercicio = NuevoTr.querySelector('#Ejercicio' + is)
+                    var inputSeries = NuevoTr.querySelector('#Series' + is)
+                    var inputReps = NuevoTr.querySelector('#Reps' + is)
+                
+                    inputEjercicio.value = ""
+                    inputEjercicio.name = e
+                    inputSeries.value = ""
+                    inputSeries.name = e
+                    inputReps.value = ""
+                    inputReps.name = e
+                    tbody2.appendChild(NuevoTr)
                 }
             }
             firsttime2 = false
         }
 
-        for(let j = 0; j < 4; j++){
-            if(localStorage.getItem("Ejercicio" + i + j) == undefined){
-                localStorage.setItem("Ejercicio" + i + j, "")
+        for(let j = 0; j <= 4; j++){
+            //alert("i = " + i + " j = " + j)
+            if(CantEjerciciosDiaSemana[i][j] == undefined){
+                CantEjerciciosDiaSemana[i][j] = "0"
             }
 
-            if(localStorage.getItem("Series" + i + j) == undefined){
-                localStorage.setItem("Series" + i + j, "")
-            }
+            var cantEjercicioPerDay = parseInt(CantEjerciciosDiaSemana[i/*Semana*/][j/*Dia*/][0])
 
-            if(localStorage.getItem("Reps" + i + j) == undefined){
-                localStorage.setItem("Reps" + i + j, "")
-            }
+            //alert("i = " + i + " j = " + j + " cant ejercicio = " + cantEjercicioPerDay)
 
-            EjercicioyDia[i][j][1] = localStorage.getItem("Ejercicio" + i + j)
-            SeriesyDia[i][j][1] = localStorage.getItem("Series" + i + j)
-            RepsyDia[i][j][1] = localStorage.getItem("Reps" + i + j)
+            for(let k = 0; k <= cantEjercicioPerDay; k++){
+
+                if(localStorage.getItem("Ejercicio" + i + j + k) == undefined){
+                    localStorage.setItem("Ejercicio" + i + j + k, "")
+                }
+    
+                if(localStorage.getItem("Series" + i + j + k) == undefined){
+                    localStorage.setItem("Series" + i + j + k, "")
+                }
+    
+                if(localStorage.getItem("Reps" + i + j + k) == undefined){
+                    localStorage.setItem("Reps" + i + j + k, "")
+                }
+                //alert(k)
+                EjercicioyDia[i][j][k] = localStorage.getItem("Ejercicio" + i + j + k)
+                SeriesyDia[i][j][k] = localStorage.getItem("Series" + i + j + k)
+                RepsyDia[i][j][k] = localStorage.getItem("Reps" + i + j + k)
+
+                let pnl = document.querySelector('#pnlSemana' + i)
+                let Inputs = pnl.querySelectorAll(`[name="${k}"]`)
+                let InputEjercicio = Inputs[0]
+                let InputSeries = Inputs[1]
+                let InputReps = Inputs[2]
+
+                InputEjercicio.value = EjercicioyDia[i][0][k]
+                InputSeries.value = SeriesyDia[i][0][k]
+                InputReps.value = RepsyDia[i][0][k]
+            }
+            
         }
-
-        InputEjercicio = document.querySelector('#Ejercicio' + i)
-        InputSeries = document.querySelector('#Series' + i)
-        InputReps = document.querySelector('#Reps' + i)
-        InputEjercicio.value = EjercicioyDia[i][0][1]
-        InputSeries.value = SeriesyDia[i][0][1]
-        InputReps.value = RepsyDia[i][0][1]
     }
 }
