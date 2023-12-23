@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Gym</title>
     <link rel="icon" href="icons/weblogo.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,14 +13,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="main.js"></script>
 </head>
 <body id="bodyrutins">
     <input type="checkbox" id="menu">
     <header id="headerRutins">
         <label for="menu" id="btnSlide" onclick="buttonSlide()"><i class="fa-solid fa-bars"></i></label>
         <img src="icons/logor.png" id="logor">
-        <a class="links" href="#" data-bs-toggle="modal" data-bs-target="#signUpModal">Registrarse</a>
+        <a class="links" >Registrarse</a>
         <a class="links" href="rutins.html">Mis rutinas</a>
         <a class="links" href="index.html">Inicio</a>
     </header>
@@ -28,89 +28,95 @@
             <ul id="side">
                 <button id="listIcon" class="buttonlistaIcon" onclick="buttonLista()"><i class="fa-solid fa-house-chimney-window"> <label id="inicio">Inicio</label></i></button>
                 <button id="rutinasIcon" class="buttonlistaIcon" onclick="buttonRutinas()">Rutina nueva</button>
+                <button id="cuaderno" class="buttonlista" onclick="buttonRutinas()">Cuaderno de ent.</button>
             </ul>
             <ul id="slide">
                 <button id="list" class="buttonlista" onclick="buttonLista()">Lista de rutinas</button>
                 <button id="rutinas" class="buttonlista" onclick="buttonRutinas()">Rutina nueva</button>
+                <button id="cuaderno" class="links buttonlista" href="cuaderno.html" onclick="buttonRutinas()">Cuaderno de entrenamiento</button>
             </ul>
         </section>
         <div id="pagerutinas">
             <section id="listasrutinas">
-                <h1 class="fs-4">Listas de rutinas<hr></h1>
+                <h1 class="fs-4">Listas de rutinas<hr class="centrado"></h1>
 
-                <section id="sectionSemanaIDEAL" class="SectionLabel">
-                    <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
-
-                    <section id ="pnlSemana" class="PanelLabel">
-                        <div id="Botones">
-                            <button id="Dia1" class="buttonTabla" onclick="Lunes(this)" contenteditable="true">Lunes</button>
-                            <button id="Dia2" class="buttonTabla" onclick="Martes(this)" contenteditable="true">Martes</button>
-                            <button id="Dia3" class="buttonTabla" onclick="Miercoles(this)" contenteditable="true">Miercoles</button>
-                            <button id="Dia4" class="buttonTabla" onclick="Jueves(this)" contenteditable="true">Jueves</button>
-                            <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
-                        </div>
-
-                        <table id="Tabla" class="rounded-3 text-center">
-                            <thead class="thead-light">
-                                <tr>
-                                   <th>Nombre</th> 
-                                   <th>Series</th>
-                                   <th>Reps</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody">
-                                <tr id="dataInputs">
-                                    <td class="dataInputtd"><input class="dataInput" type="text" name="ejericio[]" placeholder="..."></td>
-                                    <td class="dataInputtd"><input class="dataInput" type="text" name="series[]" placeholder="..."></td>
-                                    <td class="dataInputtd"><input class="dataInput" type="text" name="reps[]" placeholder="..."></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <section id="sectionAddDelete">
-                            <button id="add" class="buttonsAddDelete" onclick="addEjercicio(this)" ><i class="fa-solid fa-plus"></i></button>
-                            <button id="delete" class="buttonsAddDelete" onclick="deleteEjercicio(this)" ><i class="fa-solid fa-minus"></i></button>
+                <div id="DivSemanas">
+                    <section id="sectionSemanaIDEAL" class="SectionLabel">
+                    
+                        <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
+    
+                        <section id ="pnlSemana" class="PanelLabel">
+                            <div id="Botones">
+                                <button id="Dia1" class="buttonTabla cambiado" onclick="Lunes(this)" contenteditable="true">Lunes</button>
+                                <button id="Dia2" class="buttonTabla" onclick="Martes(this)" contenteditable="true">Martes</button>
+                                <button id="Dia3" class="buttonTabla" onclick="Miercoles(this)" contenteditable="true">Miercoles</button>
+                                <button id="Dia4" class="buttonTabla" onclick="Jueves(this)" contenteditable="true">Jueves</button>
+                                <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
+                            </div>
+    
+                            <table id="Tabla" class="rounded-3 text-center">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="LabelName">Nombre</th> 
+                                        <th class="LabelSeries">Series</th>
+                                        <th class="LabelReps">Reps</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    <tr id="dataInputs">
+                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Ejercicio" name="ejericio[]" placeholder="..."></td>
+                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Series" name="series[]" placeholder="..."></td>
+                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Reps" name="reps[]" placeholder="..."></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                            <section id="sectionAddDelete">
+                                <button id="add" class="buttonsAddDelete" onclick="addEjercicio(this)" ><i class="fa-solid fa-plus"></i></button>
+                                <button id="delete" class="buttonsAddDelete" onclick="deleteEjercicio(this)" ><i class="fa-solid fa-minus"></i></button>
+                            </section>
+                            
                         </section>
-                        
                     </section>
-                </section>
-
-                <section id="sectionSemana" class="SectionLabel">
-                    <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
-
-                    <section id ="pnlSemana" class="PanelLabel">
-                        <div id="Botones">
-                            <button id="Dia1" class="buttonTabla" onclick="Lunes(this)" contenteditable="true">Lunes</button>
-                            <button id="Dia2" class="buttonTabla" onclick="Martes(this)" contenteditable="true">Martes</button>
-                            <button id="Dia3" class="buttonTabla" onclick="Miercoles(this)" contenteditable="true">Miercoles</button>
-                            <button id="Dia4" class="buttonTabla" onclick="Jueves(this)" contenteditable="true">Jueves</button>
-                            <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
-                        </div>
-
-                        <table id="Tabla" class="rounded-3 text-center">
-                            <thead class="thead-light">
-                                <tr>
-                                   <th>Nombre</th> 
-                                   <th>Series</th>
-                                   <th>Reps</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody">
-                                <tr id="dataInputs">
-                                    <td class="dataInputtd"><input class="dataInput" type="text" name="ejericio[]" placeholder="..."></td>
-                                    <td class="dataInputtd"><input class="dataInput" type="text" name="series[]" placeholder="..."></td>
-                                    <td class="dataInputtd"><input class="dataInput" type="text" name="reps[]" placeholder="..."></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <section id="sectionAddDelete">
-                            <button id="add" class="buttonsAddDelete" onclick="addEjercicio(this)" ><i class="fa-solid fa-plus"></i></button>
-                            <button id="delete" class="buttonsAddDelete" onclick="deleteEjercicio(this)" ><i class="fa-solid fa-minus"></i></button>
+    
+                    <section id="sectionSemana" class="SectionLabel">
+                        
+                        <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
+    
+                        <section id ="pnlSemana0" class="PanelLabel">
+                            <div id="Botones">
+                                <button id="Dia1" class="buttonTabla cambiado" onclick="Lunes(this)" contenteditable="true">Lunes</button>
+                                <button id="Dia2" class="buttonTabla" onclick="Martes(this)" contenteditable="true">Martes</button>
+                                <button id="Dia3" class="buttonTabla" onclick="Miercoles(this)" contenteditable="true">Miercoles</button>
+                                <button id="Dia4" class="buttonTabla" onclick="Jueves(this)" contenteditable="true">Jueves</button>
+                                <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
+                            </div>
+    
+                            <table id="Tabla" class="rounded-3 text-center">
+                                <thead class="thead-light">
+                                    <tr>
+                                       <th class="LabelName">Nombre</th> 
+                                       <th class="LabelSeries">Series</th>
+                                       <th class="LabelReps">Reps</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    <tr id="dataInputs">
+                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Ejercicio0" name="ejericio[]" placeholder="..."></td>
+                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Series0" name="series[]" placeholder="..."></td>
+                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Reps0" name="reps[]" placeholder="..."></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                            <section id="sectionAddDelete">
+                                <button id="add" class="buttonsAddDelete" onclick="addEjercicio(this)" ><i class="fa-solid fa-plus"></i></button>
+                                <button id="delete" class="buttonsAddDelete" onclick="deleteEjercicio(this)" ><i class="fa-solid fa-minus"></i></button>
+                            </section>
+                            
                         </section>
-                        
                     </section>
-                </section>
+                </div>
             </section>
 
             <section id="sectionAddDelete">
@@ -122,25 +128,21 @@
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header bg-dark">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">Registrarse</h1>
+                      <h1 class="modal-title fs-4 text-center" id="exampleModalLabel">Registrarse</h1>
                       <button type="button" class="btn-close text-primary" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body bg-dark">
                       <form id="signup-form">
                         <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
-                          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="example@gmail.com" aria-describedby="emailHelp" required>
+                          <label for="signup-email" class="form-label">Correo electrónico</label>
+                          <input type="email" class="form-control" id="signup-email" placeholder="example@gmail.com" aria-describedby="emailHelp" required>
                           <div id="emailHelp" class="form-text text-white text-opacity-50">No compartiremos el correo electrónico.</div>
                         </div>
                         <div class="mb-3">
-                          <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                          <input type="password" class="form-control" id="exampleInputPassword1" required>
+                          <label for="signup-password" class="form-label">Contraseña</label>
+                          <input type="password" class="form-control" id="signup-password" required>
                         </div>
-                        <div class="mb-3 form-check">
-                          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                          <label class="form-check-label" for="exampleCheck1">Recordarme</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit"  class="btn btn-primary">Submit</button>
                       </form>
                     </div>
                   </div>
@@ -149,16 +151,24 @@
         </div>
     </section>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
+    <!-- BOOTSTRAP SCRIPTS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+    <!-- JS FILE -->
+
+    <script src="main.js"></script>
+
+    <!-- FIRE BASE SCRIPTS -->
+
+    <!-- Agrega estas líneas antes de cerrar el tag </body> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-auth.js"></script>
+
+    Agrega estas líneas después de incluir las bibliotecas de Firebase 
+    <script>
+        var firebaseConfig = {
           apiKey: "AIzaSyCIS57qO0Y8-vGmSlGUsY0XIgR6crGIMUg",
           authDomain: "fitness-gym-ac2c8.firebaseapp.com",
           projectId: "fitness-gym-ac2c8",
@@ -167,12 +177,11 @@
           appId: "1:506502187706:web:71d6d4947966f553d1d083",
           measurementId: "G-T61RDH6KBP"
         };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    
+        // Inicializa Firebase
+        firebase.initializeApp(firebaseConfig); 
+        var auth = firebase.auth();
+        var googleProvider = new firebase.auth.GoogleAuthProvider();
+    </script> -->
 </body>
 </html>
