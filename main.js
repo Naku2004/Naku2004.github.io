@@ -18,30 +18,30 @@ var cantEjercicio = 0
 
 var EjercicioyDia = [
     [
-        ["Lunes"],
-        ["Martes"],
-        ["Miercoles"],
-        ["Jueves"],
-        ["Viernes"]
+        [""],
+        [""],
+        [""],
+        [""],
+        [""]
     ]
 ]
 var SeriesyDia = [
     [
-        ["Lunes"],
-        ["Martes"],
-        ["Miercoles"],
-        ["Jueves"],
-        ["Viernes"]
+        [""],
+        [""],
+        [""],
+        [""],
+        [""]
     ]
 ]
 
 var RepsyDia = [
     [ 
-        ["Lunes"],
-        ["Martes"],
-        ["Miercoles"],
-        ["Jueves"],
-        ["Viernes"]
+        [""],
+        [""],
+        [""],
+        [""],
+        [""]
     ]
 ]
 
@@ -108,7 +108,8 @@ function buttonSemana(button){
     
     if (desplegado == false){
         desplegado = true
-        panel.classList.add('cambiado')
+        panel.classList.add('cambiado') 
+        Lunes()
     }
     else{
         desplegado = false;
@@ -145,9 +146,9 @@ function addSemanas(){
     localStorage.setItem("CantSemanas", cantSemanas)
 
     CantEjerciciosDiaSemana.push([[  /*Semana*/ [0 /*Lunes*/], [0 /*Martes*/], [0 /*Miercoles*/], [0 /*Jueves*/], [0 /*Viernes*/]]])
-    EjercicioyDia.push([["Lunes"], ["Martes"], ["Miercoles"], ["Jueves"], ["Viernes"]])
-    SeriesyDia.push([["Lunes"], ["Martes"], ["Miercoles"], ["Jueves"], ["Viernes"]])
-    RepsyDia.push([["Lunes"], ["Martes"], ["Miercoles"], ["Jueves"], ["Viernes"]])
+    EjercicioyDia.push([[""], [""], [""], [""], [""]])
+    SeriesyDia.push([[""], [""], [""], [""], [""]])
+    RepsyDia.push([[""], [""], [""], [""], [""]])
 }
 
 function deleteSemanas(){
@@ -183,13 +184,13 @@ function addEjercicio(AddButton){
         IDSEMANA = 0
     }
 
-    var cantEjercicios = parseInt(CantEjerciciosDiaSemana[IDSEMANA][Dia][0])
+    var cantEjercicios = parseInt(CantEjerciciosDiaSemana[IDSEMANA][Dia])
     cantEjercicios = cantEjercicios + 1
 
-    CantEjerciciosDiaSemana[IDSEMANA][Dia][0] = cantEjercicios 
+    CantEjerciciosDiaSemana[IDSEMANA][Dia] = cantEjercicios 
 
     localStorage.setItem("Semana" + IDSEMANA + "Dia" + Dia, cantEjercicios)
-
+    //alert("Semana" + IDSEMANA + "Dia" + Dia + " " + cantEjercicios)
     var tabla = section.querySelector('table')
     var tbody2 = tabla.querySelector('tbody')
     var tbody = document.getElementById('tbody')
@@ -218,7 +219,7 @@ function deleteEjercicio(AddButton){
         IDSEMANA = 0
     }
 
-    var cantEjercicios = parseInt(CantEjerciciosDiaSemana[IDSEMANA][Dia][0])
+    var cantEjercicios = parseInt(CantEjerciciosDiaSemana[IDSEMANA][Dia])
 
     if(cantEjercicios > 0){
         var section = AddButton.closest('.PanelLabel')
@@ -227,7 +228,7 @@ function deleteEjercicio(AddButton){
         var tr = tbody2.getElementsByTagName('tr')[cantEjercicios]
         tr.remove()
         cantEjercicios = cantEjercicios - 1
-        CantEjerciciosDiaSemana[IDSEMANA][Dia][0] = cantEjercicios 
+        CantEjerciciosDiaSemana[IDSEMANA][Dia] = cantEjercicios 
         EjercicioyDia[IDSEMANA][Dia].pop()
         SeriesyDia[IDSEMANA][Dia].pop()
         RepsyDia[IDSEMANA][Dia].pop()
@@ -274,25 +275,64 @@ function Lunes(Button){
             ID = 0
         }
 
-        InputEjercicio = document.querySelector('#Ejercicio' + ID)
-        InputSeries = document.querySelector('#Series' + ID)
-        InputReps = document.querySelector('#Reps' + ID)
+        let CantEjercicioDia = (parseInt(CantEjerciciosDiaSemana[ID][Dia]))
+        //alert(ID + Dia)
+        //alert(CantEjercicioDia)
 
-        if(EjercicioyDia[ID][Dia][1] == undefined){
-            EjercicioyDia[ID][Dia][1] = ""
-        } 
+        let tablaM = Section.querySelector('table')
+        let tablaLength = (tablaM.rows.length - 2)
+        //alert(CantEjerciciosDiaSemana[ID][0] + " " + tablaM.rows.length)
 
-        if(SeriesyDia[ID][Dia][1] == undefined){
-            SeriesyDia[ID][Dia][1] = ""
+        if(CantEjercicioDia < tablaLength){
+            for(let i = tablaLength; i > CantEjercicioDia; i--){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[(i)]
+                trM.remove()
+            }
+        }
+        else if(CantEjercicioDia > tablaLength){
+            for(let i = tablaLength; i < CantEjercicioDia; i++){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[0]
+                let NuevoTrM = trM.cloneNode(true)
+                let inputEjercicio = NuevoTrM.querySelector('#Ejercicio' + ID)
+                let inputSeries = NuevoTrM.querySelector('#Series' + ID)
+                let inputReps = NuevoTrM.querySelector('#Reps' + ID)
+
+                inputEjercicio.value = ""
+                inputEjercicio.name = (i + 1)
+                inputSeries.value = ""
+                inputSeries.name = (i + 1)
+                inputReps.value = ""
+                inputReps.name = (i + 1)
+
+                tbody2M.appendChild(NuevoTrM)
+            }
         }
 
-        if(RepsyDia[ID][Dia][1] == undefined){
-            RepsyDia[ID][Dia][1] = ""
-        }
+        for(let i = 0; i <= CantEjercicioDia; i++){
+            //alert(`ID: ${ID} Dia: ${Dia} i: ${i}`)
+            let Inputs = Section.querySelectorAll(`[name="${i}"]`)
+            let InputEjercicio = Inputs[0]
+            let InputSeries = Inputs[1]
+            let InputReps = Inputs[2]
 
-        InputEjercicio.value = EjercicioyDia[ID][Dia][1]
-        InputSeries.value = SeriesyDia[ID][Dia][1]
-        InputReps.value = RepsyDia[ID][Dia][1]
+            if(EjercicioyDia[ID][Dia][i] == undefined){
+                EjercicioyDia[ID][Dia][i] = ""
+            } 
+
+            if(SeriesyDia[ID][Dia][i] == undefined){
+                SeriesyDia[ID][Dia][i] = ""
+            }
+
+            if(RepsyDia[ID][Dia][i] == undefined){
+                RepsyDia[ID][Dia][i] = ""
+            }
+
+            InputEjercicio.value = EjercicioyDia[ID][Dia][i]
+            InputSeries.value = SeriesyDia[ID][Dia][i]
+            InputReps.value = RepsyDia[ID][Dia][i]
+        }
     }
 }
 
@@ -325,25 +365,64 @@ function Martes(Button){
             ID = 0
         }
 
-        InputEjercicio = document.querySelector('#Ejercicio' + ID)
-        InputSeries = document.querySelector('#Series' + ID)
-        InputReps = document.querySelector('#Reps' + ID)
+        let CantEjercicioDia = (parseInt(CantEjerciciosDiaSemana[ID][Dia]))
+        //alert(ID + Dia)
+        //alert(CantEjercicioDia)
 
-        if(EjercicioyDia[ID][Dia][1] == undefined){
-            EjercicioyDia[ID][Dia][1] = ""
-        } 
+        let tablaM = Section.querySelector('table')
+        let tablaLength = (tablaM.rows.length - 2)
+        //alert(CantEjerciciosDiaSemana[ID][0] + " " + tablaM.rows.length)
 
-        if(SeriesyDia[ID][Dia][1] == undefined){
-            SeriesyDia[ID][Dia][1] = ""
+        if(CantEjercicioDia < tablaLength){
+            for(let i = tablaLength; i > CantEjercicioDia; i--){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[(i)]
+                trM.remove()
+            }
         }
+        else if(CantEjercicioDia > tablaLength){
+            for(let i = tablaLength; i < CantEjercicioDia; i++){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[0]
+                let NuevoTrM = trM.cloneNode(true)
+                let inputEjercicio = NuevoTrM.querySelector('#Ejercicio' + ID)
+                let inputSeries = NuevoTrM.querySelector('#Series' + ID)
+                let inputReps = NuevoTrM.querySelector('#Reps' + ID)
 
-        if(RepsyDia[ID][Dia][1] == undefined){
-            RepsyDia[ID][Dia][1] = ""
+                inputEjercicio.value = ""
+                inputEjercicio.name = (i + 1)
+                inputSeries.value = ""
+                inputSeries.name = (i + 1)
+                inputReps.value = ""
+                inputReps.name = (i + 1)
+
+                tbody2M.appendChild(NuevoTrM)
+            }
         }
+        
+        for(let i = 0; i <= CantEjercicioDia; i++){
+            //alert(`ID: ${ID} Dia: ${Dia} i: ${i}`)
+            let Inputs = Section.querySelectorAll(`[name="${i}"]`)
+            let InputEjercicio = Inputs[0]
+            let InputSeries = Inputs[1]
+            let InputReps = Inputs[2]
 
-        InputEjercicio.value = EjercicioyDia[ID][Dia][1]
-        InputSeries.value = SeriesyDia[ID][Dia][1]
-        InputReps.value = RepsyDia[ID][Dia][1]
+            if(EjercicioyDia[ID][Dia][i] == undefined){
+                EjercicioyDia[ID][Dia][i] = ""
+            } 
+
+            if(SeriesyDia[ID][Dia][i] == undefined){
+                SeriesyDia[ID][Dia][i] = ""
+            }
+
+            if(RepsyDia[ID][Dia][i] == undefined){
+                RepsyDia[ID][Dia][i] = ""
+            }
+
+            InputEjercicio.value = EjercicioyDia[ID][Dia][i]
+            InputSeries.value = SeriesyDia[ID][Dia][i]
+            InputReps.value = RepsyDia[ID][Dia][i]
+        }
     }
 }
 
@@ -376,26 +455,64 @@ function Miercoles(Button){
             ID = 0
         }
 
+        let CantEjercicioDia = (parseInt(CantEjerciciosDiaSemana[ID][Dia]))
+        //alert(ID + Dia)
+        //alert(CantEjercicioDia)
 
-        InputEjercicio = document.querySelector('#Ejercicio' + ID)
-        InputSeries = document.querySelector('#Series' + ID)
-        InputReps = document.querySelector('#Reps' + ID)
+        let tablaM = Section.querySelector('table')
+        let tablaLength = (tablaM.rows.length - 2)
+        //alert(CantEjerciciosDiaSemana[ID][0] + " " + tablaM.rows.length)
 
-        if(EjercicioyDia[ID][Dia][1] == undefined){
-            EjercicioyDia[ID][Dia][1] = ""
-        } 
-
-        if(SeriesyDia[ID][Dia][1] == undefined){
-            SeriesyDia[ID][Dia][1] = ""
+        if(CantEjercicioDia < tablaLength){
+            for(let i = tablaLength; i > CantEjercicioDia; i--){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[(i)]
+                trM.remove()
+            }
         }
+        else if(CantEjercicioDia > tablaLength){
+            for(let i = tablaLength; i < CantEjercicioDia; i++){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[0]
+                let NuevoTrM = trM.cloneNode(true)
+                let inputEjercicio = NuevoTrM.querySelector('#Ejercicio' + ID)
+                let inputSeries = NuevoTrM.querySelector('#Series' + ID)
+                let inputReps = NuevoTrM.querySelector('#Reps' + ID)
 
-        if(RepsyDia[ID][Dia][1] == undefined){
-            RepsyDia[ID][Dia][1] = ""
+                inputEjercicio.value = ""
+                inputEjercicio.name = (i + 1)
+                inputSeries.value = ""
+                inputSeries.name = (i + 1)
+                inputReps.value = ""
+                inputReps.name = (i + 1)
+
+                tbody2M.appendChild(NuevoTrM)
+            }
         }
+        
+        for(let i = 0; i <= CantEjercicioDia; i++){
+            //alert(`ID: ${ID} Dia: ${Dia} i: ${i}`)
+            let Inputs = Section.querySelectorAll(`[name="${i}"]`)
+            let InputEjercicio = Inputs[0]
+            let InputSeries = Inputs[1]
+            let InputReps = Inputs[2]
 
-        InputEjercicio.value = EjercicioyDia[ID][Dia][1]
-        InputSeries.value = SeriesyDia[ID][Dia][1]
-        InputReps.value = RepsyDia[ID][Dia][1]
+            if(EjercicioyDia[ID][Dia][i] == undefined){
+                EjercicioyDia[ID][Dia][i] = ""
+            } 
+
+            if(SeriesyDia[ID][Dia][i] == undefined){
+                SeriesyDia[ID][Dia][i] = ""
+            }
+
+            if(RepsyDia[ID][Dia][i] == undefined){
+                RepsyDia[ID][Dia][i] = ""
+            }
+
+            InputEjercicio.value = EjercicioyDia[ID][Dia][i]
+            InputSeries.value = SeriesyDia[ID][Dia][i]
+            InputReps.value = RepsyDia[ID][Dia][i]
+        }
     }
 }
 
@@ -428,25 +545,64 @@ function Jueves(Button){
             ID = 0
         }
 
-        InputEjercicio = document.querySelector('#Ejercicio' + ID)
-        InputSeries = document.querySelector('#Series' + ID)
-        InputReps = document.querySelector('#Reps' + ID)
+        let CantEjercicioDia = (parseInt(CantEjerciciosDiaSemana[ID][Dia]))
+        //alert(ID + Dia)
+        //alert(CantEjercicioDia)
 
-        if(EjercicioyDia[ID][Dia][1] == undefined){
-            EjercicioyDia[ID][Dia][1] = ""
-        } 
+        let tablaM = Section.querySelector('table')
+        let tablaLength = (tablaM.rows.length - 2)
+        //alert(CantEjerciciosDiaSemana[ID][0] + " " + tablaM.rows.length)
 
-        if(SeriesyDia[ID][Dia][1] == undefined){
-            SeriesyDia[ID][Dia][1] = ""
+        if(CantEjercicioDia < tablaLength){
+            for(let i = tablaLength; i > CantEjercicioDia; i--){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[(i)]
+                trM.remove()
+            }
         }
+        else if(CantEjercicioDia > tablaLength){
+            for(let i = tablaLength; i < CantEjercicioDia; i++){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[0]
+                let NuevoTrM = trM.cloneNode(true)
+                let inputEjercicio = NuevoTrM.querySelector('#Ejercicio' + ID)
+                let inputSeries = NuevoTrM.querySelector('#Series' + ID)
+                let inputReps = NuevoTrM.querySelector('#Reps' + ID)
 
-        if(RepsyDia[ID][Dia][1] == undefined){
-            RepsyDia[ID][Dia][1] = ""
+                inputEjercicio.value = ""
+                inputEjercicio.name = (i + 1)
+                inputSeries.value = ""
+                inputSeries.name = (i + 1)
+                inputReps.value = ""
+                inputReps.name = (i + 1)
+
+                tbody2M.appendChild(NuevoTrM)
+            }
         }
+        
+        for(let i = 0; i <= CantEjercicioDia; i++){
+            //alert(`ID: ${ID} Dia: ${Dia} i: ${i}`)
+            let Inputs = Section.querySelectorAll(`[name="${i}"]`)
+            let InputEjercicio = Inputs[0]
+            let InputSeries = Inputs[1]
+            let InputReps = Inputs[2]
 
-        InputEjercicio.value = EjercicioyDia[ID][Dia][1]
-        InputSeries.value = SeriesyDia[ID][Dia][1]
-        InputReps.value = RepsyDia[ID][Dia][1]
+            if(EjercicioyDia[ID][Dia][i] == undefined){
+                EjercicioyDia[ID][Dia][i] = ""
+            } 
+
+            if(SeriesyDia[ID][Dia][i] == undefined){
+                SeriesyDia[ID][Dia][i] = ""
+            }
+
+            if(RepsyDia[ID][Dia][i] == undefined){
+                RepsyDia[ID][Dia][i] = ""
+            }
+
+            InputEjercicio.value = EjercicioyDia[ID][Dia][i]
+            InputSeries.value = SeriesyDia[ID][Dia][i]
+            InputReps.value = RepsyDia[ID][Dia][i]
+        }
     }
 }
 
@@ -479,25 +635,64 @@ function Viernes(Button){
             ID = 0
         }
 
-        InputEjercicio = document.querySelector('#Ejercicio' + ID)
-        InputSeries = document.querySelector('#Series' + ID)
-        InputReps = document.querySelector('#Reps' + ID)
+        let CantEjercicioDia = (parseInt(CantEjerciciosDiaSemana[ID][Dia]))
+        //alert(ID + Dia)
+        //alert(CantEjercicioDia)
 
-        if(EjercicioyDia[ID][Dia][1] == undefined){
-            EjercicioyDia[ID][Dia][1] = ""
-        } 
+        let tablaM = Section.querySelector('table')
+        let tablaLength = (tablaM.rows.length - 2)
+        //alert(CantEjerciciosDiaSemana[ID][0] + " " + tablaM.rows.length)
 
-        if(SeriesyDia[ID][Dia][1] == undefined){
-            SeriesyDia[ID][Dia][1] = ""
+        if(CantEjercicioDia < tablaLength){
+            for(let i = tablaLength; i > CantEjercicioDia; i--){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[(i)]
+                trM.remove()
+            }
+        }
+        else if(CantEjercicioDia > tablaLength){
+            for(let i = tablaLength; i < CantEjercicioDia; i++){
+                let tbody2M = tablaM.querySelector('tbody')
+                let trM = tbody2M.getElementsByTagName('tr')[0]
+                let NuevoTrM = trM.cloneNode(true)
+                let inputEjercicio = NuevoTrM.querySelector('#Ejercicio' + ID)
+                let inputSeries = NuevoTrM.querySelector('#Series' + ID)
+                let inputReps = NuevoTrM.querySelector('#Reps' + ID)
+
+                inputEjercicio.value = ""
+                inputEjercicio.name = (i + 1)
+                inputSeries.value = ""
+                inputSeries.name = (i + 1)
+                inputReps.value = ""
+                inputReps.name = (i + 1)
+
+                tbody2M.appendChild(NuevoTrM)
+            }
         }
 
-        if(RepsyDia[ID][Dia][1] == undefined){
-            RepsyDia[ID][Dia][1] = ""
-        }
+        for(let i = 0; i <= CantEjercicioDia; i++){
+            //alert(`ID: ${ID} Dia: ${Dia} i: ${i}`)
+            let Inputs = Section.querySelectorAll(`[name="${i}"]`)
+            let InputEjercicio = Inputs[0]
+            let InputSeries = Inputs[1]
+            let InputReps = Inputs[2]
 
-        InputEjercicio.value = EjercicioyDia[ID][Dia][1]
-        InputSeries.value = SeriesyDia[ID][Dia][1]
-        InputReps.value = RepsyDia[ID][Dia][1]
+            if(EjercicioyDia[ID][Dia][i] == undefined){
+                EjercicioyDia[ID][Dia][i] = ""
+            } 
+
+            if(SeriesyDia[ID][Dia][i] == undefined){
+                SeriesyDia[ID][Dia][i] = ""
+            }
+
+            if(RepsyDia[ID][Dia][i] == undefined){
+                RepsyDia[ID][Dia][i] = ""
+            }
+
+            InputEjercicio.value = EjercicioyDia[ID][Dia][i]
+            InputSeries.value = SeriesyDia[ID][Dia][i]
+            InputReps.value = RepsyDia[ID][Dia][i]
+        }
     }
 }
 
@@ -512,7 +707,38 @@ function TextChanged(TextInput, event){
     var InputID = TextInput.id
     var EjercicioID = TextInput.name
     localStorage.setItem(InputID + Dia + EjercicioID, event.target.value)
-    //alert(InputID + Dia + EjercicioID + " " + localStorage.getItem(InputID + Dia + EjercicioID))
+
+    for(let i = 0; i <= cantSemanas; i++){
+        for(let j = 0; j <= 4; j++){
+            //alert("i = " + i + " j = " + j
+            
+            if(CantEjerciciosDiaSemana[i][j] == undefined){
+                CantEjerciciosDiaSemana[i][j] = "0"
+            }
+
+            var cantEjercicioPerDay = parseInt(CantEjerciciosDiaSemana[i][j])
+            //alert("i = " + i + " j = " + j + " cant ejercicio = " + cantEjercicioPerDay)
+
+            for(let k = 0; k <= cantEjercicioPerDay; k++){
+
+                if(localStorage.getItem("Ejercicio" + i + j + k) == undefined){
+                    localStorage.setItem("Ejercicio" + i + j + k, "")
+                }
+    
+                if(localStorage.getItem("Series" + i + j + k) == undefined){
+                    localStorage.setItem("Series" + i + j + k, "")
+                }
+    
+                if(localStorage.getItem("Reps" + i + j + k) == undefined){
+                    localStorage.setItem("Reps" + i + j + k, "")
+                }
+                //alert(k)
+                EjercicioyDia[i][j][k] = localStorage.getItem("Ejercicio" + i + j + k)
+                SeriesyDia[i][j][k] = localStorage.getItem("Series" + i + j + k)
+                RepsyDia[i][j][k] = localStorage.getItem("Reps" + i + j + k)
+            }
+        }
+    }
 }
 
 function FirstTime(){
@@ -522,6 +748,7 @@ function FirstTime(){
 }
 
 function LoadData(){
+
     for (let i = 0; i <= cantSemana; i++){
         if(firsttime == true && i == 0){
             for (let s = 1; s <= cantSemana; s++){
@@ -530,6 +757,17 @@ function LoadData(){
 
 
             firsttime = false
+        }
+
+        for(let i = 0; i <= cantSemana; i++){
+            for(let j = 0; j <= 4; j++){
+                //alert(i + " " + j + " " + localStorage.getItem("Semana" + i + "Dia" + j))
+                if(localStorage.getItem("Semana" + i + "Dia" + j) == undefined){
+                    localStorage.setItem("Semana" + i + "Dia" + j, 0)
+                }
+        
+                CantEjerciciosDiaSemana[i][j] = (localStorage.getItem("Semana" + i + "Dia" + j))
+            }
         }
 
         if(firsttime2 == true){
@@ -573,13 +811,13 @@ function LoadData(){
         }
 
         for(let j = 0; j <= 4; j++){
-            //alert("i = " + i + " j = " + j)
+            //alert("i = " + i + " j = " + j
+            
             if(CantEjerciciosDiaSemana[i][j] == undefined){
                 CantEjerciciosDiaSemana[i][j] = "0"
             }
 
-            var cantEjercicioPerDay = parseInt(CantEjerciciosDiaSemana[i/*Semana*/][j/*Dia*/][0])
-
+            var cantEjercicioPerDay = parseInt(CantEjerciciosDiaSemana[i/*Semana*/][j/*Dia*/])
             //alert("i = " + i + " j = " + j + " cant ejercicio = " + cantEjercicioPerDay)
 
             for(let k = 0; k <= cantEjercicioPerDay; k++){
@@ -606,11 +844,18 @@ function LoadData(){
                 let InputSeries = Inputs[1]
                 let InputReps = Inputs[2]
 
-                InputEjercicio.value = EjercicioyDia[i][0][k]
-                InputSeries.value = SeriesyDia[i][0][k]
-                InputReps.value = RepsyDia[i][0][k]
+                if(InputEjercicio != undefined){
+                    InputEjercicio.value = EjercicioyDia[i][0][k]
+                }
+
+                if(InputSeries != undefined){
+                    InputSeries.value = SeriesyDia[i][0][k]
+                }
+
+                if(InputReps != undefined){
+                    InputReps.value = RepsyDia[i][0][k]
+                }
             }
-            
         }
     }
 }
