@@ -17,18 +17,19 @@
 <body id="bodyrutins">
     <input type="checkbox" id="menu">
     <header id="headerRutins">
-        <label for="menu" id="btnSlide" onclick="buttonSlide()"><i class="fa-solid fa-bars"></i></label>
+        <label for="menu" id="btnSlide" onclick="buttonSlide()" ><i class="fa-solid fa-bars"></i></label>
         <img src="icons/logor.png" id="logor">
         <a class="links" >Registrarse</a>
         <a class="links" href="rutins.html">Mis rutinas</a>
         <a class="links" href="index.html">Inicio</a>
     </header>
+
     <section id="page">
         <section id="slidesection">
             <ul id="side">
                 <button id="listIcon" class="buttonlistaIcon" onclick="buttonLista()"><i class="fa-solid fa-house-chimney-window"> <label id="inicio">Inicio</label></i></button>
-                <button id="rutinasIcon" class="buttonlistaIcon" onclick="buttonRutinas()">Rutina nueva</button>
-                <button id="cuaderno" class="buttonlista" onclick="buttonRutinas()">Cuaderno de ent.</button>
+                <button id="rutinasIcon" class="buttonlistaIcon" onclick="buttonListaRutinas()">Lista de rutinas</button>
+                <button id="cuaderno" class="buttonlista" onclick="buttonCuaderno()">Cuaderno de ent.</button>
             </ul>
             <ul id="slide">
                 <button id="list" class="buttonlista" onclick="buttonLista()">Lista de rutinas</button>
@@ -36,6 +37,7 @@
                 <button id="cuaderno" class="links buttonlista" href="cuaderno.html" onclick="buttonRutinas()">Cuaderno de entrenamiento</button>
             </ul>
         </section>
+
         <div id="pagerutinas">
             <section id="listasrutinas">
                 <h1 class="fs-4">Listas de rutinas<hr class="centrado"></h1>
@@ -149,7 +151,27 @@
                 </div>
               </div>
         </div>
+
+        <div id="pagebook">
+
+        </div>
+
+        
     </section>
+
+    <nav id="navbottom">
+        <ul id="navtab" class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" onclick="buttonListaRutinas()">Lista de rutinas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="buttonCuaderno()">Cuaderno de ent.</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Resumen</a>
+            </li>
+        </ul>
+    </nav>
 
     <!-- BOOTSTRAP SCRIPTS -->
 
@@ -159,6 +181,9 @@
     <!-- JS FILE -->
 
     <script src="main.js"></script>
+    <script src="book.js"></script>
+    <script src="pages.js"></script>
+
 
     <!-- FIRE BASE SCRIPTS -->
 

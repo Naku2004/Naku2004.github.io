@@ -1,13 +1,3 @@
-function cambia_de_pagina(){
-    setTimeout(() => { 
-        location.href="rutins.html" }, 900);
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Aquí puedes llamar a tu función para cargar datos
-    FirstTime();
-});
-
 var button = 0
 var slideBoolean = false
 var firsttime = true
@@ -15,6 +5,26 @@ var firsttime2 = true
 var cantSemanas = 0
 var cantSemanasText = 1
 var cantEjercicio = 0
+var listarutinas = true
+var cuaderno = false
+
+function cambia_de_pagina(){
+    setTimeout(() => { 
+        location.href="rutins.html" }, 900);
+}
+
+function buttonListaRutinas(){
+    let PageRutinas = document.querySelector('#pagerutinas') 
+    PageRutinas.classList.remove('off')
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Aquí puedes llamar a tu función para cargar datos
+    FirstTime();
+});
+
+
+
 
 var EjercicioyDia = [
     [
@@ -25,6 +35,7 @@ var EjercicioyDia = [
         [""]
     ]
 ]
+
 var SeriesyDia = [
     [
         [""],
@@ -109,7 +120,9 @@ function buttonSemana(button){
     if (desplegado == false){
         desplegado = true
         panel.classList.add('cambiado') 
-        Lunes()
+
+        let BotonLunes = panel.querySelector('#Dia1')
+        Lunes(BotonLunes)
     }
     else{
         desplegado = false;

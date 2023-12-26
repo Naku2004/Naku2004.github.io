@@ -34,6 +34,10 @@ text-aling
     position: absolute;
 }
 
+a{
+    cursor: pointer;;
+}
+
 /*-----Head-----*/
 
 html {
@@ -173,11 +177,17 @@ section {
 
 #page{
     display: flex;
+    margin-top: 1rem;
     height: 100%;
 }
 
 #pagerutinas{
     width: 100%;
+    height: 100%;
+}
+
+#pagerutinas.off{
+    visibility: hidden;
 }
 
 /*-----Section Slide-----*/
@@ -369,7 +379,7 @@ th{
 }
 
 .LabelSeries, .LabelReps{
-    width: 25%;
+    width: 18%;
 }
 
 th:first-child{
@@ -489,3 +499,70 @@ th:last-child{
 #delete{
     margin-left: 0.6rem;
 }
+
+#navbottom{
+    visibility: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 6%;
+    width: 100%;
+    border-width: 0.1rem 0 0 0;
+    border-style: solid;
+    border-color: #288d00;
+    background-color: #0d0d10;
+}
+
+#navtab{
+    padding-top: 0.4rem;
+}
+
+@media(max-width: 1550px){
+    .SectionLabel{
+        width: 45%;
+    }
+
+    #side, #slide{
+        visibility: hidden;
+        position: fixed;
+    }
+
+    #slide.on{
+        visibility: visible;
+        position: absolute;
+    }
+
+    #navbottom{
+        visibility: visible;
+    }
+}
+
+@media(max-width: 1000px){
+    .SectionLabel{
+        width: 90%;
+    }
+
+    #side, #slide{
+        visibility: hidden;
+        position: fixed;
+    }
+
+    #slide.on{
+        visibility: visible;
+        position: absolute;
+    }
+
+    #btnSlide{
+        position: absolute;
+        visibility: hidden;
+    }
+
+    #logor{
+        margin-left: 2rem;
+    }
+
+    #navbottom{
+        visibility: visible;
+    }
+}
+
