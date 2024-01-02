@@ -338,6 +338,10 @@ span, .buttonBook{
 
 @media (max-width: 1000px){
 
+    #pagebook{
+        width: 720px;
+    }
+
     .ButtonLabelBook{
         font-size: 0.96rem;
         width: 100%;
