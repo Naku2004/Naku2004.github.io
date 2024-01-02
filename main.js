@@ -5,26 +5,17 @@ var firsttime2 = true
 var cantSemanas = 0
 var cantSemanasText = 1
 var cantEjercicio = 0
-var listarutinas = true
-var cuaderno = false
 
 function cambia_de_pagina(){
     setTimeout(() => { 
         location.href="rutins.html" }, 900);
 }
 
-function buttonListaRutinas(){
-    let PageRutinas = document.querySelector('#pagerutinas') 
-    PageRutinas.classList.remove('off')
-}
 
 document.addEventListener('DOMContentLoaded', function() {
     // Aquí puedes llamar a tu función para cargar datos
     FirstTime();
 });
-
-
-
 
 var EjercicioyDia = [
     [

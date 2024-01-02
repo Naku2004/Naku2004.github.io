@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylebook.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body id="bodyrutins">
@@ -38,7 +39,7 @@
             </ul>
         </section>
 
-        <div id="pagerutinas">
+        <div id="pagerutinas" class="off">
             <section id="listasrutinas">
                 <h1 class="fs-4">Listas de rutinas<hr class="centrado"></h1>
 
@@ -59,9 +60,9 @@
                             <table id="Tabla" class="rounded-3 text-center">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th class="LabelName">Nombre</th> 
-                                        <th class="LabelSeries">Series</th>
-                                        <th class="LabelReps">Reps</th>
+                                        <th class="LabelName thRutinas">Nombre</th> 
+                                        <th class="LabelSeries thRutinas">Series</th>
+                                        <th class="LabelReps thRutinas">Reps</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
@@ -97,9 +98,9 @@
                             <table id="Tabla" class="rounded-3 text-center">
                                 <thead class="thead-light">
                                     <tr>
-                                       <th class="LabelName">Nombre</th> 
-                                       <th class="LabelSeries">Series</th>
-                                       <th class="LabelReps">Reps</th>
+                                       <th class="LabelName thRutinas">Nombre</th> 
+                                       <th class="LabelSeries thRutinas">Series</th>
+                                       <th class="LabelReps thRutinas">Reps</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
@@ -152,11 +153,78 @@
               </div>
         </div>
 
-        <div id="pagebook">
+        <div id="pagebook" class="on">
 
-        </div>
+            <h1 class="fs-4">Cuaderno de entrenamiento<hr class="centrado"></h1>
 
-        
+            <div id="DivSemanasBook">
+                <div id="semana" class="PnlSemanaBook" name="0">
+                    <span id="LabelSemana" class="ButtonLabelBook off" contenteditable="true">Semana 1</span>
+                    <button id="BtnSemanaSlide" onclick="ButtonSemanaSlideBook(this)" class="ButtonLabelBook">Semana 1</button>
+    
+                    <section class="SectionTable">
+                        <table id="tablebook">
+                            <thead class="theadBook">
+                                <tr class="trBook">
+                                    <th id="divDivButtons">
+                                        <div id="divButtons" name="0">
+                                            <span id="LabelDia" class="buttonLabelDay deleteOff off" oninput="EditText(this, event)" contenteditable="true">Lunes</span>
+                                            <button class="buttonBook deleteOff on" onclick="ButtonClick(this)">Lunes</button>
+                                            <div id="divDelete">
+                                                <button id="BtnDeleteButtons" onclick="DeleteDays(this)" class="buttonDelete buttonAddDeleteBook off">
+                                                    <i id="minus"class="fa-solid fa-xmark"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th id="divAdd" class="off">
+                                        <button id="BtnAddButtons" onclick="AddDays(this, false)" class="buttonAddDeleteBook"><i id="addBook" class="fa-solid fa-plus"></i></button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyBook">
+                                <tr id="trBookHead" class="trBook">
+                                    <th id="thEjercicio" class="thBook">Nombre</th>
+                                    <th class="thBook">Series</th>
+                                    <th class="thBook">Reps</th>
+                                    <th class="thBook">RIR</th>
+                                </tr>
+                                <tr class="trBookEjercicio" name="0">
+                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" oninput="TextChangedB(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputSeries" oninput="TextChangedB(this, 'Series')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputReps" oninput="TextChangedB(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdLast" class="tdBook"><input id="InputRIR" oninput="TextChangedB(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <section id="SectionButtons">
+                            <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook btnDelete" onclick="DeleteEjercicioBook(this, false)" >
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+            
+                            <button id="BtnEditButtons" onclick="EditButtons(this)" class="buttonAddDeleteBook">
+                                <i id="EditIcon" class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            
+                            <button id="BtnAddEjercicios" class="buttonAddDeleteBook btnAdd" onclick="AddEjercicioBook(this, false)" >
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </section>
+                    </section>
+                </div>
+            </div>
+            
+            <div class="DivBtnDelAdd">
+                <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook" onclick="DeleteWeek(this)" >
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+    
+                <button id="BtnAddEjercicios" class="buttonAddDeleteBook AddWeek" onclick="AddWeek(this, false, 0)" >
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </div>  
     </section>
 
     <nav id="navbottom">

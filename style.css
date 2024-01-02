@@ -181,13 +181,25 @@ section {
     height: 100%;
 }
 
-#pagerutinas{
+#pagerutinas, #pagebook{
     width: 100%;
     height: 100%;
 }
 
 #pagerutinas.off{
     visibility: hidden;
+    display: none;
+    position: absolute;
+}
+
+#pagebook{
+    position: absolute;
+    visibility: hidden;
+}
+
+#pagebook.on{
+    position: relative;
+    visibility: visible;
 }
 
 /*-----Section Slide-----*/
@@ -358,7 +370,7 @@ h1{
     table-layout: fixed;
 }
 
-thead, tr{
+#pagerutins > thead, tr{
     height: 1.5rem;
     padding: 0;
     padding-top: 0.1rem;
@@ -366,7 +378,7 @@ thead, tr{
     border-spacing: 1rem;
 }
 
-th{
+.thRutinas{
     padding: 0;
     padding-top: 0.1rem;
     background-color: #17171b;
@@ -540,6 +552,12 @@ th:last-child{
 @media(max-width: 1000px){
     .SectionLabel{
         width: 90%;
+    }
+
+    .ButtonLabel{
+        width: 100%;
+        height: 3rem;
+        font-size: 1.5rem;
     }
 
     #side, #slide{

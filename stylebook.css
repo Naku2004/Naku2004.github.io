@@ -1,0 +1,336 @@
+#pagebook, #semana{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+#DivSemanasBook{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+}
+
+.PnlSemanaBook{
+    width: 48%;
+}
+
+.ButtonLabelBook{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 5px;
+    height: 1.5rem;
+    width: 85%;
+    
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.05rem;
+    color: white;
+    justify-content: center;
+    vertical-align: center;
+
+    border-width: 1.5px;
+    border-radius: 2rem;
+    border-color: white;
+    background-color: #17171b;
+    border-style:none;
+}
+
+#BtnSemanaSlide.off{
+    visibility: hidden;
+    display: none;
+}
+
+#LabelSemana{
+    text-align: center;
+    border-style: solid;
+}
+
+#LabelSemana.off{
+    visibility: hidden;
+    display: none;
+}
+
+.SectionTable{
+    display: none;
+}
+
+.SectionTable.on{
+    display: block;
+}
+
+#tablebook{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-collapse: collapse;
+    width: 85%;
+    margin: auto;
+    border-radius: 1rem;
+}
+
+.theadBook, .tbodyBook{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+.trBook, .trBookEjercicio{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    background-color: #17171b;
+    border-radius: 1rem;
+    margin-bottom: 3px;
+}
+
+#trBookHead{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.trBookEjercicio{
+    border-radius: 0rem;
+    background-color: transparent;
+}
+
+.thBook, .tdBook{
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    font-weight: 400;
+    width: 17%;
+    padding-right: 3px;
+}
+
+#thEjercicio, #tdEjercicio{
+    width: 50%;
+}
+
+#tdLast{
+    padding: 0;
+}
+
+.InputDatos{
+    padding: 0;
+    margin: 0;
+    border-width: 0;
+    width: 100%;
+    background: #17171b;
+    padding-left: 5px;
+    color: rgb(238, 238, 238);
+    font-weight: lighter;
+    font-size: 0.9rem;
+}
+
+.buttonBook, .buttonLabelDay{
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    width: 100%;
+    justify-content: center;
+    border-style: solid;
+    border-radius: 1rem;
+    border-width: 0px;
+    background-color: #17171b;
+    color: white;
+    position: relative;
+    padding: 0;
+    padding-left: 1rem;
+    padding-right: 1.5rem;
+}
+
+.buttonBook:hover{
+    background-color: #222325;
+}
+
+.buttonBook.on{
+    color: aqua;
+}
+
+.buttonBook.off{
+    visibility: hidden;
+    display: none;
+}
+
+.buttonBook.deleteOff{
+    padding-right: 1rem;
+}
+
+
+.buttonLabelDay{
+    border-width: 1.5px;
+    padding-right: 1.5rem;
+    padding-bottom: 0;
+    font-weight: 400;
+}
+
+.buttonLabelDay.off{
+    visibility: hidden;
+    display: none;
+}
+
+.buttonLabelDay.deleteOff{
+    padding-right: 1rem;
+}
+
+.buttonAddDeleteBook{
+    border-style: solid;
+    border-radius: 1rem;
+    background-color: #17171b;
+    color: white;
+    position: relative;
+    margin-right: 2px;
+    padding-left: 1rem;
+    padding-right: 1.5rem;
+    padding-bottom: 2px; 
+}
+
+#BtnAddButtons, #BtnDeleteButtons, #BtnEditButtons{
+    display: flex;
+    justify-content: center;  /* Centrar horizontalmente */
+    align-items: center;      /* Centrar verticalmente */
+    height: 1rem;
+    width: 1rem;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    background-color: #0c0c0e;
+}
+
+#BtnAddButtons{
+    background-color: white;
+    color: #17171b;
+}
+
+#BtnAddButtons:hover{
+    background-color: #dadada;
+
+}
+
+#BtnDeleteButtons{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    background-color: transparent;
+}
+
+#BtnDeleteButtons:hover{
+    background-color: #1a1a1d;
+}
+
+#BtnDeleteButtons.off{
+    visibility: hidden;
+    display: none;
+}
+
+#minus{
+    padding-top: 1px;
+    margin: auto;
+    justify-content: center;
+    justify-self: center;
+    font-size: 0.6rem;
+}
+
+#addBook{
+    padding-top: 1px;
+    margin: auto;
+    justify-content: center;
+    justify-self: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #17171b;
+}
+
+#divDivButtons{
+    width: 100%;
+    display: flex;
+    flex-direction:row;
+    padding: 0;
+
+}
+
+#divButtons{
+    width: 100%;
+    display: inline-flex;
+    position: relative;
+    flex-direction:row;
+    align-items: center;
+    justify-content: center;
+}
+
+#divAdd{
+    position: relative;
+    padding: 0;
+    left: -0.6rem;
+    width: 1rem;
+    height: 1rem;
+    margin: auto;
+}
+
+#divAdd.off{
+    display: none;
+    visibility: hidden;
+}
+
+#divDelete{
+    position: absolute;
+    right: 0.6rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+span, .buttonBook{
+    white-space: pre;
+    overflow: hidden;  /* Esto asegura que el texto que no cabe no se muestre */
+    text-overflow: ellipsis; /* Opcional: agrega "..." al final del texto si se desborda */
+    display: block; /* Para asegurarte de que el span se muestre como un bloque inline */
+    max-width: 100%;
+}
+
+#SectionButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 85%;
+    margin: auto;
+}
+
+#BtnEditButtons, #BtnAddEjercicios, #BtnDeleteEjercicios{
+    margin: 0 4px;
+    height: 2rem;
+    width: 2rem;
+    background-color: #17171b;
+    padding: 0;
+    border-style: none;
+}
+
+#EditIcon{
+    padding-left: 2px;
+    padding-bottom: 1px;
+}
+
+#EditIcon.check{
+    padding: 0;
+}
+
+#BtnEditButtons:hover, #BtnAddEjercicios:hover, #BtnDeleteEjercicios:hover{
+    background-color: #1a1a1d;
+}
+
+.DivBtnDelAdd{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 0.8rem;
+}
