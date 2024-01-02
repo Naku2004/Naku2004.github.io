@@ -44,16 +44,7 @@
     display: none;
 }
 
-@media (max-width: 1000px){
-    .PnlSemanaBook{
-        width: 100%;
-    }
-    
-    .ButtonLabelBook{
-        height: 3rem;
-        font-size: 3rem;
-    }
-}
+
 
 #LabelSemana{
     text-align: center;
@@ -346,3 +337,17 @@ span, .buttonBook{
     margin-top: 0.8rem;
 }
 
+@media (max-width: 1000px){
+    .PnlSemanaBook{
+        width: 100%;
+    }
+    
+    #divDivButtons, #divButtons{
+        height: 3rem;
+    }
+
+    .ButtonLabelBook, .buttonBook{
+        height: 3rem;
+        font-size: 3rem;
+    }
+}
