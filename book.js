@@ -6,8 +6,41 @@ var pnlSlide = false
 document.addEventListener('DOMContentLoaded', function() {
     // Aquí puedes llamar a tu función para cargar datos
     LoadDataBook(true);
+    SlideDivButtons()
+    
 });
 
+function SlideDivButtons(){
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    const container = document.querySelectorAll('#divDivButtons');
+
+    for(let i = 0; i < container.length; i++){
+        container[i].addEventListener('mousedown', function(e) {
+            isDown = true;
+            startX = e.pageX - container[i].offsetLeft;
+            scrollLeft = container[i].scrollLeft;
+        });
+    
+        container[i].addEventListener('mouseleave', function() {
+            isDown = false;
+        });
+    
+        container[i].addEventListener('mouseup', function() {
+            isDown = false;
+        });
+    
+        container[i].addEventListener('mousemove', function(e) {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container[i].offsetLeft;
+            const walk = (x - startX) * 1; // Ajusta la velocidad del desplazamiento según sea necesario
+            container[i].scrollLeft = scrollLeft - walk;
+        });
+    }
+}
 
 function ButtonSemanaSlideBook(Button){
     let divSemana = Button.closest('div')
@@ -131,6 +164,7 @@ function AddWeek(Button, Load, i){
         ButtonClick(NewDivSemana.querySelector('#divDivButtons').querySelector('.on'))
     }
     SaveDataBook() 
+    SlideDivButtons()
 }
 
 function DeleteWeek(Button){
