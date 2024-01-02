@@ -334,3 +334,9 @@ span, .buttonBook{
     justify-content: center;
     margin-top: 0.8rem;
 }
+
+@media (max-width: 800px){
+    .PnlSemanaBook{
+        width: 96%;
+    }
+}
