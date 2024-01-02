@@ -339,15 +339,15 @@ span, .buttonBook{
 
 @media (max-width: 1000px){
     .PnlSemanaBook{
-        width: 100%;
+        width: 90%;
     }
     
-    #divDivButtons, #divButtons{
+    /*#divDivButtons, #divButtons{
         height: 3rem;
     }
 
     .ButtonLabelBook, .buttonBook{
         height: 3rem;
         font-size: 3rem;
-    }
+    }*/
 }
