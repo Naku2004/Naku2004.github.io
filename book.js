@@ -51,7 +51,7 @@ function ButtonClick(Button){
     }
     else if(NumberExcercisesActual > NumberExcercisesAfter){
         let Diferencia = NumberExcercisesActual - NumberExcercisesAfter
-        
+
         for(let i = 0; i < Diferencia; i++){
             DeleteEjercicioBook(ButtonDelete, true)
         }
@@ -126,7 +126,9 @@ function AddWeek(Button, Load, i){
             textSeries[amountWeeks - 1][i] = [""]
             textReps[amountWeeks - 1][i] = [""]
             textRIR[amountWeeks - 1][i] = [""]
-        }   
+        } 
+        
+        ButtonClick(NewDivSemana.querySelector('#divDivButtons').querySelector('.on'))
     }
     SaveDataBook() 
 }
@@ -156,8 +158,10 @@ function DeleteWeek(Button){
 
         SaveDataBook()
 
-        let divPage = Button.closest('#pagebook')
-        divPage.removeChild(divPage.children[(amountWeeks + 1)])
+        let divPagebook = Button.closest('#pagebook')
+        let divPage = divPagebook.querySelector('#DivSemanasBook')
+
+        divPage.removeChild(divPage.children[(amountWeeks)])
         LoadDataBook(false)
     }
 }
@@ -298,12 +302,13 @@ function AddEjercicioBook(Button, Load, j){
 
     if(Load){
         NewTrEjercicio.setAttribute('name', (j))
+        tBody.appendChild(NewTrEjercicio)
     }
     else{
         NewTrEjercicio.setAttribute('name', (amountEjerciciosDay[Week][Day] - 1))
+        tBody.appendChild(NewTrEjercicio)
+        ButtonClick(divSemana.querySelector('#divDivButtons').querySelector('.on'))
     }
-
-    tBody.appendChild(NewTrEjercicio)
 }
 
 function DeleteEjercicioBook(Button, Load){
