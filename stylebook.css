@@ -10,7 +10,6 @@
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
-    margin: auto;
 }
 
 .PnlSemanaBook{
@@ -338,6 +337,20 @@ span, .buttonBook{
 }
 
 @media (max-width: 1000px){
+
+    .ButtonLabelBook{
+        font-size: 0.96rem;
+        width: 100%;
+    }
+
+    .buttonBook{
+        font-size: 0.96rem;
+    }
+
+    #tablebook{
+        width: 100%;
+    }
+
     .PnlSemanaBook{
         width: 90%;
     }
