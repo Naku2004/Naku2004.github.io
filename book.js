@@ -50,7 +50,7 @@ function SlideDivButtons(){
             if (!isTouching) return;
             e.preventDefault();
             const x = e.touches[0].pageX - container[i].offsetLeft;
-            const walk = (x - startX) * 3; // Ajusta la velocidad del desplazamiento según sea necesario
+            const walk = (x - startX) * 1; // Ajusta la velocidad del desplazamiento según sea necesario
             container[i].scrollLeft = scrollLeft - walk;
         });
 
@@ -234,7 +234,7 @@ function AddDays(Button, Load, i){
     let th = tr.querySelector('th')
     let semana = Button.closest('#semana')
     let Week = semana.getAttribute('name')
-    addButton = tr.querySelector('#divAdd')
+    addButton = Button.closest('#divAdd')
 
     if(amountDays[Week] < 7 || Load == true){
         if(Load == false){
@@ -252,15 +252,20 @@ function AddDays(Button, Load, i){
             th.querySelector('#BtnDeleteButtons').classList.remove('off')
         }
 
-        if(amountDays[Week] == 7){
-            addButton.classList.add("off")
-        }
+        
 
-        let divBtn = tr.querySelector('div')
+        let divsBtn = tr.querySelectorAll('#divButtons')
+        let divBtn = divsBtn[divsBtn.length - 1]
         let NewDivBtn = divBtn.cloneNode(true)
         let Btn = NewDivBtn.querySelector('button')
         let SpanBtn = NewDivBtn.querySelector('span')
         Btn.classList.remove('on')
+        addButton.classList.add('off')
+
+        //alert(NewDivBtn.querySelector('#divAdd'))
+        if(amountDays[Week] == 7){
+            NewDivBtn.querySelector('#divAdd').classList.add("off")
+        }
         
         if(Load == true){
             NewDivBtn.setAttribute('name', (i - 1))
@@ -274,7 +279,8 @@ function AddDays(Button, Load, i){
         }
 
         let NumTrChilds = th.childElementCount
-        th.insertBefore(NewDivBtn, th.children[(NumTrChilds)])
+        th.appendChild(NewDivBtn)
+        //th.insertBefore(NewDivBtn, th.children[(NumTrChilds)])
     }
     SaveDataBook()
 }
@@ -330,6 +336,8 @@ function DeleteDays(Button){
         }
 
         if(amountDays == 6){
+            let addButtons = divDivButtons.querySelectorAll('#divAdd')
+            addButton = addButtons[addButtons.length - 1]
             addButton.classList.remove("off")
         }
 
@@ -401,7 +409,8 @@ function EditButtons(Button){
     let labelSemana = divSemana.querySelector('span')
     let labelDays = divSemana.querySelectorAll('.buttonLabelDay')
     let btnSlideSemana = divSemana.querySelector('button')
-    let divAdd = divSemana.querySelector('#divAdd')
+    let divsAdd = divSemana.querySelectorAll('#divAdd')
+    let divAdd = divsAdd[divsAdd.length - 1]
     let btnDays = divSemana.querySelectorAll('.buttonBook')
     let btnDelete = divSemana.querySelectorAll('.buttonDelete')
     let EditIcon = divSemana.querySelector('#EditIcon')
