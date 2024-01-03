@@ -39,6 +39,33 @@ function SlideDivButtons(){
             const walk = (x - startX) * 1; // Ajusta la velocidad del desplazamiento según sea necesario
             container[i].scrollLeft = scrollLeft - walk;
         });
+
+        container[i].addEventListener('touchstart', function (e) {
+            isTouching = true;
+            startX = e.touches[0].pageX - container[i].offsetLeft;
+            scrollLeft = container[i].scrollLeft;
+        });
+
+        container[i].addEventListener('touchmove', function (e) {
+            if (!isTouching) return;
+            e.preventDefault();
+            const x = e.touches[0].pageX - container[i].offsetLeft;
+            const walk = (x - startX) * 3; // Ajusta la velocidad del desplazamiento según sea necesario
+            container[i].scrollLeft = scrollLeft - walk;
+        });
+
+        container[i].addEventListener('touchend', function () {
+            isTouching = false;
+        });
+
+        container[i].addEventListener('scroll', function() {
+            if (container[i].scrollLeft === (container[i].scrollWidth - container[i].clientWidth)) {
+                container[i].classList.add('rebote');
+                setTimeout(() => {
+                    container[i].classList.remove('rebote');
+                }, 500); // La duración del rebote, debe coincidir con la duración de la animación en CSS
+              }
+        });
     }
 }
 

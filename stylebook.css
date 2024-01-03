@@ -10,7 +10,6 @@
     justify-content: center;
     align-items: center;
     align-content: center;
-    height: 94%;
 }
 
 #DivSemanasBook{
@@ -267,6 +266,20 @@
     flex-direction:row;
     padding: 0;
     overflow-x: hidden;
+    transition: all 0.3s;
+}
+
+#divDivButtons.rebote{
+    animation-name: rebote;
+    animation-duration: 0.5s;
+}
+
+@keyframes rebote{
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
 }
 
 #divButtons{
@@ -341,10 +354,21 @@ span, .buttonBook{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 0.8rem;
+    margin: 0.8rem 0;
 }
 
+
+
+
+
 @media (max-width: 1000px){
+
+
+    #page{
+        height: auto;
+        display: inline-flex;
+        margin-bottom: 5%;
+    }
 
     .ButtonLabelBook{
         font-size: 0.96rem;
