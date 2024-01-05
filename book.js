@@ -537,7 +537,7 @@ function TextChangedB(TextInput, Type){
 
 function SaveDataBook(){
     localStorage.setItem("amountWeeks", amountWeeks)
-
+    
     for(let i = 0; i < amountWeeks; i++){
         localStorage.setItem("SemanaText" + i, SemanaText[i])
     }
@@ -549,6 +549,9 @@ function SaveDataBook(){
     }
 
     for(let i = 0; i < amountDays.length; i++){
+        if(amountDays[i] == null){
+            amountDays[i] = 1 
+        }
         localStorage.setItem("amountDays" + i, amountDays[i])
     }
 
@@ -638,8 +641,10 @@ function LoadDataBook(FirstTime){
 
 function LoadDays(){
 
-    document.querySelector('.PnlSemanaBook').querySelector('input').value = SemanaText[0]
-    document.querySelector('.PnlSemanaBook').querySelector('button').innerText = SemanaText[0]
+    if(SemanaText[0] != null && SemanaText[0] != "null"){
+        document.querySelector('.PnlSemanaBook').querySelector('input').value = SemanaText[0]
+        document.querySelector('.PnlSemanaBook').querySelector('button').innerText = SemanaText[0]
+    }
 
     for(let i = 2; i <= amountWeeks; i++){
         AddWeek(document.querySelector('.AddWeekBook'), true, i)
@@ -654,6 +659,15 @@ function LoadDays(){
     for(let i = 0; i < amountWeeks; i++){
         for(let j = 1; j < amountEjerciciosDay[i][0]; j++){
             AddEjercicioBook(document.querySelectorAll('.PnlSemanaBook')[i].querySelector('#BtnAddEjercicios'), true, j)
+        }
+    }
+
+    for(let i = 0; i < amountWeeks; i++){
+        for(let j = 0; j < amountDays[i]; j++){
+            if(DiaText[i][j] != null && DiaText[i][j] != "null"){
+                document.querySelectorAll('.PnlSemanaBook')[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaText[i][j]
+                document.querySelectorAll('.PnlSemanaBook')[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaText[i][j]
+            }
         }
     }
 }

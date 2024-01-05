@@ -4,7 +4,6 @@ function cambia_de_pagina(){
         location.href="rutins.html" }, 900);
 }
 
-
 var amountWeeksLista = 1
 var edit = false
 var pnlSlide = false
@@ -88,7 +87,7 @@ function ButtonSemanaSlideLista(Button){
         pnlSlide = false
     }
 
-    ButtonClickLista(pnlSemana.querySelector('#divButtons').querySelector('button'))
+    //ButtonClickLista(pnlSemana.querySelector('#divButtons').querySelector('button'))
 }
 
 function ButtonClickLista(Button){
@@ -168,8 +167,10 @@ function AddWeekLista(Button, Load, i){
     let AmountDays = NewDivSemana.querySelector('#divDivButtons').children.length - 1
 
     if(Load == true){
-        BtnSlide.innerText = SemanaTextLista[i - 1]
-        SpanSlide.value = SemanaTextLista[i - 1]
+        if(SemanaTextLista[i - 1] != "" || SemanaTextLista[i - 1] != undefined || SemanaTextLista[i - 1] != null){    
+            BtnSlide.innerText = SemanaTextLista[i - 1]
+            SpanSlide.value = SemanaTextLista[i - 1]
+        }
         NewDivSemana.setAttribute('name', (i - 1))
         divPage.insertBefore(NewDivSemana, divPage.childNodes[(i + 2)])
     }
@@ -556,6 +557,9 @@ function SaveData(){
     }
 
     for(let i = 0; i < amountDaysLista.length; i++){
+        if(amountDaysLista[i] == null){
+            amountDaysLista[i] = 1 
+        }
         localStorage.setItem("amountDaysLista" + i, amountDaysLista[i])
     }
 
@@ -646,8 +650,11 @@ function LoadData(FirstTime){
 
 function LoadDaysLista(){
 
-    document.querySelector('.PnlSemana').querySelector('input').value = SemanaTextLista[0]
-    document.querySelector('.PnlSemana').querySelector('button').innerText = SemanaTextLista[0]
+    if(SemanaTextLista[0] != null && SemanaTextLista[0] != "null"){
+        document.querySelector('.PnlSemana').querySelector('input').value = SemanaTextLista[0]
+        document.querySelector('.PnlSemana').querySelector('button').innerText = SemanaTextLista[0]
+    }
+    
 
     for(let i = 2; i <= amountWeeksLista; i++){
         AddWeekLista(document.querySelector('.AddWeek'), true, i)
@@ -662,6 +669,15 @@ function LoadDaysLista(){
     for(let i = 0; i < amountWeeksLista; i++){
         for(let j = 1; j < amountEjerciciosDayLista[i][0]; j++){
             AddEjercicio(document.querySelectorAll('.PnlSemana')[i].querySelector('#BtnAddEjercicios'), true, j)
+        }
+    }
+
+    for(let i = 0; i < amountWeeksLista; i++){
+        for(let j = 0; j < amountDaysLista[i]; j++){
+            if(DiaTextLista[i][j] != null && DiaTextLista[i][j] != "null"){
+                document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaTextLista[i][j]
+                document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaTextLista[i][j]
+            }
         }
     }
 }
