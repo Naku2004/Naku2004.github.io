@@ -1,25 +1,27 @@
 #semana{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+#pagebook, #pagerutinas{
     display: block;
     justify-content: center;
     align-items: center;
     align-content: center;
 }
 
-#pagebook{
-    display: block;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-
-#DivSemanasBook{
+#DivSemanasBook, #DivSemanasLista{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
+    margin: 0 auto;
+    width: 95%;
 }
 
-.PnlSemanaBook{
+.PnlSemanaBook, .PnlSemana{
     width: 48%;
 }
 
@@ -147,9 +149,10 @@
     height: 1.5rem;
     width: 100%;
     justify-content: center;
+    text-align: center;
     border-style: solid;
     border-radius: 1rem;
-    border-width: 0px;
+    border-width: 0;
     background-color: #17171b;
     color: white;
     position: relative;
@@ -177,7 +180,8 @@
 
 
 .buttonLabelDay{
-    border-width: 1.5px;
+    border-width: 1px;
+    border-color: white;
     padding-right: 1.5rem;
     padding-bottom: 0;
     font-weight: 400;
@@ -312,6 +316,10 @@
     height: 1rem;
 }
 
+#divDelete.last{
+    right: 1.6rem;
+}
+
 span, .buttonBook{
     white-space: nowrap;
     overflow: hidden;  /* Esto asegura que el texto que no cabe no se muestre */
@@ -357,10 +365,6 @@ span, .buttonBook{
     margin: 0.8rem 0;
 }
 
-
-
-
-
 @media (max-width: 1000px){
 
 
@@ -383,7 +387,7 @@ span, .buttonBook{
         width: 100%;
     }
 
-    .PnlSemanaBook{
+    .PnlSemanaBook, .PnlSemana{
         width: 90%;
     }
     

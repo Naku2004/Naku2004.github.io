@@ -1,5 +1,4 @@
 var amountWeeks = 1
-var addButton
 var edit = false
 var pnlSlide = false
 
@@ -162,8 +161,8 @@ function AddWeek(Button, Load, i){
     let AmountDays = NewDivSemana.querySelector('#divDivButtons').children.length - 1
 
     if(Load == true){
-        BtnSlide.innerText = "Semana " + i
-        SpanSlide.textContent = "Semana " + i
+        BtnSlide.innerText = SemanaText[i - 1]
+        SpanSlide.value = SemanaText[i - 1]
         NewDivSemana.setAttribute('name', (i - 1))
         divPage.insertBefore(NewDivSemana, divPage.childNodes[(i + 2)])
     }
@@ -171,7 +170,7 @@ function AddWeek(Button, Load, i){
         BtnSlide.innerText = "Semana " + amountWeeks
         SpanSlide.textContent = "Semana " + amountWeeks
         NewDivSemana.setAttribute('name', (amountWeeks - 1))
-        divPage.insertBefore(NewDivSemana, divPage.childNodes[(amountWeeks + 2)])
+        
 
         amountDays[amountWeeks - 1] = AmountDays + 1
         amountEjerciciosDay[amountWeeks - 1] = []
@@ -179,6 +178,8 @@ function AddWeek(Button, Load, i){
         textSeries[amountWeeks - 1] = []
         textReps[amountWeeks - 1] = []
         textRIR[amountWeeks - 1] = []
+        DiaText[amountWeeks - 1] = [[]]
+        SemanaText[amountWeeks - 1] = "Semana " + amountWeeks
     
         for(let i = 0; i <= AmountDays; i++){
             amountEjerciciosDay[amountWeeks - 1][i] = "1"
@@ -186,7 +187,10 @@ function AddWeek(Button, Load, i){
             textSeries[amountWeeks - 1][i] = [""]
             textReps[amountWeeks - 1][i] = [""]
             textRIR[amountWeeks - 1][i] = [""]
-        } 
+            DiaText[amountWeeks - 1][i] = NewDivSemana.querySelectorAll('#divButtons')[i].querySelector('input').value
+        }
+
+        divPage.insertBefore(NewDivSemana, divPage.childNodes[(amountWeeks + 2)])
         
         ButtonClick(NewDivSemana.querySelector('#divDivButtons').querySelector('.on'))
     }
@@ -216,6 +220,7 @@ function DeleteWeek(Button){
         textSeries.splice(amountWeeks, 1)
         textReps.splice(amountWeeks, 1)
         textRIR.splice(amountWeeks, 1)
+        DiaText.splice(amountWeeks, 1)
 
         SaveDataBook()
 
@@ -229,12 +234,12 @@ function DeleteWeek(Button){
 
 var amountDays = [1/*Semana1*/]
 
-function AddDays(Button, Load, i){
+function AddDays(Button, Load, j){
     let tr = Button.closest('tr')
     let th = tr.querySelector('th')
     let semana = Button.closest('#semana')
     let Week = semana.getAttribute('name')
-    addButton = Button.closest('#divAdd')
+    let addButton = Button.closest('#divAdd')
 
     if(amountDays[Week] < 7 || Load == true){
         if(Load == false){
@@ -252,33 +257,34 @@ function AddDays(Button, Load, i){
             th.querySelector('#BtnDeleteButtons').classList.remove('off')
         }
 
-        
-
         let divsBtn = tr.querySelectorAll('#divButtons')
         let divBtn = divsBtn[divsBtn.length - 1]
         let NewDivBtn = divBtn.cloneNode(true)
         let Btn = NewDivBtn.querySelector('button')
-        let SpanBtn = NewDivBtn.querySelector('span')
+        let SpanBtn = NewDivBtn.querySelector('input')
         Btn.classList.remove('on')
         addButton.classList.add('off')
+        divBtn.querySelector('#divDelete').classList.remove('last')
+        NewDivBtn.querySelector('#divDelete').classList.add("last")
 
         //alert(NewDivBtn.querySelector('#divAdd'))
         if(amountDays[Week] == 7){
             NewDivBtn.querySelector('#divAdd').classList.add("off")
+            NewDivBtn.querySelector('#divDelete').classList.remove("last")
         }
         
         if(Load == true){
-            NewDivBtn.setAttribute('name', (i - 1))
-            Btn.innerText = "Dia " + i
-            SpanBtn.textContent = "Dia " + i
+            NewDivBtn.setAttribute('name', (j - 1))
+            Btn.innerText = DiaText[Week][j - 1]
+            SpanBtn.value = DiaText[Week][j - 1]
         }
         else{
             NewDivBtn.setAttribute('name', (amountDays[Week] - 1))
             Btn.innerText = "Dia " + amountDays[Week]
-            SpanBtn.textContent = "Dia " + amountDays[Week]
+            SpanBtn.value = "Dia " + amountDays[Week]
+            DiaText[Week][amountDays[Week] - 1] = "Dia " + amountDays[Week]
         }
 
-        let NumTrChilds = th.childElementCount
         th.appendChild(NewDivBtn)
         //th.insertBefore(NewDivBtn, th.children[(NumTrChilds)])
     }
@@ -326,18 +332,23 @@ function DeleteDays(Button){
             divButtons[i].setAttribute('name', (i - 1))
         }
 
-        if(amountDays == 1){
-            div.remove()
+        if(amountDays[Week] == 1){
             divDivButtons.querySelector('.buttonLabelDay').classList.add('deleteOff')
             divDivButtons.querySelector('#BtnDeleteButtons').classList.add('off')
         }
-        else{
-            div.remove()
+
+        div.remove()
+        
+        let lastAddButton = divDivButtons.querySelectorAll('#divAdd')[divDivButtons.children.length - 1]
+        lastAddButton.classList.remove('off')
+
+        if(amountDays[Week] > 1){
+            divDivButtons.querySelectorAll('#divDelete')[divDivButtons.children.length - 1].classList.add('last')
         }
 
-        if(amountDays == 6){
+        if(amountDays[Week] == 6){
             let addButtons = divDivButtons.querySelectorAll('#divAdd')
-            addButton = addButtons[addButtons.length - 1]
+            let addButton = addButtons[addButtons.length - 1]
             addButton.classList.remove("off")
         }
 
@@ -349,7 +360,6 @@ function DeleteDays(Button){
 
     SaveDataBook()
 }
-
 
 function AddEjercicioBook(Button, Load, j){
     let Week = Button.closest('#semana').getAttribute('name')
@@ -369,7 +379,7 @@ function AddEjercicioBook(Button, Load, j){
     let trEjercicio = tBody.querySelector('.trBookEjercicio')
     let NewTrEjercicio = trEjercicio.cloneNode(true)
 
-    if(Load){
+    if(Load == true){
         NewTrEjercicio.setAttribute('name', (j))
         tBody.appendChild(NewTrEjercicio)
     }
@@ -406,7 +416,7 @@ function DeleteEjercicioBook(Button, Load){
 
 function EditButtons(Button){
     let divSemana = Button.closest('div')
-    let labelSemana = divSemana.querySelector('span')
+    let labelSemana = divSemana.querySelector('input')
     let labelDays = divSemana.querySelectorAll('.buttonLabelDay')
     let btnSlideSemana = divSemana.querySelector('button')
     let divsAdd = divSemana.querySelectorAll('#divAdd')
@@ -471,6 +481,25 @@ function EditText(TextInput, event){
     Btn.innerText = TextInput.textContent
 }
 
+var SemanaText = []
+var DiaText = [[]]
+
+function EditTextSpan(TextInput, Type){
+    let Week = TextInput.closest('.PnlSemanaBook').getAttribute('name')
+    let Div = TextInput.closest('div')
+    let Btn = Div.querySelector('button')
+    if(Type == "Semana"){
+        Btn.innerText = TextInput.value
+        SemanaText[Week] = TextInput.value
+    } else
+    if(Type == "Dia"){
+        Btn.innerText = TextInput.value
+        let Day = TextInput.closest('div').getAttribute('name')
+        DiaText[Week][Day] = TextInput.value
+    }
+    SaveDataBook()
+}
+
 var textEjercicios =    [/* Semana */[/*Dia 1*/[""/*1er Ejercicio*/]]]
 var textSeries =        [/* Semana */[/*Dia 1*/[""/*1er Series*/]]]
 var textReps =          [/* Semana */[/*Dia 1*/[""/*1er Reps*/]]]
@@ -509,6 +538,16 @@ function TextChangedB(TextInput, Type){
 function SaveDataBook(){
     localStorage.setItem("amountWeeks", amountWeeks)
 
+    for(let i = 0; i < amountWeeks; i++){
+        localStorage.setItem("SemanaText" + i, SemanaText[i])
+    }
+
+    for(let i = 0; i < amountWeeks; i++){
+        for(let j = 0; j < amountDays[i]; j++){
+            localStorage.setItem("DiaText" + i + "" + j, DiaText[i][j])
+        }
+    }
+
     for(let i = 0; i < amountDays.length; i++){
         localStorage.setItem("amountDays" + i, amountDays[i])
     }
@@ -544,6 +583,19 @@ function LoadDataBook(FirstTime){
 
         if(typeof amountDays[i] == undefined){
             amountDays[i] = 1
+        }
+    }
+
+    for(let i = 0; i < amountWeeks; i++){
+        SemanaText[i] = localStorage.getItem("SemanaText" + i)
+    }
+
+    for(let i = 0; i < amountWeeks; i++){
+        if(i != 0){
+            DiaText[i] = [[]]
+        }
+        for(let j = 0; j < amountDays[i]; j++){
+            DiaText[i][j] = localStorage.getItem(`DiaText${i}${j}`)
         }
     }
 
@@ -585,8 +637,12 @@ function LoadDataBook(FirstTime){
 }
 
 function LoadDays(){
+
+    document.querySelector('.PnlSemanaBook').querySelector('input').value = SemanaText[0]
+    document.querySelector('.PnlSemanaBook').querySelector('button').innerText = SemanaText[0]
+
     for(let i = 2; i <= amountWeeks; i++){
-        AddWeek(document.querySelector('.AddWeek'), true, i)
+        AddWeek(document.querySelector('.AddWeekBook'), true, i)
     } 
 
     for(let i = 0; i <= amountWeeks; i++){
