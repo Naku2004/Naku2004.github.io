@@ -305,6 +305,7 @@ function DeleteDays(Button){
             localStorage.removeItem(`textSeries${Week}${Day}${i}`)
             localStorage.removeItem(`textReps${Week}${Day}${i}`)
             localStorage.removeItem(`textRIR${Week}${Day}${i}`)
+            localStorage.removeItem(`DiaText${Week}${Day}${i}`)
         }
         SaveDataBook()
 
@@ -314,6 +315,7 @@ function DeleteDays(Button){
             localStorage.removeItem(`textSeries${Week}${amountDays}${i}`)
             localStorage.removeItem(`textReps${Week}${amountDays}${i}`)
             localStorage.removeItem(`textRIR${Week}${amountDays}${i}`)
+            localStorage.removeItem(`DiaText${Week}${amountDays}${i}`)
         }
 
         amountEjerciciosDay[Week].splice(Day, 1)
@@ -321,6 +323,7 @@ function DeleteDays(Button){
         textSeries[Week].splice(Day, 1)
         textReps[Week].splice(Day, 1)
         textRIR[Week].splice(Day, 1)
+        DiaText[Week].splice(Day, 1)
 
         SaveDataBook()
 
@@ -663,11 +666,9 @@ function LoadDays(){
     }
 
     for(let i = 0; i < amountWeeks; i++){
-        for(let j = 0; j < amountDays[i]; j++){
-            if(DiaText[i][j] != null && DiaText[i][j] != "null"){
-                document.querySelectorAll('.PnlSemanaBook')[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaText[i][j]
-                document.querySelectorAll('.PnlSemanaBook')[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaText[i][j]
-            }
+        if (DiaText[i][0] != null && DiaText[i][0] != "null") {
+            document.querySelectorAll('.PnlSemanaBook')[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaText[i][0]
+            document.querySelectorAll('.PnlSemanaBook')[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaText[i][0]
         }
     }
 }

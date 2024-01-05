@@ -313,6 +313,7 @@ function DeleteDaysLista(Button){
             localStorage.removeItem(`textSeriesLista${Week}${Day}${i}`)
             localStorage.removeItem(`textRepsLista${Week}${Day}${i}`)
             localStorage.removeItem(`textRIRLista${Week}${Day}${i}`)
+            localStorage.removeItem(`DiaTextLista${Week}${Day}${i}`)
         }
         SaveData()
 
@@ -322,6 +323,7 @@ function DeleteDaysLista(Button){
             localStorage.removeItem(`textSeriesLista${Week}${amountDaysLista}${i}`)
             localStorage.removeItem(`textRepsLista${Week}${amountDaysLista}${i}`)
             localStorage.removeItem(`textRIRLista${Week}${amountDaysLista}${i}`)
+            localStorage.removeItem(`DiaTextLista${Week}${amountDaysLista}${i}`)
         }
 
         amountEjerciciosDayLista[Week].splice(Day, 1)
@@ -329,6 +331,7 @@ function DeleteDaysLista(Button){
         textSeriesLista[Week].splice(Day, 1)
         textRepsLista[Week].splice(Day, 1)
         textRIRLista[Week].splice(Day, 1)
+        DiaTextLista[Week].splice(Day, 1)
 
         SaveData()
 
@@ -550,12 +553,6 @@ function SaveData(){
         localStorage.setItem("SemanaTextLista" + i, SemanaTextLista[i])
     }
 
-    for(let i = 0; i < amountWeeksLista; i++){
-        for(let j = 0; j < amountDaysLista[i]; j++){
-            localStorage.setItem("DiaTextLista" + i + "" + j, DiaTextLista[i][j])
-        }
-    }
-
     for(let i = 0; i < amountDaysLista.length; i++){
         if(amountDaysLista[i] == null){
             amountDaysLista[i] = 1 
@@ -566,6 +563,7 @@ function SaveData(){
     for(let i = 0; i < amountWeeksLista; i++){
         for(let j = 0; j < amountDaysLista[i]; j++){
             localStorage.setItem("amountEjerciciosDayLista" + i + j, amountEjerciciosDayLista[i][j])
+            localStorage.setItem("DiaTextLista" + i + j, DiaTextLista[i][j])
         }
     }
 
@@ -673,11 +671,10 @@ function LoadDaysLista(){
     }
 
     for(let i = 0; i < amountWeeksLista; i++){
-        for(let j = 0; j < amountDaysLista[i]; j++){
-            if(DiaTextLista[i][j] != null && DiaTextLista[i][j] != "null"){
-                document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaTextLista[i][j]
-                document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaTextLista[i][j]
-            }
+        if(DiaTextLista[i][0] != null && DiaTextLista[i][0] != "null"){
+            document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaTextLista[i][0]
+            document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaTextLista[i][0]
         }
+        
     }
 }

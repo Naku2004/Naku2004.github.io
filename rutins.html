@@ -30,7 +30,7 @@
             <ul id="side">
                 <button id="listIcon" class="buttonlistaIcon" onclick="buttonLista()"><i class="fa-solid fa-house-chimney-window"> <label id="inicio">Inicio</label></i></button>
                 <button id="rutinasIcon" class="buttonlistaIcon" onclick="buttonListaRutinas()">Lista de rutinas</button>
-                <button id="cuaderno" class="buttonlista" onclick="buttonCuaderno()">Cuaderno de ent.</button>
+                <button id="cuaderno" class="buttonlista" onclick="buttonCuaderno()"><i class="fa-solid fa-book"> </i>Cuaderno de ent.</button>
             </ul>
             <ul id="slide">
                 <button id="list" class="buttonlista" onclick="buttonLista()">Lista de rutinas</button>
@@ -304,14 +304,14 @@
 
     <nav id="navbottom">
         <ul id="navtab" class="nav justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" onclick="buttonListaRutinas()">Lista de rutinas</a>
+            <li id="navli" class="nav-item">
+                <a id="navitem" class="nav-link active on" aria-current="page" onclick="buttonListaRutinas()"><i class="fa-solid fa-rectangle-list buttonIcon on"></i>Lista de rutinas</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="buttonCuaderno()">Cuaderno de ent.</a>
+            <li id="navli" class="nav-item">
+                <a id="navitem" class="nav-link" onclick="buttonCuaderno()"><i class="fa-solid fa-book buttonIcon"></i>Cuaderno</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Resumen</a>
+            <li id="navli" class="nav-item">
+                <a id="navitem" class="nav-link" href="#"><i class="fa-solid fa-square-poll-vertical buttonIcon"></i>Resumen</a>
             </li>
         </ul>
     </nav>

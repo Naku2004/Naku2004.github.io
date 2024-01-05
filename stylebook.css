@@ -365,6 +365,38 @@ span, .buttonBook{
     margin: 0.8rem 0;
 }
 
+.buttonIcon{
+    color: gray;
+    font-size: 2rem;
+    height: 2rem;
+    margin-bottom: 0.1rem;
+}
+
+#navitem{
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    font-weight: 600;
+    font-size: .8rem;
+    color: gray;
+    height: auto;
+    margin-bottom: 0.1rem;
+}
+
+.buttonIcon.on{
+    color: #00a300;
+}
+
+#navitem.on{
+    color: #00a300;
+}
+
+#navli{
+    display: flex;
+    justify-content: center;
+    width: 30%;
+}
+
 @media (max-width: 1000px){
 
 
