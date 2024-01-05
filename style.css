@@ -554,7 +554,7 @@ th:last-child{
     }
 }
 
-@media(max-width: 1000px){
+@media(max-width: 800px){
     .SectionLabel{
         width: 90%;
     }
@@ -586,6 +586,10 @@ th:last-child{
 
     #navbottom{
         visibility: visible;
+    }
+
+    #navtab{
+        width: 90%;
     }
 }
 

@@ -381,6 +381,7 @@ span, .buttonBook{
     color: gray;
     height: auto;
     margin-bottom: 0.1rem;
+    white-space: nowrap;
 }
 
 .buttonIcon.on{
@@ -397,7 +398,7 @@ span, .buttonBook{
     width: 30%;
 }
 
-@media (max-width: 1000px){
+@media (max-width: 800px){
 
 
     #page{
