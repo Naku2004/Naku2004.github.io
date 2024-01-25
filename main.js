@@ -13,6 +13,18 @@ document.addEventListener('DOMContentLoaded', function() {
     LoadData(true);
     SlideDivButtons()
     
+    const gistId = 'be77eb681b29ec2b483f2183ab5f0db5 ';
+    const apiUrl = `https://api.github.com/gists/${gistId}`;
+
+    // Realizar una solicitud HTTP GET para obtener información del Gist
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        console.log('Contenido del Gist:', data.files[Object.keys(data.files)[0]].content);
+    })
+    .catch(error => {
+        console.error('Error al obtener el Gist:', error);
+    });
 });
 
 function SlideDivButtons(){
