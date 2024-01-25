@@ -20,7 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
+        // Verificar si la respuesta contiene datos
+        if (data && data.files && Object.keys(data.files).length > 0) {
         console.log('Contenido del Gist:', data.files[Object.keys(data.files)[0]].content);
+        } else {
+        console.log('El Gist no contiene archivos.');
+        }
     })
     .catch(error => {
         console.error('Error al obtener el Gist:', error);
