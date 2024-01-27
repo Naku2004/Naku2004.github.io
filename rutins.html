@@ -159,7 +159,7 @@
 
             <div id="DivSemanasLista">
                 <div id="semana" class="PnlSemana" name="0">
-                    <input id="LabelSemana"  class="ButtonLabelBook off" oninput="EditTextSpanLista(this, 'Semana')" type="text" value="Semana 1">
+                    <input id="LabelSemana"  class="ButtonLabelBook off" onblur="Blur(this)" oninput="EditTextSpanLista(this, 'Semana')" type="text" value="Semana 1">
                     <button id="BtnSemanaSlide" onclick="ButtonSemanaSlideLista(this)" class="ButtonLabelBook">Semana 1</button>
     
                     <section class="SectionTable">
@@ -168,7 +168,7 @@
                                 <tr class="trBook">
                                     <th id="divDivButtons">
                                         <div id="divButtons" name="0">
-                                            <input id="LabelDia"  class="buttonLabelDay deleteOff off" oninput="EditTextSpanLista(this, 'Dia')" type="text" value="Dia 1">
+                                            <input id="LabelDia"  class="buttonLabelDay deleteOff off" onblur="Blur(this)" oninput="EditTextSpanLista(this, 'Dia')" type="text" value="Dia 1">
                                             <button class="buttonBook deleteOff on" onclick="ButtonClickLista(this)">Dia 1</button>
                                             <div id="divDelete">
                                                 <button id="BtnDeleteButtons" onclick="DeleteDaysLista(this)" class="buttonDelete buttonAddDeleteBook off">
@@ -191,10 +191,10 @@
                                     <th class="thBook">RIR</th>
                                 </tr>
                                 <tr class="trBookEjercicio" name="0">
-                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" oninput="TextChanged(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook"><input id="InputSeries" oninput="TextChanged(this, 'Series')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook"><input id="InputReps" oninput="TextChanged(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td id="tdLast" class="tdBook"><input id="InputRIR" oninput="TextChanged(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurData()" oninput="TextChanged(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputSeries" onblur="BlurData()" oninput="TextChanged(this, 'Series')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputReps" onblur="BlurData()" oninput="TextChanged(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurData()" oninput="TextChanged(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -305,7 +305,7 @@
     <nav id="navbottom">
         <ul id="navtab" class="nav justify-content-center">
             <li id="navli" class="nav-item">
-                <a id="navitem" class="nav-link active on" aria-current="page" onclick="buttonListaRutinas()"><i class="fa-solid fa-rectangle-list buttonIcon on"></i>Lista de rutinas</a>
+                <a id="navitem" class="nav-link active on" aria-current="page" onclick="buttonListaRutinas()"><i class="fa-solid fa-list buttonIcon on"></i>Lista de rutinas</a>
             </li>
             <li id="navli" class="nav-item">
                 <a id="navitem" class="nav-link" onclick="buttonCuaderno()"><i class="fa-solid fa-book buttonIcon"></i>Cuaderno</a>
@@ -326,7 +326,6 @@
     <script src="main.js"></script>
     <script src="book.js"></script>
     <script src="pages.js"></script>
-
 
     <!-- FIRE BASE SCRIPTS -->
 

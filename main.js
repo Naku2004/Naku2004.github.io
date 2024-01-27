@@ -7,29 +7,91 @@ function cambia_de_pagina(){
 var amountWeeksLista = 1
 var edit = false
 var pnlSlide = false
+const githubToken  = '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';
 
-document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', async function() {
     // Aquí puedes llamar a tu función para cargar datos
     LoadData(true);
     SlideDivButtons()
     
-    const gistId = 'be77eb681b29ec2b483f2183ab5f0db5';
-    const apiUrl = `https://api.github.com/gists/${gistId}`;
 
-    // Realizar una solicitud HTTP GET para obtener información del Gist
-    fetch(apiUrl)
+    // Autenticación con un token de acceso de GitHub
+
+    
+    /* LEER GIST
+    const gistId = '0faed31478499aaabd3332ec993dcca0'; 
+
+    fetch(`https://api.github.com/gists/${gistId}`)
     .then(response => response.json())
     .then(data => {
-        // Verificar si la respuesta contiene datos
-        if (data && data.files && Object.keys(data.files).length > 0) {
-        console.log('Contenido del Gist:', data.files[Object.keys(data.files)[0]].content);
-        } else {
-        console.log('El Gist no contiene archivos.');
-        }
+        // Accede al contenido del archivo en el Gist
+        const archivoContent = data.files['archivo.txt'].content;
+        console.log(archivoContent);
     })
-    .catch(error => {
-        console.error('Error al obtener el Gist:', error);
-    });
+    .catch(error => console.error('Error:', error));*/
+
+    /* ACTUALIZAR GIST
+    const gistId = '0faed31478499aaabd3332ec993dcca0';
+
+    const datos = {
+        usuario: {
+          nombre: 'John',
+          edad: 25,
+          correo: 'john@example.com'
+        },
+        tareas: [
+          { id: 1, descripcion: 'Hacer compras', completada: false },
+          { id: 2, descripcion: 'Estudiar programación', completada: true },
+          // ... más tareas
+        ]
+    };
+
+    datosJSON = JSON.stringify(datos)
+
+    const updatedContent = {
+        files: {
+            'database.json': {
+            content: datosJSON
+            }
+        }
+    };
+
+    fetch(`https://api.github.com/gists/${gistId}`, {
+    method: 'PATCH',
+    headers: {
+        'Authorization': `token ${githubToken}`,
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedContent)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error)); */
+
+
+    /* CREAR GIST
+    const gistContent = {
+        description: 'Descripción del Gist',
+        public: true,
+        files: {
+          'archivo.txt': {
+            content: 'Contenido del archivo'
+          }
+        }
+      };
+      
+      fetch('https://api.github.com/gists', {
+        method: 'POST',
+        headers: {
+          'Authorization': `token ${githubToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(gistContent)
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));*/
 });
 
 function SlideDivButtons(){
@@ -104,7 +166,7 @@ function ButtonSemanaSlideLista(Button){
         pnlSlide = false
     }
 
-    //ButtonClickLista(pnlSemana.querySelector('#divButtons').querySelector('button'))
+    ButtonClickLista(pnlSemana.querySelector('#divButtons').querySelector('button'))
 }
 
 function ButtonClickLista(Button){
@@ -159,13 +221,14 @@ function ButtonClickLista(Button){
             textRIRLista[Week][Day][i] = ""
         }
 
-        SaveData()
 
         AllTextInputExcercise[i].value = textEjerciciosLista[Week][Day][i]
         AllTextInputSeries[i].value = textSeriesLista[Week][Day][i]
         AllTextInputReps[i].value = textRepsLista[Week][Day][i]
         AllTextInputRIR[i].value = textRIRLista[Week][Day][i]
     }
+    
+    //SaveData()
 }
 
 var amountEjerciciosDayLista = [/*Semana 1*/ [1 /*Dia1*/]]
@@ -218,16 +281,17 @@ function AddWeekLista(Button, Load, i){
         divPage.insertBefore(NewDivSemana, divPage.childNodes[(amountWeeksLista + 2)])
         
         ButtonClickLista(NewDivSemana.querySelector('#divDivButtons').querySelector('.on'))
+        SaveData()
     }
-    SaveData() 
     SlideDivButtons()
 }
+
+var pase
 
 function DeleteWeekLista(Button){
     if(amountWeeksLista > 1){
         amountWeeksLista--
         localStorage.removeItem("amountDaysLista" + amountWeeksLista)
-        SaveData()
 
         for(let i = 0; i < amountDaysLista[amountWeeksLista]; i++){
             localStorage.removeItem(`amountEjerciciosDayLista${amountWeeksLista}${i}`)
@@ -246,6 +310,8 @@ function DeleteWeekLista(Button){
         textRepsLista.splice(amountWeeksLista, 1)
         textRIRLista.splice(amountWeeksLista, 1)
         DiaTextLista.splice(amountWeeksLista, 1)
+        dataBase.ListaRutinas.splice(amountWeeksLista, 1)
+        pase = Math.random()
 
         SaveData()
 
@@ -253,7 +319,6 @@ function DeleteWeekLista(Button){
         let divPage = divpagerutinas.querySelector('#DivSemanasLista')
 
         divPage.removeChild(divPage.children[(amountWeeksLista)])
-        LoadData(false)
     }
 }
 
@@ -269,6 +334,7 @@ function AddDaysLista(Button, Load, j){
     if(amountDaysLista[Week] < 7 || Load == true){
         if(Load == false){
             amountDaysLista[Week]++
+            DiaTextLista[Week][amountDaysLista[Week] - 1] = `Dia ${amountDaysLista[Week]}`
             amountEjerciciosDayLista[Week][amountDaysLista[Week] - 1] = 1
             textEjerciciosLista[Week][amountDaysLista[Week] - 1] = [""]
             textSeriesLista[Week][amountDaysLista[Week] - 1] = [""]
@@ -313,7 +379,6 @@ function AddDaysLista(Button, Load, j){
         th.appendChild(NewDivBtn)
         //th.insertBefore(NewDivBtn, th.children[(NumTrChilds)])
     }
-    SaveData()
 }
 
 function DeleteDaysLista(Button){
@@ -332,7 +397,6 @@ function DeleteDaysLista(Button){
             localStorage.removeItem(`textRIRLista${Week}${Day}${i}`)
             localStorage.removeItem(`DiaTextLista${Week}${Day}${i}`)
         }
-        SaveData()
 
         for(let i = 0; i < amountEjerciciosDayLista[Week][Day]; i++){
             localStorage.removeItem(`amountEjerciciosDayLista${Week}${amountDaysLista}${i}`)
@@ -349,6 +413,12 @@ function DeleteDaysLista(Button){
         textRepsLista[Week].splice(Day, 1)
         textRIRLista[Week].splice(Day, 1)
         DiaTextLista[Week].splice(Day, 1)
+        dataBase.ListaRutinas[Week].DIASNAME.splice(Day, 1)
+        dataBase.ListaRutinas[Week].CANTEJERCICIOSDIA.splice(Day, 1)
+        dataBase.ListaRutinas[Week].TEXTEJERCICIO.splice(Day, 1)
+        dataBase.ListaRutinas[Week].TEXTSERIES.splice(Day, 1)
+        dataBase.ListaRutinas[Week].TEXTREPS.splice(Day, 1)
+        dataBase.ListaRutinas[Week].TEXTRIR.splice(Day, 1)
 
         SaveData()
 
@@ -385,8 +455,6 @@ function DeleteDaysLista(Button){
         FirstButton.classList.add('on')
         ButtonClickLista(FirstButton)
     }
-
-    SaveData()
 }
 
 function AddEjercicio(Button, Load, j){
@@ -499,7 +567,7 @@ function EditButtonsLista(Button){
 
         edit = false
     }
-    SaveData()
+    //SaveData()
 }
 
 function EditText(TextInput, event){
@@ -525,42 +593,69 @@ function EditTextSpanLista(TextInput, Type){
         let Day = TextInput.closest('div').getAttribute('name')
         DiaTextLista[Week][Day] = TextInput.value
     }
-    SaveData()
+    //SaveData()
 }
 
 var textEjerciciosLista =    [/* Semana */[/*Dia 1*/[""/*1er Ejercicio*/]]]
 var textSeriesLista =        [/* Semana */[/*Dia 1*/[""/*1er Series*/]]]
 var textRepsLista =          [/* Semana */[/*Dia 1*/[""/*1er Reps*/]]]
 var textRIRLista =           [/* Semana */[/*Dia 1*/[""/*1er RIR*/]]]
+var TextoCambiado = false
 
 function TextChanged(TextInput, Type){
     let Week = TextInput.closest('#semana').getAttribute('name')
     let Day = TextInput.closest('#semana').querySelector('#divDivButtons').querySelector('.on').closest('#divButtons').getAttribute('name')
     let ExerciseID = TextInput.closest('tr').getAttribute('name')
+    TextoCambiado = true
 
     if(Type == "Ejercicio"){
         textEjerciciosLista[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
-        SaveData()
     }
 
     if(Type == "Series"){
         textSeriesLista[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjerciciosLista[Week][Day][ExerciseID])
-        SaveData()
     }
 
     if(Type == "Reps"){
         textRepsLista[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
-        SaveData()
     }
 
     if(Type == "RIR"){
         textRIRLista[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
+    }
+}
+
+function Blur(Button){
+    let divSemana = Button.closest('.PnlSemana')
+    BtnEditButtons = divSemana.querySelector('#BtnEditButtons')
+    EditButtonsLista(BtnEditButtons)
+    SaveData()
+}
+
+function BlurData(){
+    if(TextoCambiado == true){
+        TextoCambiado = false
         SaveData()
     }
+}
+
+var dataBase = {
+    ListaRutinas: [{
+        SEMANAID: 0,
+        SEMANANAME: "Semana",
+        CANTDIAS: 0,
+        DIASNAME: ["Dia 1"],
+        CANTEJERCICIOSDIA: [],
+        TEXTEJERCICIO:[[""]],
+        TEXTSERIES: [[""]],
+        TEXTREPS: [[""]],
+        TEXTRIR: [[""]],
+        PASE: 0
+    }]
 }
 
 function SaveData(){
@@ -594,9 +689,157 @@ function SaveData(){
             }
         }
     }
+
+    for(let i = 0; i < amountWeeksLista; i++){
+
+        if(dataBase.ListaRutinas[i] == undefined){
+            dataBase.ListaRutinas[i] = {
+                SEMANAID: 0,
+                SEMANANAME: "Semana",
+                CANTDIAS: 0,
+                DIASNAME: ["Dia 1"],
+                CANTEJERCICIOSDIA: [],
+                TEXTEJERCICIO:[[""]],
+                TEXTSERIES: [[""]],
+                TEXTREPS: [[""]],
+                TEXTRIR: [[""]],
+                PASE: 0
+            }
+        }
+        
+        dataBase.ListaRutinas[i].SEMANAID = i
+        dataBase.ListaRutinas[i].SEMANANAME = SemanaTextLista[i]
+        dataBase.ListaRutinas[i].PASE = pase
+
+        for(let j = 0; j < amountDaysLista[i]; j++){
+            
+            dataBase.ListaRutinas[i].CANTDIAS = amountDaysLista[i]
+            dataBase.ListaRutinas[i].DIASNAME[j] = DiaTextLista[i][j]
+            dataBase.ListaRutinas[i].CANTEJERCICIOSDIA[j] = amountEjerciciosDayLista[i][j]
+
+            for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
+                if(dataBase.ListaRutinas[i].TEXTEJERCICIO[j] == undefined){
+                    dataBase.ListaRutinas[i].TEXTEJERCICIO[j] = []
+                }
+
+                if(dataBase.ListaRutinas[i].TEXTSERIES[j] == undefined){
+                    dataBase.ListaRutinas[i].TEXTSERIES[j] = []
+                }
+
+                if(dataBase.ListaRutinas[i].TEXTREPS[j] == undefined){
+                    dataBase.ListaRutinas[i].TEXTREPS[j] = []
+                }
+
+                if(dataBase.ListaRutinas[i].TEXTRIR[j] == undefined){
+                    dataBase.ListaRutinas[i].TEXTRIR[j] = []
+                }
+
+                dataBase.ListaRutinas[i].TEXTEJERCICIO[j][k] = textEjerciciosLista[i][j][k]
+                dataBase.ListaRutinas[i].TEXTSERIES[j][k] = textSeriesLista[i][j][k]
+                dataBase.ListaRutinas[i].TEXTREPS[j][k] = textRepsLista[i][j][k]
+                dataBase.ListaRutinas[i].TEXTRIR[j][k] = textRIRLista[i][j][k]
+            }
+        }
+    }
+
+    const gistId = '0faed31478499aaabd3332ec993dcca0';
+
+    const datosJSON = JSON.stringify(dataBase)
+
+    console.log('datosJSON: ', datosJSON)
+
+    const updatedContent = {
+        files: {
+            'database.json': {
+            content: datosJSON
+            }
+        }
+    };
+
+    fetch(`https://api.github.com/gists/${gistId}`, {
+    method: 'PATCH',
+    headers: {
+        'Authorization': `token ${githubToken}`,
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedContent)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error)); 
+
+    console.log(dataBase.ListaRutinas)
 }
 
-function LoadData(FirstTime){
+const gistId = '0faed31478499aaabd3332ec993dcca0'; 
+
+async function LoadData(FirstTime){
+    try{
+        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+            headers: {
+                'Authorization': `token ${githubToken}`
+              }
+        })
+
+        const data = await response.json()
+        const dataBaseRaw = data.files['database.json'].content
+        const dataBaseLoad = JSON.parse(dataBaseRaw)
+
+        amountWeeksLista = parseInt(dataBaseLoad.ListaRutinas.length)
+
+        for(let i = 0; i < amountWeeksLista; i++){
+            amountDaysLista[i] = parseInt(dataBaseLoad.ListaRutinas[i].CANTDIAS)
+            SemanaTextLista[i] = dataBaseLoad.ListaRutinas[i].SEMANANAME
+
+            if(typeof amountDaysLista[i] == undefined){
+                amountDaysLista[i] = 1
+            }
+
+            if(i != 0){
+                DiaTextLista[i] = [[]]
+                amountEjerciciosDayLista[i] = []
+            }
+            for(let j = 0; j < amountDaysLista[i]; j++){
+                DiaTextLista[i][j] = dataBaseLoad.ListaRutinas[i].DIASNAME[j]
+                amountEjerciciosDayLista[i][j] = dataBaseLoad.ListaRutinas[i].CANTEJERCICIOSDIA[j]
+            }
+        }
+
+        for(let i = 0; i < amountWeeksLista; i++){
+            if(i != 0){
+                textEjerciciosLista[i] = [[]]
+                textSeriesLista[i] = [[]]
+                textRepsLista[i] = [[]]
+                textRIRLista[i] = [[]]
+            }
+
+            for(let j = 0; j < amountDaysLista[i]; j++){
+                if(j != 0){
+                    textEjerciciosLista[i][j] = []
+                    textSeriesLista[i][j] = []
+                    textRepsLista[i][j] = []
+                    textRIRLista[i][j] = []
+                }
+                for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
+                    //alert(localStorage.getItem(`textEjerciciosListaLista${i}${j}${k}`))
+                    textEjerciciosLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTEJERCICIO[j][k]
+                    textSeriesLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTSERIES[j][k]
+                    textRepsLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTREPS[j][k]
+                    textRIRLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTRIR[j][k]
+                }
+            }
+        }
+    } 
+    catch (error){
+        console.error('Error:', error);
+    }
+
+    if(FirstTime){
+        LoadDaysLista()
+    }
+}
+
+/*function LoadData(FirstTime){
 
     amountWeeksLista = localStorage.getItem("amountWeeksLista")
 
@@ -658,10 +901,76 @@ function LoadData(FirstTime){
         }
     }
 
+    fetch(`https://api.github.com/gists/${gistId}`, {
+        headers: {
+            'Authorization': `token ${githubToken}`
+          }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Accede al contenido del archivo en el Gist
+        const gistContent = data.files['database.json'].content;
+        var dataBaseLoad= JSON.parse(gistContent)
+
+        amountWeeksLista = parseInt(dataBaseLoad.ListaRutinas.length)
+
+        for(let i = 0; i < amountWeeksLista; i++){
+            amountDaysLista[i] = parseInt(dataBaseLoad.ListaRutinas[i].CANTDIAS)
+            console.log(amountDaysLista)
+            SemanaTextLista[i] = dataBaseLoad.ListaRutinas[i].SEMANANAME
+
+            if(typeof amountDaysLista[i] == undefined){
+                amountDaysLista[i] = 1
+            }
+
+            if(i != 0){
+                DiaTextLista[i] = [[]]
+                amountEjerciciosDayLista[i] = []
+            }
+            for(let j = 0; j < amountDaysLista[i]; j++){
+                DiaTextLista[i][j] = dataBaseLoad.ListaRutinas[i].DIASNAME[j]
+                amountEjerciciosDayLista[i][j] = dataBaseLoad.ListaRutinas[i].CANTEJERCICIOSDIA[j]
+            }
+        }
+
+        for(let i = 0; i < amountWeeksLista; i++){
+            if(i != 0){
+                textEjerciciosLista[i] = [[]]
+                textSeriesLista[i] = [[]]
+                textRepsLista[i] = [[]]
+                textRIRLista[i] = [[]]
+            }
+
+            for(let j = 0; j < amountDaysLista[i]; j++){
+                if(j != 0){
+                    textEjerciciosLista[i][j] = []
+                    textSeriesLista[i][j] = []
+                    textRepsLista[i][j] = []
+                    textRIRLista[i][j] = []
+                }
+                for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
+                    //alert(localStorage.getItem(`textEjerciciosListaLista${i}${j}${k}`))
+                    textEjerciciosLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTEJERCICIO[j][k]
+                    textSeriesLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTSERIES[j][k]
+                    textRepsLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTREPS[j][k]
+                    textRIRLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTRIR[j][k]
+                }
+            }
+        }
+        console.log(dataBaseLoad);
+        console.log('data: ',amountWeeksLista)
+
+    })
+    .catch(error => console.error('Error:', error));
+
+
+    console.log('data fuera: ',amountWeeksLista)
+
+
     if(FirstTime){
         LoadDaysLista()
     }
-}
+}*/
 
 function LoadDaysLista(){
 
