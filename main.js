@@ -7,10 +7,8 @@ function cambia_de_pagina(){
 var amountWeeksLista = 1
 var edit = false
 var pnlSlide = false
-const githubToken  = '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';
 
-
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Aquí puedes llamar a tu función para cargar datos
     LoadData(true);
     SlideDivButtons()
@@ -497,6 +495,10 @@ function DeleteEjercicio(Button, Load){
             textSeriesLista[Week][Day].splice(amountEjerciciosDayLista[Week][Day], 1)
             textRepsLista[Week][Day].splice(amountEjerciciosDayLista[Week][Day], 1)
             textRIRLista[Week][Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+            dataBase.ListaRutinas[Week].TEXTEJERCICIO[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+            dataBase.ListaRutinas[Week].TEXTSERIES[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+            dataBase.ListaRutinas[Week].TEXTREPS[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+            dataBase.ListaRutinas[Week].TEXTRIR[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
 
             localStorage.removeItem(`textEjerciciosLista${Week}${Day}${amountEjerciciosDayLista[Week][Day]}`)
             localStorage.removeItem(`textSeriesLista${Week}${Day}${amountEjerciciosDayLista[Week][Day]}`)
@@ -564,7 +566,7 @@ function EditButtonsLista(Button){
         }
 
         EditIcon.className = "fa-solid fa-pen-to-square"
-
+        SaveData()
         edit = false
     }
     //SaveData()
@@ -629,13 +631,6 @@ function TextChanged(TextInput, Type){
     }
 }
 
-function Blur(Button){
-    let divSemana = Button.closest('.PnlSemana')
-    BtnEditButtons = divSemana.querySelector('#BtnEditButtons')
-    EditButtonsLista(BtnEditButtons)
-    SaveData()
-}
-
 function BlurData(){
     if(TextoCambiado == true){
         TextoCambiado = false
@@ -645,6 +640,18 @@ function BlurData(){
 
 var dataBase = {
     ListaRutinas: [{
+        SEMANAID: 0,
+        SEMANANAME: "Semana",
+        CANTDIAS: 0,
+        DIASNAME: ["Dia 1"],
+        CANTEJERCICIOSDIA: [],
+        TEXTEJERCICIO:[[""]],
+        TEXTSERIES: [[""]],
+        TEXTREPS: [[""]],
+        TEXTRIR: [[""]],
+        PASE: 0
+    }],
+    ListaBook: [{
         SEMANAID: 0,
         SEMANANAME: "Semana",
         CANTDIAS: 0,
@@ -742,7 +749,57 @@ function SaveData(){
         }
     }
 
-    const gistId = '0faed31478499aaabd3332ec993dcca0';
+    for(let i = 0; i < amountWeeks; i++){
+
+        if(dataBase.ListaBook[i] == undefined){
+            dataBase.ListaBook[i] = {
+                SEMANAID: 0,
+                SEMANANAME: "Semana",
+                CANTDIAS: 0,
+                DIASNAME: ["Dia 1"],
+                CANTEJERCICIOSDIA: [],
+                TEXTEJERCICIO:[[""]],
+                TEXTSERIES: [[""]],
+                TEXTREPS: [[""]],
+                TEXTRIR: [[""]],
+                PASE: 0
+            }
+        }
+        
+        dataBase.ListaBook[i].SEMANAID = i
+        dataBase.ListaBook[i].SEMANANAME = SemanaText[i]
+        dataBase.ListaBook[i].PASE = pase
+
+        for(let j = 0; j < amountDays[i]; j++){
+            
+            dataBase.ListaBook[i].CANTDIAS = amountDays[i]
+            dataBase.ListaBook[i].DIASNAME[j] = DiaText[i][j]
+            dataBase.ListaBook[i].CANTEJERCICIOSDIA[j] = amountEjerciciosDay[i][j]
+
+            for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
+                if(dataBase.ListaBook[i].TEXTEJERCICIO[j] == undefined){
+                    dataBase.ListaBook[i].TEXTEJERCICIO[j] = []
+                }
+
+                if(dataBase.ListaBook[i].TEXTSERIES[j] == undefined){
+                    dataBase.ListaBook[i].TEXTSERIES[j] = []
+                }
+
+                if(dataBase.ListaBook[i].TEXTREPS[j] == undefined){
+                    dataBase.ListaBook[i].TEXTREPS[j] = []
+                }
+
+                if(dataBase.ListaBook[i].TEXTRIR[j] == undefined){
+                    dataBase.ListaBook[i].TEXTRIR[j] = []
+                }
+
+                dataBase.ListaBook[i].TEXTEJERCICIO[j][k] = textEjercicios[i][j][k]
+                dataBase.ListaBook[i].TEXTSERIES[j][k] = textSeries[i][j][k]
+                dataBase.ListaBook[i].TEXTREPS[j][k] = textReps[i][j][k]
+                dataBase.ListaBook[i].TEXTRIR[j][k] = textRIR[i][j][k]
+            }
+        }
+    }
 
     const datosJSON = JSON.stringify(dataBase)
 
@@ -772,6 +829,7 @@ function SaveData(){
 }
 
 const gistId = '0faed31478499aaabd3332ec993dcca0'; 
+const githubToken = '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'
 
 async function LoadData(FirstTime){
     try{
@@ -829,6 +887,51 @@ async function LoadData(FirstTime){
                 }
             }
         }
+
+        amountWeeks = parseInt(dataBaseLoad.ListaBook.length)
+
+        for(let i = 0; i < amountWeeks; i++){
+            amountDays[i] = parseInt(dataBaseLoad.ListaBook[i].CANTDIAS)
+            SemanaText[i] = dataBaseLoad.ListaBook[i].SEMANANAME
+
+            if(typeof amountDays[i] == undefined){
+                amountDays[i] = 1
+            }
+
+            if(i != 0){
+                DiaText[i] = [[]]
+                amountEjerciciosDay[i] = []
+            }
+            for(let j = 0; j < amountDays[i]; j++){
+                DiaText[i][j] = dataBaseLoad.ListaBook[i].DIASNAME[j]
+                amountEjerciciosDay[i][j] = dataBaseLoad.ListaBook[i].CANTEJERCICIOSDIA[j]
+            }
+        }
+
+        for(let i = 0; i < amountWeeks; i++){
+            if(i != 0){
+                textEjercicios[i] = [[]]
+                textSeries[i] = [[]]
+                textReps[i] = [[]]
+                textRIR[i] = [[]]
+            }
+
+            for(let j = 0; j < amountDays[i]; j++){
+                if(j != 0){
+                    textEjercicios[i][j] = []
+                    textSeries[i][j] = []
+                    textReps[i][j] = []
+                    textRIR[i][j] = []
+                }
+                for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
+                    //alert(localStorage.getItem(`textEjercicios${i}${j}${k}`))
+                    textEjercicios[i][j][k] = dataBaseLoad.ListaBook[i].TEXTEJERCICIO[j][k]
+                    textSeries[i][j][k] = dataBaseLoad.ListaBook[i].TEXTSERIES[j][k]
+                    textReps[i][j][k] = dataBaseLoad.ListaBook[i].TEXTREPS[j][k]
+                    textRIR[i][j][k] = dataBaseLoad.ListaBook[i].TEXTRIR[j][k]
+                }
+            }
+        }
     } 
     catch (error){
         console.error('Error:', error);
@@ -836,6 +939,7 @@ async function LoadData(FirstTime){
 
     if(FirstTime){
         LoadDaysLista()
+        LoadDays()
     }
 }
 
@@ -1004,3 +1108,19 @@ function LoadDaysLista(){
         
     }
 }
+
+var user
+var pw
+var recordar
+
+document.getElementById('RegisterForm').addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target)
+
+    user = formData.get('user')
+    pw = formData.get('pw')
+    recordar = formData.get('recordar')
+
+    console.log(user, pw, recordar)
+})

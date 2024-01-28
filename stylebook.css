@@ -25,6 +25,7 @@
     width: 48%;
 }
 
+
 .ButtonLabelBook{
     display: flex;
     align-items: center;
@@ -162,7 +163,7 @@
 }
 
 .buttonBook:hover{
-    background-color: #222325;
+    background-color: #1e1e22;
 }
 
 .buttonBook.on{

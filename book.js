@@ -4,7 +4,7 @@ var pnlSlide = false
 
 document.addEventListener('DOMContentLoaded', function() {
     // Aquí puedes llamar a tu función para cargar datos
-    LoadDataBook(true);
+    //LoadDataBook(true);
     SlideDivButtons()
     
 });
@@ -136,7 +136,7 @@ function ButtonClick(Button){
             textRIR[Week][Day][i] = ""
         }
 
-        SaveDataBook()
+        //SaveDataBook()
 
         AllTextInputExcercise[i].value = textEjercicios[Week][Day][i]
         AllTextInputSeries[i].value = textSeries[Week][Day][i]
@@ -193,8 +193,8 @@ function AddWeek(Button, Load, i){
         divPage.insertBefore(NewDivSemana, divPage.childNodes[(amountWeeks + 2)])
         
         ButtonClick(NewDivSemana.querySelector('#divDivButtons').querySelector('.on'))
+        SaveData() 
     }
-    SaveDataBook() 
     SlideDivButtons()
 }
 
@@ -202,7 +202,6 @@ function DeleteWeek(Button){
     if(amountWeeks > 1){
         amountWeeks--
         localStorage.removeItem("amountDays" + amountWeeks)
-        SaveDataBook()
 
         for(let i = 0; i < amountDays[amountWeeks]; i++){
             localStorage.removeItem(`amountEjerciciosDay${amountWeeks}${i}`)
@@ -221,14 +220,15 @@ function DeleteWeek(Button){
         textReps.splice(amountWeeks, 1)
         textRIR.splice(amountWeeks, 1)
         DiaText.splice(amountWeeks, 1)
+        dataBase.ListaBook.splice(amountWeeks, 1)
 
-        SaveDataBook()
+        SaveData()
 
         let divPagebook = Button.closest('#pagebook')
         let divPage = divPagebook.querySelector('#DivSemanasBook')
 
-        divPage.removeChild(divPage.children[(amountWeeks)])
-        LoadDataBook(false)
+        console.log(amountWeeks)
+        divPage.removeChild(divPage.children[amountWeeks])
     }
 }
 
@@ -249,7 +249,7 @@ function AddDays(Button, Load, j){
             textSeries[Week][amountDays[Week] - 1] = [""]
             textReps[Week][amountDays[Week] - 1] = [""]
             textRIR[Week][amountDays[Week] - 1] = [""]
-            SaveDataBook()
+            SaveData()
         }
 
         if(amountDays[Week] == 2 && Load == false){
@@ -288,7 +288,6 @@ function AddDays(Button, Load, j){
         th.appendChild(NewDivBtn)
         //th.insertBefore(NewDivBtn, th.children[(NumTrChilds)])
     }
-    SaveDataBook()
 }
 
 function DeleteDays(Button){
@@ -307,7 +306,6 @@ function DeleteDays(Button){
             localStorage.removeItem(`textRIR${Week}${Day}${i}`)
             localStorage.removeItem(`DiaText${Week}${Day}${i}`)
         }
-        SaveDataBook()
 
         for(let i = 0; i < amountEjerciciosDay[Week][Day]; i++){
             localStorage.removeItem(`amountEjerciciosDay${Week}${amountDays}${i}`)
@@ -324,8 +322,14 @@ function DeleteDays(Button){
         textReps[Week].splice(Day, 1)
         textRIR[Week].splice(Day, 1)
         DiaText[Week].splice(Day, 1)
+        dataBase.ListaBook[Week].DIASNAME.splice(Day, 1)
+        dataBase.ListaBook[Week].CANTEJERCICIOSDIA.splice(Day, 1)
+        dataBase.ListaBook[Week].TEXTEJERCICIO.splice(Day, 1)
+        dataBase.ListaBook[Week].TEXTSERIES.splice(Day, 1)
+        dataBase.ListaBook[Week].TEXTREPS.splice(Day, 1)
+        dataBase.ListaBook[Week].TEXTRIR.splice(Day, 1)
 
-        SaveDataBook()
+        SaveData()
 
         let divDivButtons = Button.closest('#divDivButtons')
         let divButtons = divDivButtons.querySelectorAll('#divButtons')
@@ -360,8 +364,6 @@ function DeleteDays(Button){
         FirstButton.classList.add('on')
         ButtonClick(FirstButton)
     }
-
-    SaveDataBook()
 }
 
 function AddEjercicioBook(Button, Load, j){
@@ -374,7 +376,7 @@ function AddEjercicioBook(Button, Load, j){
         textReps[Week][Day][amountEjerciciosDay[Week][Day]] = ""
         textRIR[Week][Day][amountEjerciciosDay[Week][Day]] = ""
         amountEjerciciosDay[Week][Day]++
-        SaveDataBook()
+        SaveData()
     }
 
     let divSemana = Button.closest('#semana')
@@ -404,12 +406,16 @@ function DeleteEjercicioBook(Button, Load){
             textSeries[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
             textReps[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
             textRIR[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
+            dataBase.ListaBook[Week].TEXTEJERCICIO[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+            dataBase.ListaBook[Week].TEXTSERIES[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+            dataBase.ListaBook[Week].TEXTREPS[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+            dataBase.ListaBook[Week].TEXTRIR[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
 
             localStorage.removeItem(`textEjercicios${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
             localStorage.removeItem(`textSeries${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
             localStorage.removeItem(`textReps${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
             localStorage.removeItem(`textRIR${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
-            SaveDataBook()
+            SaveData()
         }
         let divSemana = Button.closest('#semana')
         let tBody = divSemana.querySelector('.tbodyBook')
@@ -471,10 +477,10 @@ function EditButtons(Button){
         }
 
         EditIcon.className = "fa-solid fa-pen-to-square"
-
+        SaveData()
         edit = false
     }
-    SaveDataBook()
+    //SaveDataBook()
 }
 
 function EditText(TextInput, event){
@@ -500,7 +506,7 @@ function EditTextSpan(TextInput, Type){
         let Day = TextInput.closest('div').getAttribute('name')
         DiaText[Week][Day] = TextInput.value
     }
-    SaveDataBook()
+    //SaveDataBook()
 }
 
 var textEjercicios =    [/* Semana */[/*Dia 1*/[""/*1er Ejercicio*/]]]
@@ -512,32 +518,46 @@ function TextChangedB(TextInput, Type){
     let Week = TextInput.closest('#semana').getAttribute('name')
     let Day = TextInput.closest('#semana').querySelector('#divDivButtons').querySelector('.on').closest('#divButtons').getAttribute('name')
     let ExerciseID = TextInput.closest('tr').getAttribute('name')
+    TextoCambiadoBook = true
 
     if(Type == "Ejercicio"){
         textEjercicios[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
-        SaveDataBook()
+        //SaveDataBook()
     }
 
     if(Type == "Series"){
         textSeries[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
-        SaveDataBook()
+        //SaveDataBook()
     }
 
     if(Type == "Reps"){
         textReps[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
-        SaveDataBook()
+        //SaveDataBook()
     }
 
     if(Type == "RIR"){
         textRIR[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
-        SaveDataBook()
+        //SaveDataBook()
     }
 }
 
+//const gistIdBook = 'd63b62cc7e658fc25713c59a88a88817'; 
+const githubTokenBook = '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'
+
+var TextoCambiadoBook = false
+
+function BlurDataBook(){
+    if(TextoCambiadoBook == true){
+        TextoCambiadoBook = false
+        SaveData()
+    }
+}
+
+/*
 function SaveDataBook(){
     localStorage.setItem("amountWeeks", amountWeeks)
     
@@ -574,9 +594,153 @@ function SaveDataBook(){
             }
         }
     }
-}
 
-function LoadDataBook(FirstTime){
+    for(let i = 0; i < amountWeeks; i++){
+
+        if(dataBase.ListaBook[i] == undefined){
+            dataBase.ListaBook[i] = {
+                SEMANAID: 0,
+                SEMANANAME: "Semana",
+                CANTDIAS: 0,
+                DIASNAME: ["Dia 1"],
+                CANTEJERCICIOSDIA: [],
+                TEXTEJERCICIO:[[""]],
+                TEXTSERIES: [[""]],
+                TEXTREPS: [[""]],
+                TEXTRIR: [[""]],
+                PASE: 0
+            }
+        }
+        
+        dataBase.ListaBook[i].SEMANAID = i
+        dataBase.ListaBook[i].SEMANANAME = SemanaText[i]
+        dataBase.ListaBook[i].PASE = pase
+
+        for(let j = 0; j < amountDays[i]; j++){
+            
+            dataBase.ListaBook[i].CANTDIAS = amountDays[i]
+            dataBase.ListaBook[i].DIASNAME[j] = DiaText[i][j]
+            dataBase.ListaBook[i].CANTEJERCICIOSDIA[j] = amountEjerciciosDay[i][j]
+
+            for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
+                if(dataBase.ListaBook[i].TEXTEJERCICIO[j] == undefined){
+                    dataBase.ListaBook[i].TEXTEJERCICIO[j] = []
+                }
+
+                if(dataBase.ListaBook[i].TEXTSERIES[j] == undefined){
+                    dataBase.ListaBook[i].TEXTSERIES[j] = []
+                }
+
+                if(dataBase.ListaBook[i].TEXTREPS[j] == undefined){
+                    dataBase.ListaBook[i].TEXTREPS[j] = []
+                }
+
+                if(dataBase.ListaBook[i].TEXTRIR[j] == undefined){
+                    dataBase.ListaBook[i].TEXTRIR[j] = []
+                }
+
+                dataBase.ListaBook[i].TEXTEJERCICIO[j][k] = textEjercicios[i][j][k]
+                dataBase.ListaBook[i].TEXTSERIES[j][k] = textSeries[i][j][k]
+                dataBase.ListaBook[i].TEXTREPS[j][k] = textReps[i][j][k]
+                dataBase.ListaBook[i].TEXTRIR[j][k] = textRIR[i][j][k]
+            }
+        }
+    }
+
+    const datosBJSON = JSON.stringify(dataBase)
+
+    console.log('datosJSON: ', dataBase)
+
+    const updatedContent = {
+        files: {
+            'bookdatabase.json': {
+            content: datosBJSON
+            }
+        }
+    };
+
+    fetch(`https://api.github.com/gists/${gistIdBook}`, {
+    method: 'PATCH',
+    headers: {
+        'Authorization': `token ${githubTokenBook}`,
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedContent)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error)); 
+
+    console.log(dataBase.ListaBook)
+}*/
+/*
+async function LoadDataBook(FirstTime){
+    try{
+        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+            headers: {
+                'Authorization': `token ${githubToken}`
+              }
+        })
+
+        const dataBook = await response.json()
+        const dataBaseRawBook = dataBook.files['database.json'].content
+        const dataBaseLoadBook = JSON.parse(dataBaseRawBook)
+
+        amountWeeks = parseInt(dataBaseLoadBook.ListaBook.length)
+
+        for(let i = 0; i < amountWeeks; i++){
+            amountDays[i] = parseInt(dataBaseLoadBook.ListaBook[i].CANTDIAS)
+            SemanaText[i] = dataBaseLoadBook.ListaBook[i].SEMANANAME
+
+            if(typeof amountDays[i] == undefined){
+                amountDays[i] = 1
+            }
+
+            if(i != 0){
+                DiaText[i] = [[]]
+                amountEjerciciosDay[i] = []
+            }
+            for(let j = 0; j < amountDays[i]; j++){
+                DiaText[i][j] = dataBaseLoadBook.ListaBook[i].DIASNAME[j]
+                amountEjerciciosDay[i][j] = dataBaseLoadBook.ListaBook[i].CANTEJERCICIOSDIA[j]
+            }
+        }
+
+        for(let i = 0; i < amountWeeks; i++){
+            if(i != 0){
+                textEjercicios[i] = [[]]
+                textSeries[i] = [[]]
+                textReps[i] = [[]]
+                textRIR[i] = [[]]
+            }
+
+            for(let j = 0; j < amountDays[i]; j++){
+                if(j != 0){
+                    textEjercicios[i][j] = []
+                    textSeries[i][j] = []
+                    textReps[i][j] = []
+                    textRIR[i][j] = []
+                }
+                for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
+                    //alert(localStorage.getItem(`textEjercicios${i}${j}${k}`))
+                    textEjercicios[i][j][k] = dataBaseLoadBook.ListaBook[i].TEXTEJERCICIO[j][k]
+                    textSeries[i][j][k] = dataBaseLoadBook.ListaBook[i].TEXTSERIES[j][k]
+                    textReps[i][j][k] = dataBaseLoadBook.ListaBook[i].TEXTREPS[j][k]
+                    textRIR[i][j][k] = dataBaseLoadBook.ListaBook[i].TEXTRIR[j][k]
+                }
+            }
+        }
+    } 
+    catch (error){
+        console.error('Error:', error);
+    }
+
+    if(FirstTime){
+        LoadDays()
+    }
+}*/
+
+/*function LoadDataBook(FirstTime){
 
     amountWeeks = localStorage.getItem("amountWeeks")
 
@@ -640,7 +804,7 @@ function LoadDataBook(FirstTime){
     if(FirstTime){
         LoadDays()
     }
-}
+}*/
 
 function LoadDays(){
 

@@ -162,11 +162,33 @@ section {
 }
 
 .links {
+    background-color: #288d00;
+    border-style: none;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
     color:white;
+
+    height: 2.5rem;
+    padding: 0rem 1rem;
     font-size: 1rem;
     text-align: center;
-    margin:1.75rem 2rem 0 0;
+    margin:1.3rem 2rem 0 0;
     float: right;
+}
+
+.links:hover{
+    background-color: #1d6102;
+}
+
+.outline{
+    border-style: solid;
+    border-radius: 0.5rem;
+    border-color: #288d00;
+    background-color: transparent;
+}
+
+.outline:hover{
+    background-color: #288d00;
 }
 
 /*-----Body-----*/
@@ -350,6 +372,10 @@ h1{
     border-color: #17171b;
     background-color: #17171b;
     border-style:none;
+}
+
+.ButtonLabel:hover, .ButtonLabelBook:hover{
+    background-color: #1e1e22;
 }
 
 .PanelLabel{

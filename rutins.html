@@ -20,9 +20,8 @@
     <header id="headerRutins">
         <label for="menu" id="btnSlide" onclick="buttonSlide()" ><i class="fa-solid fa-bars"></i></label>
         <img src="icons/logor.png" id="logor">
-        <a class="links" >Registrarse</a>
-        <a class="links" href="rutins.html">Mis rutinas</a>
-        <a class="links" href="index.html">Inicio</a>
+        <button type="button" class="links outline">Iniciar sesión</button>
+        <button type="button" class="links" data-bs-toggle="modal" data-bs-target="#ModalRegister">Registrarse</button>
     </header>
 
     <section id="page">
@@ -159,7 +158,7 @@
 
             <div id="DivSemanasLista">
                 <div id="semana" class="PnlSemana" name="0">
-                    <input id="LabelSemana"  class="ButtonLabelBook off" onblur="Blur(this)" oninput="EditTextSpanLista(this, 'Semana')" type="text" value="Semana 1">
+                    <input id="LabelSemana"  class="ButtonLabelBook off" oninput="EditTextSpanLista(this, 'Semana')" type="text" value="Semana 1">
                     <button id="BtnSemanaSlide" onclick="ButtonSemanaSlideLista(this)" class="ButtonLabelBook">Semana 1</button>
     
                     <section class="SectionTable">
@@ -168,7 +167,7 @@
                                 <tr class="trBook">
                                     <th id="divDivButtons">
                                         <div id="divButtons" name="0">
-                                            <input id="LabelDia"  class="buttonLabelDay deleteOff off" onblur="Blur(this)" oninput="EditTextSpanLista(this, 'Dia')" type="text" value="Dia 1">
+                                            <input id="LabelDia"  class="buttonLabelDay deleteOff off" oninput="EditTextSpanLista(this, 'Dia')" type="text" value="Dia 1">
                                             <button class="buttonBook deleteOff on" onclick="ButtonClickLista(this)">Dia 1</button>
                                             <div id="divDelete">
                                                 <button id="BtnDeleteButtons" onclick="DeleteDaysLista(this)" class="buttonDelete buttonAddDeleteBook off">
@@ -265,10 +264,10 @@
                                     <th class="thBook">RIR</th>
                                 </tr>
                                 <tr class="trBookEjercicio" name="0">
-                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" oninput="TextChangedB(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook"><input id="InputSeries" oninput="TextChangedB(this, 'Series')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook"><input id="InputReps" oninput="TextChangedB(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td id="tdLast" class="tdBook"><input id="InputRIR" oninput="TextChangedB(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputSeries" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Series')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputReps" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurDataBook()" oninput="TextChangedB(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -315,6 +314,35 @@
             </li>
         </ul>
     </nav>
+
+   <!-- Modal -->
+   <div class="modal fade" id="ModalRegister" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabel">Registrarse</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="RegisterForm">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" name="user">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" name="pw">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1" name="recordar">Recordarme</label>
+                        </div>
+                        <button type="submit" id="BtnSubmit" data-bs-dismiss="modal" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- BOOTSTRAP SCRIPTS -->
 
