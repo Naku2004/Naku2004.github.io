@@ -373,6 +373,14 @@ span, .buttonBook{
     margin-bottom: 0.1rem;
 }
 
+.googleIcon{
+    font-size: 1.9rem !important;
+}
+
+.resumenIcon{
+    padding-top: 0.1rem;
+}
+
 #navitem{
     display: inline-flex;
     flex-direction: column;

@@ -135,11 +135,114 @@ section {
 /*-----Header-----*/
 
 #headerRutins{
+    display: flex;
+    flex-direction: row;
     height: 5rem;
 }
 
 #menu {
     display: none;
+}
+
+#ButtonsSign{
+    display: flex;
+    position: relative;
+    justify-content: right;
+    height: 100%;
+    width: 100%;
+}
+
+#ButtonsSign.off{
+    display: none;
+}
+
+#navAccount{
+    display: flex;
+    position: relative;
+    justify-content: right;
+    height: 100%;
+    width: 100%;
+}
+
+#navAccount.off{
+    display: none;
+}
+
+#accountIcon{
+    border-style: none;
+    background-color: transparent;
+
+    font-size: 2.5rem;
+    color: #288d00;
+    margin: 1rem 2rem 0 0;;
+}
+
+.logOut{
+    display: flex;
+    flex-direction: row;
+    border-style: none;
+    background-color: transparent;
+    color: rgb(207, 53, 53);
+    transition: all 0.2s;
+    width: 100%;
+    padding: 0 1rem;
+    padding-bottom: 0.4rem;
+    border-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.logOut > span{
+    margin-left: -0.15rem;
+    padding-top: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.2rem;
+}
+
+.logOut:hover{
+    background-color: rgb(207, 53, 53);
+    color: white;
+}
+
+.navPopover{
+    list-style: none;
+}
+
+.Popover{
+    z-index: 2;
+    transition: all 0.2s;
+    list-style: none;
+    display: none;
+    position: absolute;
+    width: 200px;
+    padding: 0;
+
+    background-color: #252529;
+    margin-left: -160px;
+
+    color: white;
+    text-wrap: nowrap;
+    border-radius: 0.5rem;
+}
+
+.Popover.on{
+    transition: all 0.2s;
+    display: block;
+}
+
+.Popover > li{
+    background-color: transparent;
+    transition: all 0.2s;
+    width: 100%;
+    font-size: large;
+    padding: 0 1rem;
+    margin-top: 0.7rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+}
+
+.Popover > li > hr{
+    margin: 0.5rem 0;
 }
 
 #btnSlide {
@@ -221,6 +324,10 @@ section {
 #pagebook.on{
     position: relative;
     visibility: visible;
+}
+
+#loading.off{
+    display: none;
 }
 
 /*-----Section Slide-----*/
@@ -327,6 +434,10 @@ section {
     justify-content: center;
 }
 
+#DivSemanasLista.off{
+    display: none;
+}
+
 #listasrutinas{
     width: 100%;
     display: flexbox;
@@ -352,6 +463,7 @@ h1{
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    z-index: 1;
 }
 
 .ButtonLabel{

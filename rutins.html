@@ -13,16 +13,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="stylebook.css">
+    <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body id="bodyrutins">
     <input type="checkbox" id="menu">
     <header id="headerRutins">
         <label for="menu" id="btnSlide" onclick="buttonSlide()" ><i class="fa-solid fa-bars"></i></label>
         <img src="icons/logor.png" id="logor">
-        <button type="button" class="links outline">Iniciar sesión</button>
-        <button type="button" class="links" data-bs-toggle="modal" data-bs-target="#ModalRegister">Registrarse</button>
+
+        <nav id="ButtonsSign" class="">
+            <button type="button" class="links" data-bs-toggle="modal" data-bs-target="#ModalRegister">Registrarse</button>
+            <button type="button" class="links outline" data-bs-toggle="modal" data-bs-target="#ModalSign">Iniciar sesión</button>
+        </nav>
+
+        <nav id="navAccount" class="off">
+            <ul class="navPopover">
+                <li>
+                    <button id="accountIcon" class="material-symbols-outlined" onclick="AccountClick()">
+                        account_circle
+                    </button>
+                    <ul class="Popover">
+                        <li class="title">Usuario <hr></li>
+                        <button class="logOut" onclick="LogOut()">
+                            <span class="material-symbols-outlined">logout</span> 
+                            <span>Log Out</span> 
+                        </button>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
     </header>
+
 
     <section id="page">
         <section id="slidesection">
@@ -156,7 +180,13 @@
 
             <h1 class="fs-4">Lista de rutinas<hr class="centrado"></h1>
 
-            <div id="DivSemanasLista">
+            <div id="loading" class="d-flex justify-content-center">
+                <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <div id="DivSemanasLista" class="off">
                 <div id="semana" class="PnlSemana" name="0">
                     <input id="LabelSemana"  class="ButtonLabelBook off" oninput="EditTextSpanLista(this, 'Semana')" type="text" value="Semana 1">
                     <button id="BtnSemanaSlide" onclick="ButtonSemanaSlideLista(this)" class="ButtonLabelBook">Semana 1</button>
@@ -304,13 +334,15 @@
     <nav id="navbottom">
         <ul id="navtab" class="nav justify-content-center">
             <li id="navli" class="nav-item">
-                <a id="navitem" class="nav-link active on" aria-current="page" onclick="buttonListaRutinas()"><i class="fa-solid fa-list buttonIcon on"></i>Lista de rutinas</a>
+                <a id="navitem" class="nav-link active on" aria-current="page" onclick="buttonListaRutinas()"><span class="material-symbols-outlined buttonIcon googleIcon on">
+                    view_list
+                    </span></i>Lista de rutinas</a>
             </li>
             <li id="navli" class="nav-item">
-                <a id="navitem" class="nav-link" onclick="buttonCuaderno()"><i class="fa-solid fa-book buttonIcon"></i>Cuaderno</a>
+                <a id="navitem" class="nav-link" onclick="buttonCuaderno()"><span class="material-symbols-outlined buttonIcon googleIcon">book_2</span></i>Cuaderno</a>
             </li>
             <li id="navli" class="nav-item">
-                <a id="navitem" class="nav-link" href="#"><i class="fa-solid fa-square-poll-vertical buttonIcon"></i>Resumen</a>
+                <a id="navitem" class="nav-link" href="#"><i class="fa-solid fa-square-poll-vertical buttonIcon resumenIcon"></i>Resumen</a>
             </li>
         </ul>
     </nav>
@@ -327,17 +359,45 @@
                     <form id="RegisterForm">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" name="user">
+                            <input type="text" class="form-control" name="user" required>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" name="pw">
+                            <input type="password" class="form-control" name="pw" required>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
                             <label class="form-check-label" for="exampleCheck1" name="recordar">Recordarme</label>
                         </div>
-                        <button type="submit" id="BtnSubmit" data-bs-dismiss="modal" class="btn btn-primary">Enviar</button>
+                        <button type="submit" id="BtnRegister" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalSign" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabel">Iniciar sesión</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="SignForm">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" name="user" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" name="pw" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1" name="recordar">Recordarme</label>
+                        </div>
+                        <button type="submit" id="BtnSign" class="btn btn-primary">Enviar</button>
                     </form>
                 </div>
             </div>

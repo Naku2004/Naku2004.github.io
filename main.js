@@ -938,10 +938,21 @@ async function LoadData(FirstTime){
         console.error('Error:', error);
     }
 
-    if(FirstTime){
-        LoadDaysLista()
-        LoadDays()
+    if(localStorage.getItem("user") != "" && localStorage.getItem("user") != undefined && localStorage.getItem("user") != null){
+        user = localStorage.getItem("user")
+        pw = localStorage.getItem("pw")
+        Logueado()
     }
+
+    setTimeout(function (){
+        document.querySelector('#loading').remove()
+        document.querySelector('#DivSemanasLista').classList.remove('off')
+        if(FirstTime){
+            LoadDaysLista()
+            LoadDays()
+        }
+    }, 250)
+
 }
 
 /*function LoadData(FirstTime){
@@ -1121,7 +1132,49 @@ document.getElementById('RegisterForm').addEventListener("submit", function (eve
 
     user = formData.get('user')
     pw = formData.get('pw')
-    recordar = formData.get('recordar')
 
-    console.log(user, pw, recordar)
+    localStorage.setItem("user", user)
+    localStorage.setItem("pw", pw)
+
+    document.querySelector('#BtnRegister').setAttribute('data-bs-dismiss', 'modal')
+    document.querySelector('#BtnRegister').click()
+    
+    console.log(user, pw)
+
+    Logueado()
 })
+
+document.getElementById('SignForm').addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target)
+
+    user = formData.get('user')
+    pw = formData.get('pw')
+
+    console.log(user, pw)
+})
+
+function Logueado(){
+    document.getElementById('ButtonsSign').classList.add('off')
+    document.getElementById('navAccount').classList.remove('off')
+}
+
+function LogOut(){
+    localStorage.removeItem('user')
+    localStorage.removeItem('pw')
+    location.reload()
+}
+
+Popover = false
+
+function AccountClick(){
+    if (!Popover){
+        Popover = !Popover
+        document.querySelector('.Popover').classList.add('on')
+    }
+    else{
+        Popover = !Popover
+        document.querySelector('.Popover').classList.remove('on')
+    }
+}

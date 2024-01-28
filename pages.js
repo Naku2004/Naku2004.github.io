@@ -10,9 +10,9 @@ function buttonCuaderno(){
     PageBook.classList.add('on')
     PageRutinas.classList.add('off')
     document.querySelectorAll('#navli')[0].querySelector('a').classList.remove('on')
-    document.querySelectorAll('#navli')[0].querySelector('i').classList.remove('on')
+    document.querySelectorAll('#navli')[0].querySelector('span').classList.remove('on')
     document.querySelectorAll('#navli')[1].querySelector('a').classList.add('on')
-    document.querySelectorAll('#navli')[1].querySelector('i').classList.add('on')
+    document.querySelectorAll('#navli')[1].querySelector('span').classList.add('on')
  }
  
  function buttonListaRutinas(){
@@ -26,7 +26,7 @@ function buttonCuaderno(){
     PageRutinas.classList.remove('off')
     PageBook.classList.remove('on')
     document.querySelectorAll('#navli')[1].querySelector('a').classList.remove('on')
-    document.querySelectorAll('#navli')[1].querySelector('i').classList.remove('on')
+    document.querySelectorAll('#navli')[1].querySelector('span').classList.remove('on')
     document.querySelectorAll('#navli')[0].querySelector('a').classList.add('on')
-    document.querySelectorAll('#navli')[0].querySelector('i').classList.add('on')
+    document.querySelectorAll('#navli')[0].querySelector('span').classList.add('on')
  }
