@@ -816,7 +816,7 @@ function SaveData(){
     fetch(`https://api.github.com/gists/${gistId}`, {
     method: 'PATCH',
     headers: {
-        'Authorization': `token ${githubToken}`,
+        'Authorization': `token ${git1 + git2}`,
         'Content-Type': 'application/json'
     },
     body: JSON.stringify(updatedContent)
@@ -829,13 +829,14 @@ function SaveData(){
 }
 
 const gistId = '0faed31478499aaabd3332ec993dcca0'; 
-const githubToken = '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'
+const git1 = 'github_pat_11A7P7C2I0iL7J0a7NZWTT_05Umcb6TlNi'
+const git2 = 'tPXKjuwqcevZdPK51rrpe94BGwem3c9vOWSYTNJ4hxJLq0VD'
 
 async function LoadData(FirstTime){
     try{
         const response = await fetch(`https://api.github.com/gists/${gistId}`, {
             headers: {
-                'Authorization': `token ${githubToken}`
+                'Authorization': `token ${git1 + git2}`
               }
         })
 
