@@ -347,8 +347,10 @@
         </ul>
     </nav>
 
-   <!-- Modal -->
-   <div class="modal fade" id="ModalRegister" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <!-- Bootstrap section -->
+
+    <!-- Modals -->
+    <div class="modal fade" id="ModalRegister" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
@@ -400,6 +402,23 @@
                         <button type="submit" id="BtnSign" class="btn btn-primary">Enviar</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toasts -->
+    <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-dark text-white" id="headerToast">
+                <img src="icons/weblogo.ico" class="rounded me-2" id="logoToast" alt="...">
+                <strong class="me-auto" id="titleToast">Fitness Gym</strong>
+                <small class="text-opacity-50">Now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="bodyToast">
+                ¡Ya existe ese usuario!
             </div>
         </div>
     </div>
