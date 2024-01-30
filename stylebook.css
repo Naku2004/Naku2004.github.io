@@ -407,6 +407,12 @@ span, .buttonBook{
     width: 33%;
 }
 
+@media(min-width: 2200px){
+    .PnlSemana, .PnlSemanaBook{
+        width: 31%;
+    }
+}
+
 @media (max-width: 800px){
 
 
@@ -442,3 +448,4 @@ span, .buttonBook{
         font-size: 3rem;
     }*/
 }
+

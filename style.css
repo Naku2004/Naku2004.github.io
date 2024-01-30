@@ -246,8 +246,16 @@ section {
 }
 
 #btnSlide {
+    display: flex;
+    cursor: pointer;
     margin: 1.1rem -0.5rem 0 1rem;
     padding: .65rem .75rem .6rem .75rem;
+    margin-left: 1.6rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
     float: left;
     color: white;
     border: 0.1 #288d00 solid;
@@ -303,17 +311,21 @@ section {
 #page{
     display: flex;
     margin-top: 1rem;
-    height: 100%;
+    height: fit-content;
 }
 
 #pagerutinas, #pagebook{
-    width: 100%;
+    width: 87%;
 }
 
 #pagerutinas.off{
     visibility: hidden;
     display: none;
     position: absolute;
+}
+
+#pagerutinas.sideoff, #pagebook.sideoff{
+    width: 95.4%;
 }
 
 #pagebook{
@@ -363,28 +375,64 @@ section {
     display: flex;
     left: -100%;
     height: 100%;
+    width: 209px;
 }
+
+#slidesection.sideoff{
+    width: 73.6px;
+}
+
 
 #side {
     padding: 0;
-    left:0.4rem;
-    left: 0%;
     margin: 0.4rem 0 0 0;
     position:absolute;
-    width: 12rem;
-    transition: all 150ms;
+    width: 209px;
+}
+
+#side.off{
+    width: 73.6px;
 }
 
 .sideIcon{
+    width: 25%;
     margin-bottom: -5px;
     font-size: 1.3rem !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.googleSideIcon{
+    width: 25%;
+    font-size: 1.2rem;
+    margin-bottom: -3.5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.chartIcon{
+    padding-left: 2px;
 }
 
 .sideLabel{
     font-family:'Roboto', sans-serif;
     font-weight: 100;
-    padding: 5px;
+    width: 75%;
+    cursor: pointer;
 }
+
+.sideLabel.off{
+    display: none;
+}
+
+.sideIcon.off{
+    width: 100%;
+}
+
+.googleSideIcon.off{
+    width: 100%;
+}
+
 
 #slide {
     background-color: #0a0a0c;
@@ -433,7 +481,7 @@ section {
     text-align: left;
 
     height: 48px;
-    width: 184px;
+    width: 100%;
 
     display: block;
     border-style:hidden;
@@ -443,7 +491,9 @@ section {
     border-radius:0.6rem;
     padding: 0 1.6rem;
     padding-right: 0;
+    margin-left: 0.5rem;
 }
+
 
 .buttonlista:hover, .buttonlistaIcon:hover {
     background-color: #222325;
@@ -705,14 +755,29 @@ th:last-child{
     padding: 0;
 }
 
+
 @media(max-width: 1550px){
+    #pagerutinas, #pagebook, #page{
+        width: 100%;
+        height: max-content;
+        margin-bottom: 1.5rem;
+    }
+
     .SectionLabel{
         width: 45%;
+    }
+
+    #btnSlide{
+        display: none;
     }
 
     #side, #slide{
         visibility: hidden;
         position: fixed;
+    }
+
+    #slidesection{
+        display: none;
     }
 
     #slide.on{
@@ -723,11 +788,16 @@ th:last-child{
     #navbottom{
         visibility: visible;
     }
+    
+    #logor{
+        margin-left: 2rem;
+    }
 }
 
 @media(max-width: 800px){
-    .SectionLabel{
-        width: 90%;
+    #pagerutinas, #pagebook{
+        width: 100%;
+        margin-bottom: 1rem;
     }
 
     .ButtonLabel{
@@ -739,6 +809,10 @@ th:last-child{
     #side, #slide{
         visibility: hidden;
         position: fixed;
+    }
+
+    #slidesection{
+        display: none;
     }
 
     #slide.on{

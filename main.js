@@ -92,6 +92,50 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => console.error('Error:', error));*/
 });
 
+var slide = true
+
+function buttonSlide(){
+    if(slide){
+        slide = false
+        sideLabels = document.querySelectorAll('.sideLabel')
+        document.querySelector('#side').classList.add('off')
+        document.querySelector('#pagerutinas').classList.add('sideoff')
+        document.querySelector('#pagebook').classList.add('sideoff')
+        document.querySelector('#slidesection').classList.add('sideoff')
+    
+        for(i = 0; i < sideLabels.length; i++){
+            let buttonlistaIcon = sideLabels[i].closest('button')
+            let sideIcon = buttonlistaIcon.querySelector('.sideIcon')
+    
+            if(sideIcon == null){
+                sideIcon = buttonlistaIcon.querySelector('.googleSideIcon')
+            }
+            
+            sideIcon.classList.add('off')
+            sideLabels[i].classList.add('off')
+        }
+    }
+    else{
+        slide = true
+        sideLabels = document.querySelectorAll('.sideLabel')
+        document.querySelector('#side').classList.remove('off')
+        document.querySelector('#pagerutinas').classList.remove('sideoff')
+        document.querySelector('#slidesection').classList.remove('sideoff')
+    
+        for(i = 0; i < sideLabels.length; i++){
+            let buttonlistaIcon = sideLabels[i].closest('button')
+            let sideIcon = buttonlistaIcon.querySelector('.sideIcon')
+    
+            if(sideIcon == null){
+                sideIcon = buttonlistaIcon.querySelector('.googleSideIcon')
+            }
+            
+            sideIcon.classList.remove('off')
+            sideLabels[i].classList.remove('off')
+        }
+    }
+}
+
 function SlideDivButtons(){
     let isDown = false;
     let startX;
