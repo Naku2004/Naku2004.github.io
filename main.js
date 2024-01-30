@@ -665,6 +665,10 @@ var dataBase = {
     }]
 }
 
+var usuarios = []
+var contraseñas = []
+var amountUsers
+
 function SaveData(){
     localStorage.setItem("amountWeeksLista", amountWeeksLista)
 
@@ -842,6 +846,7 @@ async function LoadData(FirstTime, Again){
         pw = localStorage.getItem("pw")
         document.getElementById('ButtonsSign').classList.add('off')
         document.getElementById('navAccount').classList.remove('off')
+        document.querySelector('.Popover').querySelector('.title').innerHTML = user + '<hr>'
         logueado = true
     }
 
@@ -854,10 +859,12 @@ async function LoadData(FirstTime, Again){
 
         const data = await response.json()
         const usersData = JSON.parse(data.files["users.json"].content)
-        const amountUsers = usersData.length
+        amountUsers = usersData.users.length
+
 
         for(let i = 0; i < amountUsers; i++){
-            users[i] = usersData[i]
+            usersFormat.users[i] = usersData.users[i]
+            usersFormat.password[i] = usersData.password[i]
         }
     } 
     catch (error){
@@ -1224,9 +1231,10 @@ document.getElementById('RegisterForm').addEventListener("submit", function (eve
     user = formData.get('user')
     pw = formData.get('pw')
 
-    const encontrado = users.find(elemento => elemento === user);
+    const encontrado = usersFormat.users.find(elemento => elemento === user);
 
     if (encontrado !== undefined) {
+        document.getElementById('spanToast').innerHTML = '¡Ya existe ese usuario!'
         document.getElementById('liveToastBtn').click()
         console.log(`El valor ${user} fue encontrado en el array.`);
     } else {
@@ -1238,6 +1246,7 @@ document.getElementById('RegisterForm').addEventListener("submit", function (eve
         
         console.log(user, pw)
 
+        document.querySelector('.Popover').querySelector('.title').innerHTML = user + '<hr>'
         Logueado('Register')
         console.log(`El valor ${user} no fue encontrado en el array.`);
     }
@@ -1253,16 +1262,40 @@ document.getElementById('SignForm').addEventListener("submit", function (event) 
     user = formData.get('user')
     pw = formData.get('pw')
 
-    localStorage.setItem("user", user)
-    localStorage.setItem("pw", pw)
+    const encontrado = usersFormat.users.find(elemento => elemento === user);
+    
+    if (encontrado !== undefined) {
+        console.log(`El valor ${user} fue encontrado en el array.`);
 
-    console.log(user, pw)
+        const index = usersFormat.users.findIndex(elemento => elemento === user)
+        const passwordUser = usersFormat.password[index]
 
-    Logueado('SignUp')
+        if(pw == passwordUser){
+            localStorage.setItem("user", user)
+            localStorage.setItem("pw", pw)
+        
+            console.log(user, pw)
+        
+            Logueado('SignUp')
+        }
+        else{
+            document.getElementById('spanToast').innerHTML = 'La contraseña es incorrecta'
+            document.getElementById('liveToastBtn').click()
+        }
+    } else {
+        document.getElementById('spanToast').innerHTML = 'El usuario no existe'
+        document.getElementById('liveToastBtn').click()
+        console.log(`El valor ${user} no fue encontrado en el array.`);
+    }
+
 })
 
 var logueado = false
-var users = []
+
+var usersFormat = {
+    users: [],
+    password: []
+}
 
 function Logueado(Evento){
     document.getElementById('ButtonsSign').classList.add('off')
@@ -1272,9 +1305,10 @@ function Logueado(Evento){
     if(Evento == 'Register'){
         SaveData()
     
-        users.push(user)
+        usersFormat.users[amountUsers] = user
+        usersFormat.password[amountUsers] = pw
 
-        const usersJSON = JSON.stringify(users)
+        const usersJSON = JSON.stringify(usersFormat)
 
         fetch(`https://api.github.com/gists/${gistId}`, {
             method: "PATCH",

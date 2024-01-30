@@ -375,10 +375,15 @@ section {
     transition: all 150ms;
 }
 
-#inicio{
+.sideIcon{
+    margin-bottom: -5px;
+    font-size: 1.3rem !important;
+}
+
+.sideLabel{
     font-family:'Roboto', sans-serif;
     font-weight: 100;
-    padding: 0.4rem;
+    padding: 5px;
 }
 
 #slide {
@@ -437,6 +442,7 @@ section {
 
     border-radius:0.6rem;
     padding: 0 1.6rem;
+    padding-right: 0;
 }
 
 .buttonlista:hover, .buttonlistaIcon:hover {
