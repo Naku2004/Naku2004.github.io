@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla con Filas Clonadas</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .editable {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Tabla con Filas Clonadas</h2>
+
+  <table id="miTabla">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Edad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="text" class="editable" name="nombre[]" placeholder="Ingrese el nombre"></td>
+        <td><input type="text" class="editable" name="apellido[]" placeholder="Ingrese el apellido"></td>
+        <td><input type="number" class="editable" name="edad[]" placeholder="Ingrese la edad"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button onclick="clonarFila()">Agregar Fila</button>
+
+  <script>
+    function clonarFila() {
+      // Obtener la referencia a la tabla y su cuerpo
+      var tabla = document.getElementById('miTabla');
+      var tbody = tabla.getElementsByTagName('tbody')[0];
+
+      // Obtener la referencia a la fila que queremos clonar
+      var filaOriginal = tbody.getElementsByTagName('tr')[0];
+
+      // Clonar la fila
+      var nuevaFila = filaOriginal.cloneNode(true);
+
+      // Limpiar los campos de entrada en la fila clonada (opcional)
+      limpiarCampos(nuevaFila);
+
+      // Agregar la fila clonada al cuerpo de la tabla
+      tbody.appendChild(nuevaFila);
+    }
+
+    function limpiarCampos(fila) {
+      // Obtener todos los elementos de entrada en la fila
+      var camposInput = fila.getElementsByTagName('input');
+
+      // Limpiar el contenido de los campos de entrada
+      for (var i = 0; i < camposInput.length; i++) {
+        camposInput[i].value = '';
+      }
+    }
+  </script>
+
+</body>
+</html>

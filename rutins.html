@@ -23,9 +23,13 @@
         <img src="icons/logor.png" id="logor">
 
         <nav id="ButtonsSign" class="">
-            <button type="button" class="links" data-bs-toggle="modal" data-bs-target="#ModalRegister">Registrarse</button>
-            <button type="button" class="links outline" data-bs-toggle="modal" data-bs-target="#ModalSign">Iniciar sesión</button>
+            <button type="button" class="buttonsLogin links" data-bs-toggle="modal" data-bs-target="#ModalRegister">Registrarse</button>
+            <button type="button" class="buttonsLogin links outline" data-bs-toggle="modal" data-bs-target="#ModalSign">Iniciar sesión</button>
         </nav>
+
+        <button class="btn btnRightSlide" type="button" data-bs-toggle="offcanvas" data-bs-target="#rightSideSection" aria-controls="rightSideSection">
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
 
         <nav id="navAccount" class="off">
             <ul class="navPopover">
@@ -45,7 +49,6 @@
         </nav>
 
     </header>
-
 
     <section id="page">
         <section id="slidesection">
@@ -418,6 +421,22 @@
                     ¡Ya existe ese usuario!
                 </span>
             </div>
+        </div>
+    </div>
+
+    <!-- Offcanvas -->
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="rightSideSection" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <span id="accountIconCanvas" class="imgIcon material-symbols-outlined">
+                account_circle
+            </span>
+        </div>
+        <div class="offcanvas-body">
+            <nav id="ButtonsSignCanvas" class="">
+                <button type="button" class="btnCanvas links" data-bs-toggle="modal" data-bs-target="#ModalRegister">Registrarse</button>
+                <button type="button" class="btnCanvas links outline" data-bs-toggle="modal" data-bs-target="#ModalSign">Iniciar sesión</button>
+            </nav>
         </div>
     </div>
 

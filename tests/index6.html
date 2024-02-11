@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Prevenir Recarga</title>
+</head>
+<body>
+
+<form id="miFormulario">
+    <!-- Tus campos de formulario aquí -->
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre">
+    
+    <!-- Tu botón submit -->
+    <input type="submit" value="Enviar">
+</form>
+
+<script>
+document.getElementById("miFormulario").addEventListener("submit", function(event) {
+    // Evitar la recarga de la página
+    event.preventDefault();
+
+    // Lógica de manejo del formulario
+    // Puedes agregar aquí el código para procesar los datos del formulario
+
+    // Ejemplo: Mostrar un mensaje en la consola
+    console.log("Formulario enviado sin recargar la página");
+});
+</script>
+
+</body>
+</html>

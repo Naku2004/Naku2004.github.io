@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@popperjs/core": "^2.11.8"
+    "@popperjs/core": "^2.11.8",
+    "@syncfusion/ej2-angular-schedule": "^24.2.3"
   }
 }

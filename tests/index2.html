@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla con Celdas de Ancho Fijo</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed; /* Fija la anchura de las columnas */
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+      width: 33.33%; /* Divide el espacio en tres columnas iguales */
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Ejemplo de Tabla con Celdas de Ancho Fijo</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Encabezado 1</th>
+        <th>Encabezado 2</th>
+        <th>Encabezado 3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Dato 1</td>
+        <td>Dato 2</td>
+        <td>Dato 3</td>
+      </tr>
+      <tr>
+        <td>Dato 4</td>
+        <td>Dato 5</td>
+        <td>Dato 6</td>
+      </tr>
+      <!-- Puedes agregar más filas según sea necesario -->
+    </tbody>
+  </table>
+
+</body>
+</html>

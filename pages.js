@@ -1,8 +1,10 @@
-
 var listarutinas = true
 var cuaderno = false
 
 function buttonCuaderno(){
+    if(cuaderno == true){
+        location.href="#"
+    }
     listarutinas = false
     cuaderno = true
     let PageRutinas = document.querySelector('#pagerutinas') 

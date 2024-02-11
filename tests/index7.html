@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organizador de Días</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css" media="print" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+
+    #calendar {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #2e2e2e;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale-all.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/gcal.min.js"></script>
+</head>
+<body>
+  <div id="calendar"></div>
+
+  <script>
+    $(document).ready(function() {
+      var calendar = $('#calendar').fullCalendar({
+        themeSystem: 'bootstrap3', // Utilizamos el tema Bootstrap 3 para dar un aspecto más moderno
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        defaultView: 'agendaWeek',
+        editable: true,
+        events: [
+          {
+            title: 'Trabajo',
+            start: '2024-01-31T09:00:00',
+            end: '2024-01-31T17:00:00'
+          },
+          {
+            title: 'Estudio',
+            start: '2024-02-01T13:00:00',
+            end: '2024-02-01T16:00:00'
+          },
+        ],
+        eventClick: function(calEvent, jsEvent, view) {
+          alert('Actividad: ' + calEvent.title + '\nHora de inicio: ' + moment(calEvent.start).format('HH:mm') + '\nHora de fin: ' + moment(calEvent.end).format('HH:mm'));
+        },
+        dayClick: function(date, jsEvent, view) {
+          var title = prompt('Nueva actividad para el día ' + moment(date).format('YYYY-MM-DD') + ':');
+          if (title) {
+            calendar.fullCalendar('renderEvent', {
+              title: title,
+              start: date,
+              allDay: true
+            });
+          }
+        },
+        eventRender: function(event, element) {
+          element.find('.fc-title').css('font-weight', 'bold');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

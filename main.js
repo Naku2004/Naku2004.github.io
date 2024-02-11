@@ -13,10 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
     LoadData(true, false);
     SlideDivButtons()
     
-
-    // Autenticación con un token de acceso de GitHub
-
-    
     /* LEER GIST
     const gistId = '0faed31478499aaabd3332ec993dcca0'; 
 
@@ -99,8 +95,6 @@ function buttonSlide(){
         slide = false
         sideLabels = document.querySelectorAll('.sideLabel')
         document.querySelector('#side').classList.add('off')
-        document.querySelector('#pagerutinas').classList.add('sideoff')
-        document.querySelector('#pagebook').classList.add('sideoff')
         document.querySelector('#slidesection').classList.add('sideoff')
     
         for(i = 0; i < sideLabels.length; i++){
@@ -849,6 +843,42 @@ function SaveData(){
         }
     }
 
+    localStorage.setItem("amountWeeks", amountWeeks)
+    
+    for(let i = 0; i < amountWeeks; i++){
+        localStorage.setItem("SemanaText" + i, SemanaText[i])
+    }
+
+    for(let i = 0; i < amountWeeks; i++){
+        for(let j = 0; j < amountDays[i]; j++){
+            localStorage.setItem("DiaText" + i + "" + j, DiaText[i][j])
+        }
+    }
+
+    for(let i = 0; i < amountDays.length; i++){
+        if(amountDays[i] == null){
+            amountDays[i] = 1 
+        }
+        localStorage.setItem("amountDays" + i, amountDays[i])
+    }
+
+    for(let i = 0; i < amountWeeks; i++){
+        for(let j = 0; j < amountDays[i]; j++){
+            localStorage.setItem("amountEjerciciosDay" + i + j, amountEjerciciosDay[i][j])
+        }
+    }
+
+    for(let i = 0; i < amountWeeks; i++){
+        for(let j = 0; j < amountDays[i]; j++){
+            for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
+                localStorage.setItem("textEjercicios" + i + j + k, textEjercicios[i][j][k])
+                localStorage.setItem("textSeries" + i + j + k, textSeries[i][j][k])
+                localStorage.setItem("textReps" + i + j + k, textReps[i][j][k])
+                localStorage.setItem("textRIR" + i + j + k, textRIR[i][j][k])
+            }
+        }
+    }
+
     if(logueado){
         let FileName = `${user}DataBase.json`
 
@@ -890,6 +920,7 @@ async function LoadData(FirstTime, Again){
         pw = localStorage.getItem("pw")
         document.getElementById('ButtonsSign').classList.add('off')
         document.getElementById('navAccount').classList.remove('off')
+        document.querySelector('.btnRightSlide').classList.add('off')
         document.querySelector('.Popover').querySelector('.title').innerHTML = user + '<hr>'
         logueado = true
     }
@@ -1079,6 +1110,65 @@ async function LoadData(FirstTime, Again){
                     textSeriesLista[i][j][k] = localStorage.getItem(`textSeriesLista${i}${j}${k}`)
                     textRepsLista[i][j][k] = localStorage.getItem(`textRepsLista${i}${j}${k}`)
                     textRIRLista[i][j][k] = localStorage.getItem(`textRIRLista${i}${j}${k}`)
+                }
+            }
+        }
+
+        amountWeeks = localStorage.getItem("amountWeeks")
+
+        if(amountWeeks == null){
+            amountWeeks = 1
+        }
+
+        for(let i = 0; i < amountWeeks; i++){
+            amountDays[i] = localStorage.getItem("amountDays" + i)
+
+            if(typeof amountDays[i] == undefined){
+                amountDays[i] = 1
+            }
+        }
+
+        for(let i = 0; i < amountWeeks; i++){
+            SemanaText[i] = localStorage.getItem("SemanaText" + i)
+        }
+
+        for(let i = 0; i < amountWeeks; i++){
+            if(i != 0){
+                DiaText[i] = [[]]
+            }
+            for(let j = 0; j < amountDays[i]; j++){
+                DiaText[i][j] = localStorage.getItem(`DiaText${i}${j}`)
+            }
+        }
+
+        for(let i = 0; i < amountWeeks; i++){
+            if(i != 0){
+                amountEjerciciosDay[i] = []
+            }
+            for(let j = 0; j < amountDays[i]; j++){
+                amountEjerciciosDay[i][j] = localStorage.getItem(`amountEjerciciosDay${i}${j}`)
+            }
+        }
+
+        for(let i = 0; i < amountWeeks; i++){
+            if(i != 0){
+                textEjercicios[i] = [[]]
+                textSeries[i] = [[]]
+                textReps[i] = [[]]
+                textRIR[i] = [[]]
+            }
+            for(let j = 0; j < amountDays[i]; j++){
+                if(j != 0){
+                    textEjercicios[i][j] = []
+                    textSeries[i][j] = []
+                    textReps[i][j] = []
+                    textRIR[i][j] = []
+                }
+                for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
+                    textEjercicios[i][j][k] = localStorage.getItem(`textEjercicios${i}${j}${k}`)
+                    textSeries[i][j][k] = localStorage.getItem(`textSeries${i}${j}${k}`)
+                    textReps[i][j][k] = localStorage.getItem(`textReps${i}${j}${k}`)
+                    textRIR[i][j][k] = localStorage.getItem(`textRIR${i}${j}${k}`)
                 }
             }
         }

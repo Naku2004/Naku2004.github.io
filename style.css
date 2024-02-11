@@ -291,6 +291,60 @@ section {
     background-color: #1d6102;
 }
 
+.btnRightSlide{
+    display: none !important;
+    cursor: pointer !important;
+    margin: 1.1rem -0.5rem 0 1rem !important;
+    margin-right: 1.6rem !important;
+    height: 3rem !important;
+    width: 3.5rem !important;
+    justify-content: center !important;
+    align-items: center !important;
+    vertical-align: middle !important;
+    color: white !important;
+    border-radius: 10rem !important;
+}
+
+.btnRightSlide.off{
+    display: none !important;
+}
+
+.btnRightSlide:hover{
+    background-color: #222325 !important;
+}
+
+.offcanvas{
+    background-color: #17171b !important;
+}
+
+.offcanvas-header{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+#ButtonsSignCanvas{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.btnCanvas{
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+}
+
+#accountIconCanvas{
+    border-style: none;
+    background-color: transparent;
+
+    font-size: 4rem;
+    color: #288d00;
+    cursor: default;
+    margin-top: 1rem;
+}
+
 .outline{
     border-style: solid;
     border-radius: 0.5rem;
@@ -315,17 +369,13 @@ section {
 }
 
 #pagerutinas, #pagebook{
-    width: 87%;
+    width: 100%;
 }
 
 #pagerutinas.off{
     visibility: hidden;
     display: none;
     position: absolute;
-}
-
-#pagerutinas.sideoff, #pagebook.sideoff{
-    width: 95.4%;
 }
 
 #pagebook{
@@ -835,6 +885,14 @@ th:last-child{
 
     #navtab{
         width: 90%;
+    }
+
+    .buttonsLogin{
+        display: none;
+    }
+        
+    .btnRightSlide{
+        display: block !important;
     }
 }
 
