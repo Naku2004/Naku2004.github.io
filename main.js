@@ -12,80 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Aquí puedes llamar a tu función para cargar datos
     LoadData(true, false);
     SlideDivButtons()
-    
-    /* LEER GIST
-    const gistId = '0faed31478499aaabd3332ec993dcca0'; 
-
-    fetch(`https://api.github.com/gists/${gistId}`)
-    .then(response => response.json())
-    .then(data => {
-        // Accede al contenido del archivo en el Gist
-        const archivoContent = data.files['archivo.txt'].content;
-        console.log(archivoContent);
-    })
-    .catch(error => console.error('Error:', error));*/
-
-    /* ACTUALIZAR GIST
-    const gistId = '0faed31478499aaabd3332ec993dcca0';
-
-    const datos = {
-        usuario: {
-          nombre: 'John',
-          edad: 25,
-          correo: 'john@example.com'
-        },
-        tareas: [
-          { id: 1, descripcion: 'Hacer compras', completada: false },
-          { id: 2, descripcion: 'Estudiar programación', completada: true },
-          // ... más tareas
-        ]
-    };
-
-    datosJSON = JSON.stringify(datos)
-
-    const updatedContent = {
-        files: {
-            'database.json': {
-            content: datosJSON
-            }
-        }
-    };
-
-    fetch(`https://api.github.com/gists/${gistId}`, {
-    method: 'PATCH',
-    headers: {
-        'Authorization': `token ${githubToken}`,
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(updatedContent)
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error)); */
-
-
-    /* CREAR GIST
-    const gistContent = {
-        description: 'Descripción del Gist',
-        public: true,
-        files: {
-          'archivo.txt': {
-            content: 'Contenido del archivo'
-          }
-        }
-      };
-      
-      fetch('https://api.github.com/gists', {
-        method: 'POST',
-        headers: {
-          'Authorization': `token ${githubToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(gistContent)
-      })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));*/
 });
 
 var slide = true
@@ -240,6 +166,7 @@ function ButtonClickLista(Button){
     let AllTextInputExcercise = tbody.querySelectorAll('#InputExcercise')
     let AllTextInputSeries = tbody.querySelectorAll('#InputSeries')
     let AllTextInputReps = tbody.querySelectorAll('#InputReps')
+    let AllTextInputPeso = tbody.querySelectorAll('#InputPeso')
     let AllTextInputRIR = tbody.querySelectorAll('#InputRIR')
 
     for(let i = 0; i < NumberExcercisesAfter; i++){
@@ -253,17 +180,21 @@ function ButtonClickLista(Button){
         if(textRepsLista[Week][Day][i] == "null"){
             textRepsLista[Week][Day][i] = ""
         }
+        if(textPesoLista[Week][Day][i] == "null"){
+            textPesoLista[Week][Day][i] = ""
+        }
         if(textRIRLista[Week][Day][i] == "null"){
             textRIRLista[Week][Day][i] = ""
         }
 
-
         AllTextInputExcercise[i].value = textEjerciciosLista[Week][Day][i]
         AllTextInputSeries[i].value = textSeriesLista[Week][Day][i]
         AllTextInputReps[i].value = textRepsLista[Week][Day][i]
+        AllTextInputPeso[i].value = textPesoLista[Week][Day][i]
         AllTextInputRIR[i].value = textRIRLista[Week][Day][i]
     }
     
+    ShowBtnSeries()
     //SaveData()
 }
 
@@ -301,6 +232,7 @@ function AddWeekLista(Button, Load, i){
         textEjerciciosLista[amountWeeksLista - 1] = []
         textSeriesLista[amountWeeksLista - 1] = []
         textRepsLista[amountWeeksLista - 1] = []
+        textPesoLista[amountWeeksLista - 1] = []
         textRIRLista[amountWeeksLista - 1] = []
         DiaTextLista[amountWeeksLista - 1] = [[]]
         SemanaTextLista[amountWeeksLista - 1] = "Semana " + amountWeeksLista
@@ -310,6 +242,7 @@ function AddWeekLista(Button, Load, i){
             textEjerciciosLista[amountWeeksLista - 1][i] = [""]
             textSeriesLista[amountWeeksLista - 1][i] = [""]
             textRepsLista[amountWeeksLista - 1][i] = [""]
+            textPesoLista[amountWeeksLista - 1][i] = [""]
             textRIRLista[amountWeeksLista - 1][i] = [""]
             DiaTextLista[amountWeeksLista - 1][i] = NewDivSemana.querySelectorAll('#divButtons')[i].querySelector('input').value
         }
@@ -344,6 +277,7 @@ function DeleteWeekLista(Button){
         textEjerciciosLista.splice(amountWeeksLista, 1)
         textSeriesLista.splice(amountWeeksLista, 1)
         textRepsLista.splice(amountWeeksLista, 1)
+        textPesoLista.splice(amountWeeksLista, 1)
         textRIRLista.splice(amountWeeksLista, 1)
         DiaTextLista.splice(amountWeeksLista, 1)
         dataBase.ListaRutinas.splice(amountWeeksLista, 1)
@@ -375,6 +309,7 @@ function AddDaysLista(Button, Load, j){
             textEjerciciosLista[Week][amountDaysLista[Week] - 1] = [""]
             textSeriesLista[Week][amountDaysLista[Week] - 1] = [""]
             textRepsLista[Week][amountDaysLista[Week] - 1] = [""]
+            textPesoLista[Week][amountDaysLista[Week] - 1] = [""]
             textRIRLista[Week][amountDaysLista[Week] - 1] = [""]
             SaveData()
         }
@@ -447,6 +382,7 @@ function DeleteDaysLista(Button){
         textEjerciciosLista[Week].splice(Day, 1)
         textSeriesLista[Week].splice(Day, 1)
         textRepsLista[Week].splice(Day, 1)
+        textPesoLista[Week].splice(Day, 1)
         textRIRLista[Week].splice(Day, 1)
         DiaTextLista[Week].splice(Day, 1)
         dataBase.ListaRutinas[Week].DIASNAME.splice(Day, 1)
@@ -454,6 +390,7 @@ function DeleteDaysLista(Button){
         dataBase.ListaRutinas[Week].TEXTEJERCICIO.splice(Day, 1)
         dataBase.ListaRutinas[Week].TEXTSERIES.splice(Day, 1)
         dataBase.ListaRutinas[Week].TEXTREPS.splice(Day, 1)
+        dataBase.ListaRutinas[Week].TEXTPESO.splice(Day, 1)
         dataBase.ListaRutinas[Week].TEXTRIR.splice(Day, 1)
 
         SaveData()
@@ -501,6 +438,7 @@ function AddEjercicio(Button, Load, j){
         textEjerciciosLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
         textSeriesLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
         textRepsLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
+        textPesoLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
         textRIRLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
         amountEjerciciosDayLista[Week][Day]++
         SaveData()
@@ -639,6 +577,7 @@ function EditTextSpanLista(TextInput, Type){
 var textEjerciciosLista =    [/* Semana */[/*Dia 1*/[""/*1er Ejercicio*/]]]
 var textSeriesLista =        [/* Semana */[/*Dia 1*/[""/*1er Series*/]]]
 var textRepsLista =          [/* Semana */[/*Dia 1*/[""/*1er Reps*/]]]
+var textPesoLista =          [/* Semana */[/*Dia 1*/[""/*1er Peso*/]]]
 var textRIRLista =           [/* Semana */[/*Dia 1*/[""/*1er RIR*/]]]
 var TextoCambiado = false
 
@@ -655,6 +594,7 @@ function TextChanged(TextInput, Type){
 
     if(Type == "Series"){
         textSeriesLista[Week][Day][ExerciseID] = TextInput.value
+        SeriesChanged(TextInput)
         //alert(textEjerciciosLista[Week][Day][ExerciseID])
     }
 
@@ -666,6 +606,10 @@ function TextChanged(TextInput, Type){
     if(Type == "RIR"){
         textRIRLista[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
+    }
+
+    if(Type == 'Peso'){
+        textPesoLista[Week][Day][ExerciseID] = TextInput.value
     }
 }
 
@@ -686,6 +630,7 @@ var dataBase = {
         TEXTEJERCICIO:[[""]],
         TEXTSERIES: [[""]],
         TEXTREPS: [[""]],
+        TEXTPESO: [[""]],
         TEXTRIR: [[""]],
         PASE: 0
     }],
@@ -698,6 +643,7 @@ var dataBase = {
         TEXTEJERCICIO:[[""]],
         TEXTSERIES: [[""]],
         TEXTREPS: [[""]],
+        TEXTPESO: [[""]],
         TEXTRIR: [[""]],
         PASE: 0
     }]
@@ -734,6 +680,7 @@ function SaveData(){
                 localStorage.setItem("textEjerciciosLista" + i + j + k, textEjerciciosLista[i][j][k])
                 localStorage.setItem("textSeriesLista" + i + j + k, textSeriesLista[i][j][k])
                 localStorage.setItem("textRepsLista" + i + j + k, textRepsLista[i][j][k])
+                localStorage.setItem("textPesoLista" + i + j + k, textPesoLista[i][j][k])
                 localStorage.setItem("textRIRLista" + i + j + k, textRIRLista[i][j][k])
             }
         }
@@ -751,6 +698,7 @@ function SaveData(){
                 TEXTEJERCICIO:[[""]],
                 TEXTSERIES: [[""]],
                 TEXTREPS: [[""]],
+                TEXTPESO: [[""]],
                 TEXTRIR: [[""]],
                 PASE: 0
             }
@@ -779,6 +727,10 @@ function SaveData(){
                     dataBase.ListaRutinas[i].TEXTREPS[j] = []
                 }
 
+                if(dataBase.ListaRutinas[i].TEXTPESO[j] == undefined){
+                    dataBase.ListaRutinas[i].TEXTPESO[j] = []
+                }
+
                 if(dataBase.ListaRutinas[i].TEXTRIR[j] == undefined){
                     dataBase.ListaRutinas[i].TEXTRIR[j] = []
                 }
@@ -786,6 +738,8 @@ function SaveData(){
                 dataBase.ListaRutinas[i].TEXTEJERCICIO[j][k] = textEjerciciosLista[i][j][k]
                 dataBase.ListaRutinas[i].TEXTSERIES[j][k] = textSeriesLista[i][j][k]
                 dataBase.ListaRutinas[i].TEXTREPS[j][k] = textRepsLista[i][j][k]
+                console.log(textPesoLista[i][j][k])
+                dataBase.ListaRutinas[i].TEXTPESO[j][k] = textPesoLista[i][j][k]
                 dataBase.ListaRutinas[i].TEXTRIR[j][k] = textRIRLista[i][j][k]
             }
         }
@@ -803,6 +757,7 @@ function SaveData(){
                 TEXTEJERCICIO:[[""]],
                 TEXTSERIES: [[""]],
                 TEXTREPS: [[""]],
+                TEXTPESO: [[""]],
                 TEXTRIR: [[""]],
                 PASE: 0
             }
@@ -831,6 +786,10 @@ function SaveData(){
                     dataBase.ListaBook[i].TEXTREPS[j] = []
                 }
 
+                if(dataBase.ListaBook[i].TEXTPESO[j] == undefined){
+                    dataBase.ListaBook[i].TEXTPESO[j] = []
+                }
+
                 if(dataBase.ListaBook[i].TEXTRIR[j] == undefined){
                     dataBase.ListaBook[i].TEXTRIR[j] = []
                 }
@@ -838,6 +797,7 @@ function SaveData(){
                 dataBase.ListaBook[i].TEXTEJERCICIO[j][k] = textEjercicios[i][j][k]
                 dataBase.ListaBook[i].TEXTSERIES[j][k] = textSeries[i][j][k]
                 dataBase.ListaBook[i].TEXTREPS[j][k] = textReps[i][j][k]
+                dataBase.ListaBook[i].TEXTPESO[j][k] = textPesoLista[i][j][k]
                 dataBase.ListaBook[i].TEXTRIR[j][k] = textRIR[i][j][k]
             }
         }
@@ -984,6 +944,7 @@ async function LoadData(FirstTime, Again){
                     textEjerciciosLista[i] = [[]]
                     textSeriesLista[i] = [[]]
                     textRepsLista[i] = [[]]
+                    textPesoLista[i] = [[]]
                     textRIRLista[i] = [[]]
                 }
     
@@ -992,6 +953,7 @@ async function LoadData(FirstTime, Again){
                         textEjerciciosLista[i][j] = []
                         textSeriesLista[i][j] = []
                         textRepsLista[i][j] = []
+                        textPesoLista[i][j] = []
                         textRIRLista[i][j] = []
                     }
                     for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
@@ -999,6 +961,7 @@ async function LoadData(FirstTime, Again){
                         textEjerciciosLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTEJERCICIO[j][k]
                         textSeriesLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTSERIES[j][k]
                         textRepsLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTREPS[j][k]
+                        textPesoLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTPESO[j][k]
                         textRIRLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTRIR[j][k]
                     }
                 }
@@ -1029,6 +992,7 @@ async function LoadData(FirstTime, Again){
                     textEjercicios[i] = [[]]
                     textSeries[i] = [[]]
                     textReps[i] = [[]]
+                    textPeso[i] = [[]]
                     textRIR[i] = [[]]
                 }
     
@@ -1037,6 +1001,7 @@ async function LoadData(FirstTime, Again){
                         textEjercicios[i][j] = []
                         textSeries[i][j] = []
                         textReps[i][j] = []
+                        textPeso[i][j] = []
                         textRIR[i][j] = []
                     }
                     for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
@@ -1044,6 +1009,7 @@ async function LoadData(FirstTime, Again){
                         textEjercicios[i][j][k] = dataBaseLoad.ListaBook[i].TEXTEJERCICIO[j][k]
                         textSeries[i][j][k] = dataBaseLoad.ListaBook[i].TEXTSERIES[j][k]
                         textReps[i][j][k] = dataBaseLoad.ListaBook[i].TEXTREPS[j][k]
+                        textPeso[i][j][k] = dataBaseLoad.ListaBook[i].TEXTPESO[j][k]
                         textRIR[i][j][k] = dataBaseLoad.ListaBook[i].TEXTRIR[j][k]
                     }
                 }
@@ -1095,6 +1061,7 @@ async function LoadData(FirstTime, Again){
                 textEjerciciosLista[i] = [[]]
                 textSeriesLista[i] = [[]]
                 textRepsLista[i] = [[]]
+                textPesoLista[i] = [[]]
                 textRIRLista[i] = [[]]
             }
             for(let j = 0; j < amountDaysLista[i]; j++){
@@ -1102,6 +1069,7 @@ async function LoadData(FirstTime, Again){
                     textEjerciciosLista[i][j] = []
                     textSeriesLista[i][j] = []
                     textRepsLista[i][j] = []
+                    textPesoLista[i][j] = []
                     textRIRLista[i][j] = []
                 }
                 for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
@@ -1109,6 +1077,7 @@ async function LoadData(FirstTime, Again){
                     textEjerciciosLista[i][j][k] = localStorage.getItem(`textEjerciciosLista${i}${j}${k}`)
                     textSeriesLista[i][j][k] = localStorage.getItem(`textSeriesLista${i}${j}${k}`)
                     textRepsLista[i][j][k] = localStorage.getItem(`textRepsLista${i}${j}${k}`)
+                    textPesoLista[i][j][k] = localStorage.getItem(`textPesoLista${i}${j}${k}`)
                     textRIRLista[i][j][k] = localStorage.getItem(`textRIRLista${i}${j}${k}`)
                 }
             }
@@ -1489,6 +1458,28 @@ function AccountClick(){
     }
 }
 
+function ShowBtnSeries(){
+    let AllInputSeries = document.querySelector('#pagerutinas').querySelectorAll('#InputSeries')
+
+    for(let i = 0; i < AllInputSeries.length; i++){
+        let NumberSeries = parseInt(AllInputSeries[i].value)
+        console.log(document.querySelector('#InputSeries').innerHTML)
+        if(NumberSeries > 1){
+            tdInput = AllInputSeries[i].closest('td')
+            tdInput.querySelector('#DivShowSeries').classList.add('on')
+        }
+    }
+}
+
+function SeriesChanged(Input){
+    let NumberSeries = parseInt(Input.value)
+    console.log(Input)
+    if(NumberSeries > 1){
+        tdInput = Input.closest('td')
+        tdInput.querySelector('#DivShowSeries').classList.add('on')
+    }
+}
+
 const toastTrigger = document.getElementById('liveToastBtn')
 const toastLiveExample = document.getElementById('liveToast')
 
@@ -1498,3 +1489,5 @@ if (toastTrigger) {
     toastBootstrap.show()
   })
 }
+
+const container = document.getElementById('calendar');

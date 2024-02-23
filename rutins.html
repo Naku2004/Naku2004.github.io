@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="stylebook.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css"/>
+    <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
 </head>
 <body id="bodyrutins">
     <input type="checkbox" id="menu">
@@ -57,123 +59,9 @@
                 <button id="rutinasIcon" class="buttonlistaIcon" onclick="buttonListaRutinas()"><span class="material-symbols-outlined sideIcon">view_list</span><label class="sideLabel">Lista de rutinas</label></button>
                 <button id="cuaderno" class="buttonlistaIcon" onclick="buttonCuaderno()"><span class="material-symbols-outlined sideIcon">book_2</span><label class="sideLabel">Cuaderno</label></button>
                 <button id="resumen" class="buttonlistaIcon" onclick=""><span class="fa-solid fa-square-poll-vertical googleSideIcon chartIcon"></span><label class="sideLabel">Resumen</label></button>
-                <button id="cuaderno" class="buttonlistaIcon" onclick=""><span class="material-symbols-outlined sideIcon">calendar_today</span><label class="sideLabel">Organizador</label></button>
+                <button id="calendar" class="buttonlistaIcon" onclick="buttonCalendar()"><span class="material-symbols-outlined sideIcon">calendar_today</span><label class="sideLabel">Organizador</label></button>
             </ul>
         </section>
-
-        <!-- <div id="pagerutinas" class="off">
-            <section id="listasrutinas">
-                <h1 class="fs-4">Listas de rutinas<hr class="centrado"></h1>
-
-                <div id="DivSemanas">
-                    <section id="sectionSemanaIDEAL" class="SectionLabel">
-                    
-                        <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
-    
-                        <section id ="pnlSemana" class="PanelLabel">
-                            <div id="Botones">
-                                <button id="Dia1" class="buttonTabla cambiado" onclick="Lunes(this)" contenteditable="true">Lunes</button>
-                                <button id="Dia2" class="buttonTabla" onclick="Martes(this)" contenteditable="true">Martes</button>
-                                <button id="Dia3" class="buttonTabla" onclick="Miercoles(this)" contenteditable="true">Miercoles</button>
-                                <button id="Dia4" class="buttonTabla" onclick="Jueves(this)" contenteditable="true">Jueves</button>
-                                <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
-                            </div>
-    
-                            <table id="Tabla" class="rounded-3 text-center">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th class="LabelName thRutinas">Nombre</th> 
-                                        <th class="LabelSeries thRutinas">Series</th>
-                                        <th class="LabelReps thRutinas">Reps</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                    <tr id="dataInputs">
-                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Ejercicio" name="0" placeholder="..."></td>
-                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Series"    name="0" placeholder="..."></td>
-                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Reps"      name="0" placeholder="..."></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-    
-                            <section id="sectionAddDelete">
-                                <button id="add" class="buttonsAddDelete" onclick="addEjercicio(this)" ><i class="fa-solid fa-plus"></i></button>
-                                <button id="delete" class="buttonsAddDelete" onclick="deleteEjercicio(this)" ><i class="fa-solid fa-minus"></i></button>
-                            </section>
-                            
-                        </section>
-                    </section>
-    
-                    <section id="sectionSemana" class="SectionLabel">
-                        
-                        <button contenteditable="true" id="semana" class="ButtonLabel" onclick="buttonSemana(this)">Semana 1</button>
-    
-                        <section id ="pnlSemana0" class="PanelLabel">
-                            <div id="Botones">
-                                <button id="Dia1" class="buttonTabla cambiado" onclick="Lunes(this)" contenteditable="true">Lunes</button>
-                                <button id="Dia2" class="buttonTabla" onclick="Martes(this)" contenteditable="true">Martes</button>
-                                <button id="Dia3" class="buttonTabla" onclick="Miercoles(this)" contenteditable="true">Miercoles</button>
-                                <button id="Dia4" class="buttonTabla" onclick="Jueves(this)" contenteditable="true">Jueves</button>
-                                <button id="Dia5" class="buttonTabla" onclick="Viernes(this)" contenteditable="true">Viernes</button>
-                            </div>
-    
-                            <table id="Tabla" class="rounded-3 text-center">
-                                <thead class="thead-light">
-                                    <tr>
-                                       <th class="LabelName thRutinas">Nombre</th> 
-                                       <th class="LabelSeries thRutinas">Series</th>
-                                       <th class="LabelReps thRutinas">Reps</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                    <tr id="dataInputs">
-                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Ejercicio0" name="0" placeholder="..."></td>
-                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Series0" name="0" placeholder="..."></td>
-                                        <td class="dataInputtd"><input class="dataInput" onchange="TextChanged(this, event)" type="text" id="Reps0" name="0" placeholder="..."></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-    
-                            <section id="sectionAddDelete">
-                                <button id="add" class="buttonsAddDelete" onclick="addEjercicio(this)" ><i class="fa-solid fa-plus"></i></button>
-                                <button id="delete" class="buttonsAddDelete" onclick="deleteEjercicio(this)" ><i class="fa-solid fa-minus"></i></button>
-                            </section>
-                            
-                        </section>
-                    </section>
-                </div>
-            </section>
-
-            <section id="sectionAddDelete">
-                <button id="add" class="buttonsAddDelete" onclick="addSemanas()" ><i class="fa-solid fa-plus"></i></button>
-                <button id="delete" class="buttonsAddDelete" onclick="deleteSemanas()" ><i class="fa-solid fa-minus"></i></button>
-            </section>
-
-            <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header bg-dark">
-                      <h1 class="modal-title fs-4 text-center" id="exampleModalLabel">Registrarse</h1>
-                      <button type="button" class="btn-close text-primary" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body bg-dark">
-                      <form id="signup-form">
-                        <div class="mb-3">
-                          <label for="signup-email" class="form-label">Correo electrónico</label>
-                          <input type="email" class="form-control" id="signup-email" placeholder="example@gmail.com" aria-describedby="emailHelp" required>
-                          <div id="emailHelp" class="form-text text-white text-opacity-50">No compartiremos el correo electrónico.</div>
-                        </div>
-                        <div class="mb-3">
-                          <label for="signup-password" class="form-label">Contraseña</label>
-                          <input type="password" class="form-control" id="signup-password" required>
-                        </div>
-                        <button type="submit"  class="btn btn-primary">Submit</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        </div> -->
 
         <div id="pagerutinas">
 
@@ -216,12 +104,19 @@
                                     <th id="thEjercicio" class="thBook">Nombre</th>
                                     <th class="thBook">Series</th>
                                     <th class="thBook">Reps</th>
+                                    <th class="thBook">Peso</th>
                                     <th class="thBook">RIR</th>
                                 </tr>
                                 <tr class="trBookEjercicio" name="0">
                                     <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurData()" oninput="TextChanged(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook"><input id="InputSeries" onblur="BlurData()" oninput="TextChanged(this, 'Series')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook">
+                                        <input id="InputSeries" onblur="BlurData()" oninput="TextChanged(this, 'Series')" class="InputDatos" type="text" placeholder="...">
+                                        <div id="DivShowSeries">
+                                            <button id="BtnShowSeries" class="material-symbols-outlined">expand_more</button>
+                                        </div>  
+                                    </td>
                                     <td class="tdBook"><input id="InputReps" onblur="BlurData()" oninput="TextChanged(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputPeso" onblur="BlurData()" oninput="TextChanged(this, 'Peso')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurData()" oninput="TextChanged(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
                                 </tr>
                             </tbody>
@@ -255,7 +150,7 @@
             </div>
         </div>  
 
-        <div id="pagebook" class="off">
+        <div id="pagebook">
 
             <h1 class="fs-4">Cuaderno de entrenamiento<hr class="centrado"></h1>
 
@@ -290,12 +185,14 @@
                                     <th id="thEjercicio" class="thBook">Nombre</th>
                                     <th class="thBook">Series</th>
                                     <th class="thBook">Reps</th>
+                                    <th class="thBook">Peso</th>
                                     <th class="thBook">RIR</th>
                                 </tr>
                                 <tr class="trBookEjercicio" name="0">
                                     <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td class="tdBook"><input id="InputSeries" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Series')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td class="tdBook"><input id="InputReps" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputPeso" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Peso')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurDataBook()" oninput="TextChangedB(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
                                 </tr>
                             </tbody>
@@ -328,6 +225,12 @@
                 </button>
             </div>
         </div>  
+        
+        <div id="pagecalendar">
+            <h1 class="fs-4">Organizador<hr class="centrado"></h1>
+            <div id="calendar" style="height: 600px; width: 100%;">
+            </div>
+        </div>
     </section>
 
     <nav id="navbottom">
@@ -341,7 +244,7 @@
                 <a id="navitem" class="nav-link" onclick="buttonCuaderno()"><span class="material-symbols-outlined buttonIcon googleIcon">book_2</span></i>Cuaderno</a>
             </li>
             <li id="navli" class="nav-item">
-                <a id="navitem" class="nav-link" href="#"><i class="fa-solid fa-square-poll-vertical buttonIcon resumenIcon"></i>Resumen</a>
+                <a id="navitem" class="nav-link" onclick="buttonCalendar()"><span class="material-symbols-outlined buttonIcon googleIcon">calendar_today</span>Calendario</a>
             </li>
         </ul>
     </nav>

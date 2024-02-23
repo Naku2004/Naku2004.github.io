@@ -119,6 +119,7 @@ function ButtonClick(Button){
     let AllTextInputExcercise = tbody.querySelectorAll('#InputExcercise')
     let AllTextInputSeries = tbody.querySelectorAll('#InputSeries')
     let AllTextInputReps = tbody.querySelectorAll('#InputReps')
+    let AllTextInputPeso = tbody.querySelectorAll('#InputPeso')
     let AllTextInputRIR = tbody.querySelectorAll('#InputRIR')
 
     for(let i = 0; i < NumberExcercisesAfter; i++){
@@ -132,6 +133,9 @@ function ButtonClick(Button){
         if(textReps[Week][Day][i] == "null"){
             textReps[Week][Day][i] = ""
         }
+        if(textPeso[Week][Day][i] == "null"){
+            textPeso[Week][Day][i] = ""
+        }
         if(textRIR[Week][Day][i] == "null"){
             textRIR[Week][Day][i] = ""
         }
@@ -141,6 +145,7 @@ function ButtonClick(Button){
         AllTextInputExcercise[i].value = textEjercicios[Week][Day][i]
         AllTextInputSeries[i].value = textSeries[Week][Day][i]
         AllTextInputReps[i].value = textReps[Week][Day][i]
+        AllTextInputPeso[i].value = textPeso[Week][Day][i]
         AllTextInputRIR[i].value = textRIR[Week][Day][i]
     }
 }
@@ -177,6 +182,7 @@ function AddWeek(Button, Load, i){
         textEjercicios[amountWeeks - 1] = []
         textSeries[amountWeeks - 1] = []
         textReps[amountWeeks - 1] = []
+        textPeso[amountWeeks - 1] = []
         textRIR[amountWeeks - 1] = []
         DiaText[amountWeeks - 1] = [[]]
         SemanaText[amountWeeks - 1] = "Semana " + amountWeeks
@@ -186,6 +192,7 @@ function AddWeek(Button, Load, i){
             textEjercicios[amountWeeks - 1][i] = [""]
             textSeries[amountWeeks - 1][i] = [""]
             textReps[amountWeeks - 1][i] = [""]
+            textPeso[amountWeeks - 1][i] = [""]
             textRIR[amountWeeks - 1][i] = [""]
             DiaText[amountWeeks - 1][i] = NewDivSemana.querySelectorAll('#divButtons')[i].querySelector('input').value
         }
@@ -209,6 +216,7 @@ function DeleteWeek(Button){
                 localStorage.removeItem(`textEjercicios${amountWeeks}${i}${j}`)
                 localStorage.removeItem(`textSeries${amountWeeks}${i}${j}`)
                 localStorage.removeItem(`textReps${amountWeeks}${i}${j}`)
+                localStorage.removeItem(`textPeso${amountWeeks}${i}${j}`)
                 localStorage.removeItem(`textRIR${amountWeeks}${i}${j}`)
             }
         }
@@ -218,6 +226,7 @@ function DeleteWeek(Button){
         textEjercicios.splice(amountWeeks, 1)
         textSeries.splice(amountWeeks, 1)
         textReps.splice(amountWeeks, 1)
+        textPeso.splice(amountWeeks, 1)
         textRIR.splice(amountWeeks, 1)
         DiaText.splice(amountWeeks, 1)
         dataBase.ListaBook.splice(amountWeeks, 1)
@@ -248,6 +257,7 @@ function AddDays(Button, Load, j){
             textEjercicios[Week][amountDays[Week] - 1] = [""]
             textSeries[Week][amountDays[Week] - 1] = [""]
             textReps[Week][amountDays[Week] - 1] = [""]
+            textPeso[Week][amountDays[Week] - 1] = [""]
             textRIR[Week][amountDays[Week] - 1] = [""]
             SaveData()
         }
@@ -303,6 +313,7 @@ function DeleteDays(Button){
             localStorage.removeItem(`textEjercicios${Week}${Day}${i}`)
             localStorage.removeItem(`textSeries${Week}${Day}${i}`)
             localStorage.removeItem(`textReps${Week}${Day}${i}`)
+            localStorage.removeItem(`textPeso${Week}${Day}${i}`)
             localStorage.removeItem(`textRIR${Week}${Day}${i}`)
             localStorage.removeItem(`DiaText${Week}${Day}${i}`)
         }
@@ -312,6 +323,7 @@ function DeleteDays(Button){
             localStorage.removeItem(`textEjercicios${Week}${amountDays}${i}`)
             localStorage.removeItem(`textSeries${Week}${amountDays}${i}`)
             localStorage.removeItem(`textReps${Week}${amountDays}${i}`)
+            localStorage.removeItem(`textPeso${Week}${amountDays}${i}`)
             localStorage.removeItem(`textRIR${Week}${amountDays}${i}`)
             localStorage.removeItem(`DiaText${Week}${amountDays}${i}`)
         }
@@ -320,6 +332,7 @@ function DeleteDays(Button){
         textEjercicios[Week].splice(Day, 1)
         textSeries[Week].splice(Day, 1)
         textReps[Week].splice(Day, 1)
+        textPeso[Week].splice(Day, 1)
         textRIR[Week].splice(Day, 1)
         DiaText[Week].splice(Day, 1)
         dataBase.ListaBook[Week].DIASNAME.splice(Day, 1)
@@ -327,6 +340,7 @@ function DeleteDays(Button){
         dataBase.ListaBook[Week].TEXTEJERCICIO.splice(Day, 1)
         dataBase.ListaBook[Week].TEXTSERIES.splice(Day, 1)
         dataBase.ListaBook[Week].TEXTREPS.splice(Day, 1)
+        dataBase.ListaBook[Week].TEXTPESO.splice(Day, 1)
         dataBase.ListaBook[Week].TEXTRIR.splice(Day, 1)
 
         SaveData()
@@ -374,6 +388,7 @@ function AddEjercicioBook(Button, Load, j){
         textEjercicios[Week][Day][amountEjerciciosDay[Week][Day]] = ""
         textSeries[Week][Day][amountEjerciciosDay[Week][Day]] = ""
         textReps[Week][Day][amountEjerciciosDay[Week][Day]] = ""
+        textPeso[Week][Day][amountEjerciciosDay[Week][Day]] = ""
         textRIR[Week][Day][amountEjerciciosDay[Week][Day]] = ""
         amountEjerciciosDay[Week][Day]++
         SaveData()
@@ -405,15 +420,18 @@ function DeleteEjercicioBook(Button, Load){
             textEjercicios[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
             textSeries[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
             textReps[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
+            textPeso[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
             textRIR[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
             dataBase.ListaBook[Week].TEXTEJERCICIO[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
             dataBase.ListaBook[Week].TEXTSERIES[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
             dataBase.ListaBook[Week].TEXTREPS[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+            dataBase.ListaBook[Week].TEXTPESO[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
             dataBase.ListaBook[Week].TEXTRIR[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
 
             localStorage.removeItem(`textEjercicios${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
             localStorage.removeItem(`textSeries${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
             localStorage.removeItem(`textReps${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
+            localStorage.removeItem(`textPeso${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
             localStorage.removeItem(`textRIR${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
             SaveData()
         }
@@ -512,6 +530,7 @@ function EditTextSpan(TextInput, Type){
 var textEjercicios =    [/* Semana */[/*Dia 1*/[""/*1er Ejercicio*/]]]
 var textSeries =        [/* Semana */[/*Dia 1*/[""/*1er Series*/]]]
 var textReps =          [/* Semana */[/*Dia 1*/[""/*1er Reps*/]]]
+var textPeso =          [/* Semana */[/*Dia 1*/[""/*1er Peso*/]]]
 var textRIR =           [/* Semana */[/*Dia 1*/[""/*1er RIR*/]]]
 
 function TextChangedB(TextInput, Type){
@@ -528,12 +547,19 @@ function TextChangedB(TextInput, Type){
 
     if(Type == "Series"){
         textSeries[Week][Day][ExerciseID] = TextInput.value
+        SeriesChanged(TextInput)
         //alert(textEjercicios[Week][Day][ExerciseID])
         //SaveDataBook()
     }
 
     if(Type == "Reps"){
         textReps[Week][Day][ExerciseID] = TextInput.value
+        //alert(textEjercicios[Week][Day][ExerciseID])
+        //SaveDataBook()
+    }
+    
+    if(Type == "Peso"){
+        textPeso[Week][Day][ExerciseID] = TextInput.value
         //alert(textEjercicios[Week][Day][ExerciseID])
         //SaveDataBook()
     }
@@ -739,8 +765,8 @@ async function LoadDataBook(FirstTime){
         LoadDays()
     }
 }*/
-
-/*function LoadDataBook(FirstTime){
+/*
+function LoadDataBook(FirstTime){
 
     amountWeeks = localStorage.getItem("amountWeeks")
 
