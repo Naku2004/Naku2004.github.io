@@ -119,13 +119,11 @@ function ButtonSemanaSlideLista(Button){
     let divSemana = Button.closest('div')
     let pnlSemana = divSemana.querySelector('.SectionTable')
 
-    if(pnlSlide == false){
-        pnlSemana.classList.add('on')
-        pnlSlide = true
+    if(pnlSemana.classList.contains('on')){
+        pnlSemana.classList.remove('on')
     }
     else{
-        pnlSemana.classList.remove('on')
-        pnlSlide = false
+        pnlSemana.classList.add('on')
     }
 
     ButtonClickLista(pnlSemana.querySelector('#divButtons').querySelector('button'))
@@ -148,6 +146,20 @@ function ButtonClickLista(Button){
 
     let NumberExcercisesActual = tbody.children.length - 1
     let NumberExcercisesAfter =  amountEjerciciosDayLista[Week][Day]
+
+    let AllBtnRetractSeries = Button.closest('.PnlSemana').querySelectorAll('#BtnRetractSeries')
+    
+    for(let i = 0; i < AllBtnRetractSeries.length; i++){
+        let trBook = AllBtnRetractSeries[i].closest('tr')
+        trBook.querySelector('#BtnExpandSeries').classList.remove('off')
+        trBook.querySelector('#BtnRetractSeries').classList.add('off')
+
+        let tdMoreSeries = trBook.querySelector('#MoreSeries')
+
+        while(tdMoreSeries.firstChild){
+            tdMoreSeries.removeChild(tdMoreSeries.firstChild)
+        }
+    }
 
     if(NumberExcercisesActual < NumberExcercisesAfter){
         let Diferencia = NumberExcercisesAfter - NumberExcercisesActual
@@ -1461,22 +1473,212 @@ function AccountClick(){
 function ShowBtnSeries(){
     let AllInputSeries = document.querySelector('#pagerutinas').querySelectorAll('#InputSeries')
 
+    console.log(AllInputSeries)
     for(let i = 0; i < AllInputSeries.length; i++){
         let NumberSeries = parseInt(AllInputSeries[i].value)
-        console.log(document.querySelector('#InputSeries').innerHTML)
-        if(NumberSeries > 1){
-            tdInput = AllInputSeries[i].closest('td')
+        let tdInput = AllInputSeries[i].closest('td')
+        console.log(NumberSeries)
+        if(NumberSeries > 1 && NumberSeries != undefined){
             tdInput.querySelector('#DivShowSeries').classList.add('on')
+        }
+        else if(tdInput.querySelector('#DivShowSeries').classList.contains('on')){
+            tdInput.querySelector('#DivShowSeries').classList.remove('on')
         }
     }
 }
 
 function SeriesChanged(Input){
     let NumberSeries = parseInt(Input.value)
-    console.log(Input)
+    let tdInput = Input.closest('td')
+
     if(NumberSeries > 1){
-        tdInput = Input.closest('td')
         tdInput.querySelector('#DivShowSeries').classList.add('on')
+    }
+    else{
+        tdInput.querySelector('#DivShowSeries').classList.remove('on')
+    }
+}
+
+var SeriesShown = false
+
+function ShowSeries(Button){
+    let trBook = Button.closest('tr')
+
+    if(trBook.querySelector('#BtnRetractSeries').classList.contains('off')){
+        let SingleTrBook = trBook.cloneNode(true)
+
+        trBook.querySelector('#BtnExpandSeries').classList.add('off')
+        trBook.querySelector('#BtnRetractSeries').classList.remove('off')
+
+        let InputSeries = trBook.querySelector('#InputSeries')
+        let InputReps = trBook.querySelector('#InputReps')
+        let InputPeso = trBook.querySelector('#InputPeso')
+        let InputRIR = trBook.querySelector('#InputRIR')
+
+        if(InputReps.value.includes('/')){
+            var NumberRepsMoreSeries = InputReps.value.split('/')
+        }
+
+        if(InputPeso.value.includes('/')){
+            var NumberPesoMoreSeries = InputPeso.value.split('/')
+        }
+
+        if(InputRIR.value.includes('/')){
+            var NumberRIRMoreSeries = InputRIR.value.split('/')
+        }
+
+        for (let i = 0; i < InputSeries.value; i++){
+    
+            let NewTrBook = SingleTrBook.cloneNode(true)
+    
+            NewTrBook.querySelector('#InputExcercise').remove()
+            NewTrBook.querySelector('#DivShowSeries').remove()
+            NewTrBook.querySelector('#MoreSeries').remove()
+    
+            NewTrBook.classList.remove('trBookEjercicio')
+            NewTrBook.classList.add('trMoreSeries')
+            NewTrBook.setAttribute('name', `${i}`)
+            NewTrBook.querySelector('#InputSeries').value = i + 1 + '°'
+            NewTrBook.querySelector('#InputSeries').readOnly = true
+            NewTrBook.querySelector('#InputSeries').classList.add('readOnly')
+            NewTrBook.querySelector('#InputReps').setAttribute('oninput', 'MoreSeriesTextChanged(this)')
+            NewTrBook.querySelector('#InputPeso').setAttribute('oninput', 'MoreSeriesTextChanged(this)')
+            NewTrBook.querySelector('#InputRIR').setAttribute('oninput', 'MoreSeriesTextChanged(this)')
+
+            if(i == 0){
+                NewTrBook.classList.add('margintop')
+            }
+    
+            if(i == (parseInt(InputSeries.value) - 1)){
+                NewTrBook.classList.add('nomarginbottom')
+            }
+
+            if(InputReps.value.includes('/')){
+                if(NumberRepsMoreSeries[i] == undefined){
+                    NumberRepsMoreSeries[i] = ''
+                }
+                NewTrBook.querySelector('#InputReps').value = NumberRepsMoreSeries[i]
+            }
+
+            if(InputPeso.value.includes('/')){
+                if(NumberPesoMoreSeries[i] == undefined){
+                    NumberPesoMoreSeries[i] = ''
+                }
+                NewTrBook.querySelector('#InputPeso').value = NumberPesoMoreSeries[i]
+            }
+
+            if(InputRIR.value.includes('/')){
+                if(NumberRIRMoreSeries[i] == undefined){
+                    NumberRIRMoreSeries[i] = ''
+                }
+                NewTrBook.querySelector('#InputRIR').value = NumberRIRMoreSeries[i]
+            }
+    
+            trBook.querySelector('#MoreSeries').appendChild(NewTrBook)
+        }
+    }
+    else{
+        trBook.querySelector('#BtnExpandSeries').classList.remove('off')
+        trBook.querySelector('#BtnRetractSeries').classList.add('off')
+
+        let tdMoreSeries = trBook.querySelector('#MoreSeries')
+
+        while(tdMoreSeries.firstChild){
+            tdMoreSeries.removeChild(tdMoreSeries.firstChild)
+        }
+    }
+}
+
+function MoreSeriesTextChanged(Input){
+    if(Input.id == 'InputReps'){
+        TextoCambiado = true
+        let MoreSeries = Input.closest('#MoreSeries')
+        let NumberReps = []
+        let IHaveToJoin = false
+
+        for(let i = 0; i < MoreSeries.childElementCount; i++){
+            let trMoreSeries = MoreSeries.querySelectorAll('.trMoreSeries')[i]
+            let InputReps = trMoreSeries.querySelector('#InputReps')
+            NumberReps[i] = InputReps.value
+
+            if(NumberReps[0] != NumberReps[i]){
+                IHaveToJoin = true
+            }
+        }
+
+        console.log(parseInt(Input.closest('.trMoreSeries').getAttribute('name')))
+        if(Input.value == ''){
+            NumberReps.splice(parseInt(Input.closest('.trMoreSeries').getAttribute('name')), 1)
+            console.log(NumberReps)
+        }
+
+        if(IHaveToJoin == true){
+            let NumberRepsOneLine = NumberReps.join('/')
+            let trBookEjercicio = Input.closest('.trBookEjercicio')
+            trBookEjercicio.querySelector('#InputReps').value = NumberRepsOneLine
+        }
+        else{
+            let trBookEjercicio = Input.closest('.trBookEjercicio')
+            trBookEjercicio.querySelector('#InputReps').value = NumberReps[0]
+        }
+    
+        TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputReps'), 'Reps')
+    }
+
+    if(Input.id == 'InputPeso'){
+        let MoreSeries = Input.closest('#MoreSeries')
+        let NumberPeso = []
+        let IHaveToJoin = false
+
+        for(let i = 0; i < MoreSeries.childElementCount; i++){
+            let trMoreSeries = MoreSeries.querySelectorAll('.trMoreSeries')[i]
+            let InputPeso = trMoreSeries.querySelector('#InputPeso')
+            NumberPeso[i] = InputPeso.value
+
+            if(NumberPeso[0] != NumberPeso[i]){
+                IHaveToJoin = true
+            }
+        }
+
+        if(IHaveToJoin == true){
+            let NumberPesoOneLine = NumberPeso.join('/')
+            let trBookEjercicio = Input.closest('.trBookEjercicio')
+            trBookEjercicio.querySelector('#InputPeso').value = NumberPesoOneLine
+        }
+        else{
+            let trBookEjercicio = Input.closest('.trBookEjercicio')
+            trBookEjercicio.querySelector('#InputPeso').value = NumberPeso[0]
+        }
+    
+        TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputPeso'), 'Peso')
+    }
+
+    if(Input.id == 'InputRIR'){
+        let MoreSeries = Input.closest('#MoreSeries')
+        let NumberRIR = []
+        let IHaveToJoin = false
+        
+        for(let i = 0; i < MoreSeries.childElementCount; i++){
+            let trMoreSeries = MoreSeries.querySelectorAll('.trMoreSeries')[i]
+            let InputRIR = trMoreSeries.querySelector('#InputRIR')
+            NumberRIR[i] = InputRIR.value
+
+            if(NumberRIR[0] != NumberRIR[i]){
+                IHaveToJoin = true
+            }
+        }
+
+        if(IHaveToJoin == true){
+            let NumberRIROneLine = NumberRIR.join('/')
+            let trBookEjercicio = Input.closest('.trBookEjercicio')
+            trBookEjercicio.querySelector('#InputRIR').value = NumberRIROneLine
+        }
+        else{
+            let trBookEjercicio = Input.closest('.trBookEjercicio')
+            trBookEjercicio.querySelector('#InputRIR').value = NumberRIR[0]
+        }
+    
+        TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputRIR'), 'RIR')
     }
 }
 

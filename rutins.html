@@ -109,15 +109,17 @@
                                 </tr>
                                 <tr class="trBookEjercicio" name="0">
                                     <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurData()" oninput="TextChanged(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook">
+                                    <td class="tdBook tdSeries">
                                         <input id="InputSeries" onblur="BlurData()" oninput="TextChanged(this, 'Series')" class="InputDatos" type="text" placeholder="...">
                                         <div id="DivShowSeries">
-                                            <button id="BtnShowSeries" class="material-symbols-outlined">expand_more</button>
+                                            <button id="BtnExpandSeries" class="material-symbols-outlined BtnShowSeries" onclick="ShowSeries(this)">expand_more</button>
+                                            <button id="BtnRetractSeries" class="material-symbols-outlined BtnShowSeries off" onclick="ShowSeries(this)">expand_less</button>
                                         </div>  
                                     </td>
                                     <td class="tdBook"><input id="InputReps" onblur="BlurData()" oninput="TextChanged(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td class="tdBook"><input id="InputPeso" onblur="BlurData()" oninput="TextChanged(this, 'Peso')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurData()" oninput="TextChanged(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="MoreSeries"></td>
                                 </tr>
                             </tbody>
                         </table>
