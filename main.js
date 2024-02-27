@@ -1606,12 +1606,6 @@ function MoreSeriesTextChanged(Input){
             }
         }
 
-        console.log(parseInt(Input.closest('.trMoreSeries').getAttribute('name')))
-        if(Input.value == ''){
-            NumberReps.splice(parseInt(Input.closest('.trMoreSeries').getAttribute('name')), 1)
-            console.log(NumberReps)
-        }
-
         if(IHaveToJoin == true){
             let NumberRepsOneLine = NumberReps.join('/')
             let trBookEjercicio = Input.closest('.trBookEjercicio')
@@ -1620,6 +1614,20 @@ function MoreSeriesTextChanged(Input){
         else{
             let trBookEjercicio = Input.closest('.trBookEjercicio')
             trBookEjercicio.querySelector('#InputReps').value = NumberReps[0]
+        }
+
+        while (NumberReps[NumberReps.length - 1] == '') {
+            NumberReps.pop();
+            
+            if(IHaveToJoin == true){
+                let NumberRepsOneLine = NumberReps.join('/')
+                let trBookEjercicio = Input.closest('.trBookEjercicio')
+                trBookEjercicio.querySelector('#InputReps').value = NumberRepsOneLine
+            }
+            else{
+                let trBookEjercicio = Input.closest('.trBookEjercicio')
+                trBookEjercicio.querySelector('#InputReps').value = NumberReps[0]
+            }
         }
     
         TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputReps'), 'Reps')
@@ -1649,6 +1657,20 @@ function MoreSeriesTextChanged(Input){
             let trBookEjercicio = Input.closest('.trBookEjercicio')
             trBookEjercicio.querySelector('#InputPeso').value = NumberPeso[0]
         }
+
+        while (NumberPeso[NumberPeso.length - 1] == '') {
+            NumberPeso.pop();
+            
+            if(IHaveToJoin == true){
+                let NumberPesoOneLine = NumberPeso.join('/')
+                let trBookEjercicio = Input.closest('.trBookEjercicio')
+                trBookEjercicio.querySelector('#InputPeso').value = NumberPesoOneLine
+            }
+            else{
+                let trBookEjercicio = Input.closest('.trBookEjercicio')
+                trBookEjercicio.querySelector('#InputPeso').value = NumberPeso[0]
+            }
+        }
     
         TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputPeso'), 'Peso')
     }
@@ -1676,6 +1698,20 @@ function MoreSeriesTextChanged(Input){
         else{
             let trBookEjercicio = Input.closest('.trBookEjercicio')
             trBookEjercicio.querySelector('#InputRIR').value = NumberRIR[0]
+        }
+
+        while (NumberRIR[NumberRIR.length - 1] == '') {
+            NumberRIR.pop();
+            
+            if(IHaveToJoin == true){
+                let NumberRIROneLine = NumberRIR.join('/')
+                let trBookEjercicio = Input.closest('.trBookEjercicio')
+                trBookEjercicio.querySelector('#InputRIR').value = NumberRIROneLine
+            }
+            else{
+                let trBookEjercicio = Input.closest('.trBookEjercicio')
+                trBookEjercicio.querySelector('#InputRIR').value = NumberRIR[0]
+            }
         }
     
         TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputRIR'), 'RIR')
