@@ -881,7 +881,7 @@ function SaveData(){
     //console.log(dataBase.ListaRutinas)
 }
 
-const gistId = '0faed31478499aaabd3332ec993dcca0'; 
+const gistId = 'ea76aea67dfe233b31662624d6d9cc43'; 
 const git1 = 'github_pat_11A7P7C2I0iL7J0a7NZWTT_05Umcb6TlNi'
 const git2 = 'tPXKjuwqcevZdPK51rrpe94BGwem3c9vOWSYTNJ4hxJLq0VD'
 
