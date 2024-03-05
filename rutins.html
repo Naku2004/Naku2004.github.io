@@ -192,10 +192,17 @@
                                 </tr>
                                 <tr class="trBookEjercicio" name="0">
                                     <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook"><input id="InputSeries" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Series')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook tdSeries">
+                                        <input id="InputSeries" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Series')" class="InputDatos" type="text" placeholder="...">
+                                        <div id="DivShowSeries">
+                                            <button id="BtnExpandSeries" class="material-symbols-outlined BtnShowSeries" onclick="ShowSeries(this)">expand_more</button>
+                                            <button id="BtnRetractSeries" class="material-symbols-outlined BtnShowSeries off" onclick="ShowSeries(this)">expand_less</button>
+                                        </div>  
+                                    </td>
                                     <td class="tdBook"><input id="InputReps" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td class="tdBook"><input id="InputPeso" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Peso')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurDataBook()" oninput="TextChangedB(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="MoreSeries" class="Book"></td>
                                 </tr>
                             </tbody>
                         </table>

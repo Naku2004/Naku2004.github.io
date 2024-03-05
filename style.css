@@ -384,8 +384,13 @@ section {
 }
 
 #pagebook.on{
+    display: block;
     position: relative;
     visibility: visible;
+}
+
+#pagebook.off{
+    display: none;
 }
 
 #pagecalendar{

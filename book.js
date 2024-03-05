@@ -72,13 +72,11 @@ function ButtonSemanaSlideBook(Button){
     let divSemana = Button.closest('div')
     let pnlSemana = divSemana.querySelector('.SectionTable')
 
-    if(pnlSlide == false){
-        pnlSemana.classList.add('on')
-        pnlSlide = true
+    if(pnlSemana.classList.contains('on')){
+        pnlSemana.classList.remove('on')
     }
     else{
-        pnlSemana.classList.remove('on')
-        pnlSlide = false
+        pnlSemana.classList.add('on')
     }
 
     ButtonClick(pnlSemana.querySelector('#divButtons').querySelector('button'))
@@ -101,6 +99,20 @@ function ButtonClick(Button){
 
     let NumberExcercisesActual = tbody.children.length - 1
     let NumberExcercisesAfter =  amountEjerciciosDay[Week][Day]
+
+    let AllBtnRetractSeries = Button.closest('.PnlSemanaBook').querySelectorAll('#BtnRetractSeries')
+    
+    for(let i = 0; i < AllBtnRetractSeries.length; i++){
+        let trBook = AllBtnRetractSeries[i].closest('tr')
+        trBook.querySelector('#BtnExpandSeries').classList.remove('off')
+        trBook.querySelector('#BtnRetractSeries').classList.add('off')
+
+        let tdMoreSeries = trBook.querySelector('#MoreSeries')
+
+        while(tdMoreSeries.firstChild){
+            tdMoreSeries.removeChild(tdMoreSeries.firstChild)
+        }
+    }
 
     if(NumberExcercisesActual < NumberExcercisesAfter){
         let Diferencia = NumberExcercisesAfter - NumberExcercisesActual
@@ -148,6 +160,8 @@ function ButtonClick(Button){
         AllTextInputPeso[i].value = textPeso[Week][Day][i]
         AllTextInputRIR[i].value = textRIR[Week][Day][i]
     }
+
+    ShowBtnSeries()
 }
 
 var amountEjerciciosDay = [/*Semana 1*/ [1 /*Dia1*/]]
@@ -164,6 +178,8 @@ function AddWeek(Button, Load, i){
     let BtnSlide = NewDivSemana.querySelector('#BtnSemanaSlide')
     let SpanSlide = NewDivSemana.querySelector('#LabelSemana')
     let AmountDays = NewDivSemana.querySelector('#divDivButtons').children.length - 1
+    let DivShowSeries = NewDivSemana.querySelector('#DivShowSeries')
+    DivShowSeries.classList.remove('on')
 
     if(Load == true){
         BtnSlide.innerText = SemanaText[i - 1]

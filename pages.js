@@ -16,7 +16,7 @@ function buttonListaRutinas(){
     let PageCalendar = document.querySelector('#pagecalendar')
 
     PageRutinas.classList.remove('off')
-    PageBook.classList.remove('on')
+    PageBook.classList.add('off')
     PageCalendar.classList.remove('on')
 
     document.querySelectorAll('#navli')[1].querySelector('a').classList.remove('on')
@@ -41,6 +41,7 @@ function buttonCuaderno(){
     let PageCalendar = document.querySelector('#pagecalendar')
 
     PageBook.classList.add('on')
+    PageBook.classList.remove('off')
     PageRutinas.classList.add('off')
     PageCalendar.classList.remove('on')
 
@@ -65,9 +66,9 @@ function buttonCuaderno(){
     let PageBook = document.querySelector('#pagebook') 
     let PageCalendar = document.querySelector('#pagecalendar')
 
-    PageCalendar.classList.add('on')
-    PageBook.classList.remove('on')
+    PageBook.classList.add('off')
     PageRutinas.classList.add('off')
+    PageCalendar.classList.add('on')
 
     document.querySelectorAll('#navli')[0].querySelector('a').classList.remove('on')
     document.querySelectorAll('#navli')[0].querySelector('span').classList.remove('on')

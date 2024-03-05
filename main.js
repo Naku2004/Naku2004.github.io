@@ -224,6 +224,8 @@ function AddWeekLista(Button, Load, i){
     let BtnSlide = NewDivSemana.querySelector('#BtnSemanaSlide')
     let SpanSlide = NewDivSemana.querySelector('#LabelSemana')
     let AmountDays = NewDivSemana.querySelector('#divDivButtons').children.length - 1
+    let DivShowSeries = NewDivSemana.querySelector('#DivShowSeries')
+    DivShowSeries.classList.remove('on')
 
     if(Load == true){
         if(SemanaTextLista[i - 1] != "" || SemanaTextLista[i - 1] != undefined || SemanaTextLista[i - 1] != null){    
@@ -809,7 +811,7 @@ function SaveData(){
                 dataBase.ListaBook[i].TEXTEJERCICIO[j][k] = textEjercicios[i][j][k]
                 dataBase.ListaBook[i].TEXTSERIES[j][k] = textSeries[i][j][k]
                 dataBase.ListaBook[i].TEXTREPS[j][k] = textReps[i][j][k]
-                dataBase.ListaBook[i].TEXTPESO[j][k] = textPesoLista[i][j][k]
+                dataBase.ListaBook[i].TEXTPESO[j][k] = textPeso[i][j][k]
                 dataBase.ListaBook[i].TEXTRIR[j][k] = textRIR[i][j][k]
             }
         }
@@ -846,6 +848,7 @@ function SaveData(){
                 localStorage.setItem("textEjercicios" + i + j + k, textEjercicios[i][j][k])
                 localStorage.setItem("textSeries" + i + j + k, textSeries[i][j][k])
                 localStorage.setItem("textReps" + i + j + k, textReps[i][j][k])
+                localStorage.setItem("textPeso" + i + j + k, textPeso[i][j][k])
                 localStorage.setItem("textRIR" + i + j + k, textRIR[i][j][k])
             }
         }
@@ -1326,7 +1329,7 @@ function LoadDaysLista(){
     }
 
     for(let i = 0; i < amountWeeksLista; i++){
-        if(DiaTextLista[i][0] != null && DiaTextLista[i][0] != "null"){
+        if(DiaTextLista[i][0] != null && DiaTextLista[i][0] != "null" && DiaTextLista[i][0] != undefined && DiaTextLista[i][0] != "undefined"){
             document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaTextLista[i][0]
             document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaTextLista[i][0]
         }
@@ -1471,7 +1474,7 @@ function AccountClick(){
 }
 
 function ShowBtnSeries(){
-    let AllInputSeries = document.querySelector('#pagerutinas').querySelectorAll('#InputSeries')
+    let AllInputSeries = document.querySelectorAll('#InputSeries')
 
     console.log(AllInputSeries)
     for(let i = 0; i < AllInputSeries.length; i++){
@@ -1490,7 +1493,7 @@ function ShowBtnSeries(){
 function SeriesChanged(Input){
     let NumberSeries = parseInt(Input.value)
     let tdInput = Input.closest('td')
-
+    console.log(tdInput)
     if(NumberSeries > 1){
         tdInput.querySelector('#DivShowSeries').classList.add('on')
     }
@@ -1629,8 +1632,13 @@ function MoreSeriesTextChanged(Input){
                 trBookEjercicio.querySelector('#InputReps').value = NumberReps[0]
             }
         }
-    
-        TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputReps'), 'Reps')
+        
+        if(Input.closest('tr').closest('td').classList.contains('Book')){
+            TextChangedB(Input.closest('.trBookEjercicio').querySelector('#InputReps'), 'Reps')
+        }
+        else{
+            TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputReps'), 'Reps')
+        }
     }
 
     if(Input.id == 'InputPeso'){
@@ -1672,7 +1680,12 @@ function MoreSeriesTextChanged(Input){
             }
         }
     
-        TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputPeso'), 'Peso')
+        if(Input.closest('tr').closest('td').classList.contains('Book')){
+            TextChangedB(Input.closest('.trBookEjercicio').querySelector('#InputPeso'), 'Peso')
+        }
+        else{
+            TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputPeso'), 'Peso')
+        }
     }
 
     if(Input.id == 'InputRIR'){
@@ -1714,7 +1727,12 @@ function MoreSeriesTextChanged(Input){
             }
         }
     
-        TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputRIR'), 'RIR')
+        if(Input.closest('tr').closest('td').classList.contains('Book')){
+            TextChangedB(Input.closest('.trBookEjercicio').querySelector('#InputRIR'), 'RIR')
+        }
+        else{
+            TextChanged(Input.closest('.trBookEjercicio').querySelector('#InputRIR'), 'RIR')
+        }
     }
 }
 
