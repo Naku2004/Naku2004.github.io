@@ -187,7 +187,7 @@ section {
     width: 100%;
     padding: 0 1rem;
     padding-bottom: 0.4rem;
-    border-radius: 0.5rem;
+    border-radius: 0rem;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
 }
@@ -202,6 +202,54 @@ section {
 .logOut:hover{
     background-color: rgb(207, 53, 53);
     color: white;
+}
+
+#iconLogOut{
+    padding: 0;
+    margin: 8px 1rem 3.2px 0;
+}
+
+.SyncLists{
+    display: flex;
+    flex-direction: row;
+    border-style: none;
+    background-color: transparent;
+    color: #ffffffef;
+    transition: all 0.2s;
+    width: 100%;
+    padding: 0 1rem;
+    padding-bottom: 0.4rem;
+    border-radius: 0rem;
+}
+
+.SyncLists > span{
+    margin-left: -0.15rem;
+    padding-top: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.2rem;
+}
+
+.SyncLists:hover{
+    background-color: #4b4b4b;
+}
+
+.toggleNone{
+    display: none !important;
+}
+
+#toggleOff{
+    clip-path: inset(5px 0 round 10px);
+    margin: 8px 1rem 3.2px 0;
+    padding: 0;
+    background-color: #ffffffef;
+    color: #2c2c2e;
+    transition: all 300ms;
+}
+
+.toggleOn{
+    background-color: transparent !important;
+    color: #ffffffef !important;
+    transform: scaleX(-1) !important;
 }
 
 .navPopover{

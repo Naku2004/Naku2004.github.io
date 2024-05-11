@@ -1,20 +1,62 @@
-
 function cambia_de_pagina(){
     setTimeout(() => { 
         location.href="rutins.html" }, 900);
 }
 
+const gistId = 'ea76aea67dfe233b31662624d6d9cc43'; 
+//const git1 = 'github_pat_11A7P7C2I0fyFzvkezKokP_GYWSYgR7c0'
+//const git2 = 'F5UpMP7RspnfwYSn9VUPvOeRK3TFTdRoGI2GFFLILb73RRdcL'
+const git1 = 'ghp_4hEcWsmThTfnjLqBY5Vu'
+const git2 = '4L76Z4mbJI0ZZWfo'
+
 var amountWeeksLista = 1
+var amountEjerciciosDayLista = [/*Semana 1*/ [1 /*Dia1*/]]
+var amountDaysLista = [1/*Semana1*/]
+var SemanaTextLista = []
+var DiaTextLista = [[]]
+var textEjerciciosLista =    [/* Semana */[/*Dia 1*/[""/*1er Ejercicio*/]]]
+var textSeriesLista =        [/* Semana */[/*Dia 1*/[""/*1er Series*/]]]
+var textRepsLista =          [/* Semana */[/*Dia 1*/[""/*1er Reps*/]]]
+var textPesoLista =          [/* Semana */[/*Dia 1*/[""/*1er Peso*/]]]
+var textRIRLista =           [/* Semana */[/*Dia 1*/[""/*1er RIR*/]]]
+var TextoCambiadoLista = false
+
+var amountWeeksBook = 1
+var amountEjerciciosDayBook = [/*Semana 1*/ [1 /*Dia1*/]]
+var amountDaysBook = [1/*Semana1*/]
+var SemanaTextBook = []
+var DiaTextBook = [[]]
+var textEjerciciosBook =    [/* Semana */[/*Dia 1*/[""/*1er Ejercicio*/]]]
+var textSeriesBook =        [/* Semana */[/*Dia 1*/[""/*1er Series*/]]]
+var textRepsBook =          [/* Semana */[/*Dia 1*/[""/*1er Reps*/]]]
+var textPesoBook =          [/* Semana */[/*Dia 1*/[""/*1er Peso*/]]]
+var textRIRBook =           [/* Semana */[/*Dia 1*/[""/*1er RIR*/]]]
+var TextoCambiadoBook = false
+
 var edit = false
-var pnlSlide = false
+var slide = true
+var pase
+var SeriesShown = false
+
+var usuarios = []
+var contraseñas = []
+var amountUsers
+var user
+var pw
+var recordar
+var logueado = false
+var SyncLists = false
+
+Popover = false
+const toastTrigger = document.getElementById('liveToastBtn')
+const toastLiveExample = document.getElementById('liveToast')
+const container = document.getElementById('calendar');
 
 document.addEventListener('DOMContentLoaded', function() {
     // Aquí puedes llamar a tu función para cargar datos
     LoadData(true, false);
     SlideDivButtons()
 });
-
-var slide = true
 
 function buttonSlide(){
     if(slide){
@@ -115,7 +157,7 @@ function SlideDivButtons(){
     }
 }
 
-function ButtonSemanaSlideLista(Button){
+function ButtonSemanaSlide(Button, SectionPage){
     let divSemana = Button.closest('div')
     let pnlSemana = divSemana.querySelector('.SectionTable')
 
@@ -126,10 +168,30 @@ function ButtonSemanaSlideLista(Button){
         pnlSemana.classList.add('on')
     }
 
-    ButtonClickLista(pnlSemana.querySelector('#divButtons').querySelector('button'))
+    ButtonClick(pnlSemana.querySelector('#divButtons').querySelector('button'), SectionPage)
 }
 
-function ButtonClickLista(Button){
+function ButtonClick(Button, SectionPage){
+
+    let textEjercicios, textSeries, textReps, textPeso, textRIR, amountEjerciciosDay
+
+    if (SectionPage == "Lists") {
+        textEjercicios = textEjerciciosLista
+        textSeries = textSeriesLista
+        textReps = textRepsLista
+        textPeso = textPesoLista
+        textRIR = textRIRLista
+        amountEjerciciosDay = amountEjerciciosDayLista
+    }
+    else if (SectionPage == "Book") {
+        textEjercicios = textEjerciciosBook
+        textSeries = textSeriesBook
+        textReps = textRepsBook
+        textPeso = textPesoBook
+        textRIR = textRIRBook
+        amountEjerciciosDay = amountEjerciciosDayBook
+    }
+
     let divDivButton = Button.closest('#divDivButtons')
     let NowOn = divDivButton.querySelector('.on')
 
@@ -137,17 +199,17 @@ function ButtonClickLista(Button){
     Button.classList.add('on')
 
     let divButtons = Button.closest('div')
-    let tbody = Button.closest('.PnlSemana').querySelector('.tbodyBook')
-    let ButtonAdd = Button.closest('.PnlSemana').querySelector('.btnAdd')
-    let ButtonDelete = Button.closest('.PnlSemana').querySelector('.btnDelete')
+    let tbody = Button.closest('.Week').querySelector('.tbodyBook')
+    let ButtonAdd = Button.closest('.Week').querySelector('.btnAdd')
+    let ButtonDelete = Button.closest('.Week').querySelector('.btnDelete')
 
-    let Week = Button.closest('.PnlSemana').getAttribute('name')
+    let Week = Button.closest('.Week').getAttribute('name')
     let Day = divButtons.getAttribute('name')
 
     let NumberExcercisesActual = tbody.children.length - 1
-    let NumberExcercisesAfter =  amountEjerciciosDayLista[Week][Day]
+    let NumberExcercisesAfter =  amountEjerciciosDay[Week][Day]
 
-    let AllBtnRetractSeries = Button.closest('.PnlSemana').querySelectorAll('#BtnRetractSeries')
+    let AllBtnRetractSeries = Button.closest('.Week').querySelectorAll('#BtnRetractSeries')
     
     for(let i = 0; i < AllBtnRetractSeries.length; i++){
         let trBook = AllBtnRetractSeries[i].closest('tr')
@@ -164,14 +226,13 @@ function ButtonClickLista(Button){
     if(NumberExcercisesActual < NumberExcercisesAfter){
         let Diferencia = NumberExcercisesAfter - NumberExcercisesActual
         for(let i = 0; i < Diferencia; i++){
-            AddEjercicio(ButtonAdd, true)
+            AddEjercicio(ButtonAdd, true, SectionPage)
         }
     }
     else if(NumberExcercisesActual > NumberExcercisesAfter){
         let Diferencia = NumberExcercisesActual - NumberExcercisesAfter
-
         for(let i = 0; i < Diferencia; i++){
-            DeleteEjercicio(ButtonDelete, true)
+            DeleteEjercicio(ButtonDelete, true, SectionPage)
         }
     }
 
@@ -183,152 +244,299 @@ function ButtonClickLista(Button){
 
     for(let i = 0; i < NumberExcercisesAfter; i++){
 
-        if(textEjerciciosLista[Week][Day][i] == "null"){
-            textEjerciciosLista[Week][Day][i] = ""
+        if(textEjercicios[Week][Day][i] == "null"){
+            textEjercicios[Week][Day][i] = ""
         }
-        if(textSeriesLista[Week][Day][i] == "null"){
-            textSeriesLista[Week][Day][i] = ""
+        if(textSeries[Week][Day][i] == "null"){
+            textSeries[Week][Day][i] = ""
         }
-        if(textRepsLista[Week][Day][i] == "null"){
-            textRepsLista[Week][Day][i] = ""
+        if(textReps[Week][Day][i] == "null"){
+            textReps[Week][Day][i] = ""
         }
-        if(textPesoLista[Week][Day][i] == "null"){
-            textPesoLista[Week][Day][i] = ""
+        if(textPeso[Week][Day][i] == "null"){
+            textPeso[Week][Day][i] = ""
         }
-        if(textRIRLista[Week][Day][i] == "null"){
-            textRIRLista[Week][Day][i] = ""
+        if(textRIR[Week][Day][i] == "null"){
+            textRIR[Week][Day][i] = ""
         }
 
-        AllTextInputExcercise[i].value = textEjerciciosLista[Week][Day][i]
-        AllTextInputSeries[i].value = textSeriesLista[Week][Day][i]
-        AllTextInputReps[i].value = textRepsLista[Week][Day][i]
-        AllTextInputPeso[i].value = textPesoLista[Week][Day][i]
-        AllTextInputRIR[i].value = textRIRLista[Week][Day][i]
+        AllTextInputExcercise[i].value = textEjercicios[Week][Day][i]
+        AllTextInputSeries[i].value = textSeries[Week][Day][i]
+        AllTextInputReps[i].value = textReps[Week][Day][i]
+        AllTextInputPeso[i].value = textPeso[Week][Day][i]
+        AllTextInputRIR[i].value = textRIR[Week][Day][i]
     }
     
     ShowBtnSeries()
     //SaveData()
 }
 
-var amountEjerciciosDayLista = [/*Semana 1*/ [1 /*Dia1*/]]
+function AddWeeks(Button, Load, i, SectionPage){
 
-function AddWeekLista(Button, Load, i){
+    let amountWeeks, amountDays, SemanaText, DiaText, amountEjerciciosDay, textEjercicios, textSeries, textReps, textPeso, textRIR
+
+    if (SectionPage == "Lists") {
+        amountWeeks = amountWeeksLista
+        amountDays = amountDaysLista
+        SemanaText = SemanaTextLista
+        DiaText = DiaTextLista
+        amountEjerciciosDay = amountEjerciciosDayLista
+        textEjercicios = textEjerciciosLista
+        textSeries = textSeriesLista
+        textReps = textRepsLista
+        textPeso = textPesoLista
+        textRIR = textRIRLista
+    }
+    else if (SectionPage == "Book") {
+        amountWeeks = amountWeeksBook
+        amountDays = amountDaysBook
+        SemanaText = SemanaTextBook
+        DiaText = DiaTextBook
+        amountEjerciciosDay = amountEjerciciosDayBook
+        textEjercicios = textEjerciciosBook
+        textSeries = textSeriesBook
+        textReps = textRepsBook
+        textPeso = textPesoBook
+        textRIR = textRIRBook
+    }
+
     if(Load == false){
-        amountWeeksLista++
+        amountWeeks++
     }
     
-    let divpagerutinas = Button.closest('#pagerutinas')
-    let divPage = divpagerutinas.querySelector('#DivSemanasLista')
-    let divSemana = divPage.querySelectorAll('#semana')
-    let NewDivSemana = divSemana[divSemana.length - 1].cloneNode(true)
-    let BtnSlide = NewDivSemana.querySelector('#BtnSemanaSlide')
-    let SpanSlide = NewDivSemana.querySelector('#LabelSemana')
-    let AmountDays = NewDivSemana.querySelector('#divDivButtons').children.length - 1
-    let DivShowSeries = NewDivSemana.querySelector('#DivShowSeries')
+    let divSectionPage = Button.closest('.SectionPage')
+    let divPage = divSectionPage.querySelector('.DivAllWeeks')
+    let divWeek = divPage.querySelectorAll('.Week')
+    let NewDivWeek = divWeek[divWeek.length - 1].cloneNode(true)
+    let BtnSlide = NewDivWeek.querySelector('#BtnSemanaSlide')
+    let SpanSlide = NewDivWeek.querySelector('#LabelSemana')
+    let AmountDays = NewDivWeek.querySelector('#divDivButtons').children.length - 1
+    let DivShowSeries = NewDivWeek.querySelector('#DivShowSeries')
     DivShowSeries.classList.remove('on')
 
     if(Load == true){
-        if(SemanaTextLista[i - 1] != "" || SemanaTextLista[i - 1] != undefined || SemanaTextLista[i - 1] != null){    
-            BtnSlide.innerText = SemanaTextLista[i - 1]
-            SpanSlide.value = SemanaTextLista[i - 1]
+        if(SemanaText[i - 1] != "" || SemanaText[i - 1] != undefined || SemanaText[i - 1] != null){    
+            BtnSlide.innerText = SemanaText[i - 1]
+            SpanSlide.value = SemanaText[i - 1]
         }
-        NewDivSemana.setAttribute('name', (i - 1))
-        divPage.insertBefore(NewDivSemana, divPage.childNodes[(i + 2)])
+        NewDivWeek.setAttribute('name', (i - 1))
+        divPage.insertBefore(NewDivWeek, divPage.childNodes[(i + 2)])
     }
     else{
-        BtnSlide.innerText = "Semana " + amountWeeksLista
-        SpanSlide.textContent = "Semana " + amountWeeksLista
-        NewDivSemana.setAttribute('name', (amountWeeksLista - 1))
+        BtnSlide.innerText = "Semana " + amountWeeks
+        SpanSlide.textContent = "Semana " + amountWeeks
+        NewDivWeek.setAttribute('name', (amountWeeks - 1))
         
 
-        amountDaysLista[amountWeeksLista - 1] = AmountDays + 1
-        amountEjerciciosDayLista[amountWeeksLista - 1] = []
-        textEjerciciosLista[amountWeeksLista - 1] = []
-        textSeriesLista[amountWeeksLista - 1] = []
-        textRepsLista[amountWeeksLista - 1] = []
-        textPesoLista[amountWeeksLista - 1] = []
-        textRIRLista[amountWeeksLista - 1] = []
-        DiaTextLista[amountWeeksLista - 1] = [[]]
-        SemanaTextLista[amountWeeksLista - 1] = "Semana " + amountWeeksLista
+        amountDays[amountWeeks - 1] = AmountDays + 1
+        amountEjerciciosDay[amountWeeks - 1] = []
+        textEjercicios[amountWeeks - 1] = []
+        textSeries[amountWeeks - 1] = []
+        textReps[amountWeeks - 1] = []
+        textPeso[amountWeeks - 1] = []
+        textRIR[amountWeeks - 1] = []
+        DiaText[amountWeeks - 1] = [[]]
+        SemanaText[amountWeeks - 1] = "Semana " + amountWeeks
     
         for(let i = 0; i <= AmountDays; i++){
-            amountEjerciciosDayLista[amountWeeksLista - 1][i] = "1"
-            textEjerciciosLista[amountWeeksLista - 1][i] = [""]
-            textSeriesLista[amountWeeksLista - 1][i] = [""]
-            textRepsLista[amountWeeksLista - 1][i] = [""]
-            textPesoLista[amountWeeksLista - 1][i] = [""]
-            textRIRLista[amountWeeksLista - 1][i] = [""]
-            DiaTextLista[amountWeeksLista - 1][i] = NewDivSemana.querySelectorAll('#divButtons')[i].querySelector('input').value
+            amountEjerciciosDay[amountWeeks - 1][i] = "1"
+            textEjercicios[amountWeeks - 1][i] = [""]
+            textSeries[amountWeeks - 1][i] = [""]
+            textReps[amountWeeks - 1][i] = [""]
+            textPeso[amountWeeks - 1][i] = [""]
+            textRIR[amountWeeks - 1][i] = [""]
+            DiaText[amountWeeks - 1][i] = NewDivWeek.querySelectorAll('#divButtons')[i].querySelector('input').value
         }
 
-        divPage.insertBefore(NewDivSemana, divPage.childNodes[(amountWeeksLista + 2)])
+        divPage.insertBefore(NewDivWeek, divPage.childNodes[(amountWeeks + 2)])
+
+        if(SectionPage == "Lists"){
+            amountWeeksLista = amountWeeks
+            amountDaysLista = amountDays
+            SemanaTextLista = SemanaText
+            DiaTextLista = DiaText
+            amountEjerciciosDayLista = amountEjerciciosDay
+            textEjerciciosLista = textEjercicios
+            textSeriesLista = textSeries
+            textRepsLista = textReps
+            textPesoLista = textPeso
+            textRIRLista = textRIR
+        }
+        else if(SectionPage == "Book"){
+            amountWeeksBook = amountWeeks
+            amountDaysBook = amountDays
+            SemanaTextBook = SemanaText
+            DiaTextBook = DiaText
+            amountEjerciciosDayBook = amountEjerciciosDay
+            textEjerciciosBook = textEjercicios
+            textSeriesBook = textSeries
+            textRepsBook = textReps
+            textPesoBook = textPeso
+            textRIRBook = textRIR
+        }
         
-        ButtonClickLista(NewDivSemana.querySelector('#divDivButtons').querySelector('.on'))
+        ButtonClick(NewDivWeek.querySelector('#divDivButtons').querySelector('.on'), SectionPage)
         SaveData()
     }
     SlideDivButtons()
 }
 
-var pase
+function DeleteWeeks(Button, SectionPage){
+    
+    let amountWeeks, amountDays, DiaText, IDPage, Page, dataBasePage, amountEjerciciosDay, textEjercicios, textSeries, textReps, textPeso, textRIR
 
-function DeleteWeekLista(Button){
-    if(amountWeeksLista > 1){
-        amountWeeksLista--
-        localStorage.removeItem("amountDaysLista" + amountWeeksLista)
+    if (SectionPage == "Lists") {
+        amountWeeks = amountWeeksLista
+        amountDays = amountDaysLista
+        DiaText = DiaTextLista
+        amountEjerciciosDay = amountEjerciciosDayLista
+        textEjercicios = textEjerciciosLista
+        textSeries = textSeriesLista
+        textReps = textRepsLista
+        textPeso = textPesoLista
+        textRIR = textRIRLista
+        dataBasePage = dataBase.ListaRutinas
+        Page = 'Lista'
+        IDPage = '#pagerutinas'
+    }
+    else if (SectionPage == "Book") {
+        amountWeeks = amountWeeksBook
+        amountDays = amountDaysBook
+        DiaText = DiaTextBook
+        amountEjerciciosDay = amountEjerciciosDayBook
+        textEjercicios = textEjerciciosBook
+        textSeries = textSeriesBook
+        textReps = textRepsBook
+        textPeso = textPesoBook
+        textRIR = textRIRBook
+        dataBasePage = dataBase.ListaBook
+        Page = 'Book'
+        IDPage = '#pagebook'
+    }
 
-        for(let i = 0; i < amountDaysLista[amountWeeksLista]; i++){
-            localStorage.removeItem(`amountEjerciciosDayLista${amountWeeksLista}${i}`)
-            for(let j = 0; j < amountEjerciciosDayLista[amountWeeksLista][i]; j++){
-                localStorage.removeItem(`textEjerciciosLista${amountWeeksLista}${i}${j}`)
-                localStorage.removeItem(`textSeriesLista${amountWeeksLista}${i}${j}`)
-                localStorage.removeItem(`textRepsLista${amountWeeksLista}${i}${j}`)
-                localStorage.removeItem(`textRIRLista${amountWeeksLista}${i}${j}`)
+    if(amountWeeks > 1){
+        amountWeeks--
+        localStorage.removeItem("amountDays" + Page + amountWeeks)
+
+        for(let i = 0; i < amountDays[amountWeeks]; i++){
+            localStorage.removeItem(`amountEjerciciosDay${Page}${amountWeeks}${i}`)
+            for(let j = 0; j < amountEjerciciosDay[amountWeeks][i]; j++){
+                localStorage.removeItem(`textEjercicios${Page}${amountWeeks}${i}${j}`)
+                localStorage.removeItem(`textSeries${Page}${amountWeeks}${i}${j}`)
+                localStorage.removeItem(`textReps${Page}${amountWeeks}${i}${j}`)
+                localStorage.removeItem(`textRIR${Page}${amountWeeks}${i}${j}`)
             }
         }
     
-        amountDaysLista[amountWeeksLista] = "1"
-        amountEjerciciosDayLista.splice(amountWeeksLista, 1)
-        textEjerciciosLista.splice(amountWeeksLista, 1)
-        textSeriesLista.splice(amountWeeksLista, 1)
-        textRepsLista.splice(amountWeeksLista, 1)
-        textPesoLista.splice(amountWeeksLista, 1)
-        textRIRLista.splice(amountWeeksLista, 1)
-        DiaTextLista.splice(amountWeeksLista, 1)
-        dataBase.ListaRutinas.splice(amountWeeksLista, 1)
+        amountDays[amountWeeks] = "1"
+        amountEjerciciosDay.splice(amountWeeks, 1)
+        textEjercicios.splice(amountWeeks, 1)
+        textSeries.splice(amountWeeks, 1)
+        textReps.splice(amountWeeks, 1)
+        textPeso.splice(amountWeeks, 1)
+        textRIR.splice(amountWeeks, 1)
+        DiaText.splice(amountWeeks, 1)
+        dataBasePage.splice(amountWeeks, 1)
         pase = Math.random()
+
+        if(SectionPage == "Lists"){
+            amountWeeksLista = amountWeeks
+            amountDaysLista = amountDays
+            DiaTextLista = DiaText
+            amountEjerciciosDayLista = amountEjerciciosDay
+            textEjerciciosLista = textEjercicios
+            textSeriesLista = textSeries
+            textRepsLista = textReps
+            textPesoLista = textPeso
+            textRIRLista = textRIR
+        }
+        else if(SectionPage == "Book"){
+            amountWeeksBook = amountWeeks
+            amountDaysBook = amountDays
+            DiaTextBook = DiaText
+            amountEjerciciosDayBook = amountEjerciciosDay
+            textEjerciciosBook = textEjercicios
+            textSeriesBook = textSeries
+            textRepsBook = textReps
+            textPesoBook = textPeso
+            textRIRBook = textRIR
+        }
 
         SaveData()
 
-        let divpagerutinas = Button.closest('#pagerutinas')
-        let divPage = divpagerutinas.querySelector('#DivSemanasLista')
+        let divSectionPage = Button.closest(`${IDPage}`)
+        let divAllWeeks = divSectionPage.querySelector('.DivAllWeeks')
 
-        divPage.removeChild(divPage.children[(amountWeeksLista)])
+        divAllWeeks.removeChild(divAllWeeks.children[(amountWeeks)])
     }
 }
 
-var amountDaysLista = [1/*Semana1*/]
-
-function AddDaysLista(Button, Load, j){
+function AddDays(Button, Load, j, SectionPage){
     let tr = Button.closest('tr')
     let th = tr.querySelector('th')
-    let semana = Button.closest('#semana')
+    let semana = Button.closest('.Week')
     let Week = semana.getAttribute('name')
     let addButton = Button.closest('#divAdd')
+    
+    let amountDays, DiaText, amountEjerciciosDay, textEjercicios, textSeries, textReps, textPeso, textRIR
 
-    if(amountDaysLista[Week] < 7 || Load == true){
+    if (SectionPage == "Lists") {
+        amountDays = amountDaysLista
+        DiaText = DiaTextLista
+        amountEjerciciosDay = amountEjerciciosDayLista
+        textEjercicios = textEjerciciosLista
+        textSeries = textSeriesLista
+        textReps = textRepsLista
+        textPeso = textPesoLista
+        textRIR = textRIRLista
+    }
+    else if (SectionPage == "Book") {
+        amountDays = amountDaysBook
+        DiaText = DiaTextBook
+        amountEjerciciosDay = amountEjerciciosDayBook
+        textEjercicios = textEjerciciosBook
+        textSeries = textSeriesBook
+        textReps = textRepsBook
+        textPeso = textPesoBook
+        textRIR = textRIRBook
+    }
+
+    if(amountDays[Week] < 7 || Load == true){
         if(Load == false){
-            amountDaysLista[Week]++
-            DiaTextLista[Week][amountDaysLista[Week] - 1] = `Dia ${amountDaysLista[Week]}`
-            amountEjerciciosDayLista[Week][amountDaysLista[Week] - 1] = 1
-            textEjerciciosLista[Week][amountDaysLista[Week] - 1] = [""]
-            textSeriesLista[Week][amountDaysLista[Week] - 1] = [""]
-            textRepsLista[Week][amountDaysLista[Week] - 1] = [""]
-            textPesoLista[Week][amountDaysLista[Week] - 1] = [""]
-            textRIRLista[Week][amountDaysLista[Week] - 1] = [""]
+            amountDays[Week]++
+            DiaText[Week][amountDays[Week] - 1] = `Dia ${amountDays[Week]}`
+            amountEjerciciosDay[Week][amountDays[Week] - 1] = 1
+            textEjercicios[Week][amountDays[Week] - 1] = [""]
+            textSeries[Week][amountDays[Week] - 1] = [""]
+            textReps[Week][amountDays[Week] - 1] = [""]
+            textPeso[Week][amountDays[Week] - 1] = [""]
+            textRIR[Week][amountDays[Week] - 1] = [""]
+
+            if(SectionPage == "Lists"){
+                amountDaysLista = amountDays
+                DiaTextLista = DiaText
+                amountEjerciciosDayLista = amountEjerciciosDay
+                textEjerciciosLista = textEjercicios
+                textSeriesLista = textSeries
+                textRepsLista = textReps
+                textPesoLista = textPeso
+                textRIRLista = textRIR
+            }
+            else if(SectionPage == "Book"){
+                amountDaysBook = amountDays
+                DiaTextBook = DiaText
+                amountEjerciciosDayBook = amountEjerciciosDay
+                textEjerciciosBook = textEjercicios
+                textSeriesBook = textSeries
+                textRepsBook = textReps
+                textPesoBook = textPeso
+                textRIRBook = textRIR
+            }
+
             SaveData()
         }
 
-        if(amountDaysLista[Week] == 2 && Load == false){
+        if(amountDays[Week] == 2 && Load == false){
             th.querySelector('.buttonLabelDay').classList.remove('deleteOff')
             th.querySelector('#BtnDeleteButtons').classList.remove('off')
         }
@@ -343,22 +551,21 @@ function AddDaysLista(Button, Load, j){
         divBtn.querySelector('#divDelete').classList.remove('last')
         NewDivBtn.querySelector('#divDelete').classList.add("last")
 
-        //alert(NewDivBtn.querySelector('#divAdd'))
-        if(amountDaysLista[Week] == 7){
+        if(amountDays[Week] == 7){
             NewDivBtn.querySelector('#divAdd').classList.add("off")
             NewDivBtn.querySelector('#divDelete').classList.remove("last")
         }
         
         if(Load == true){
             NewDivBtn.setAttribute('name', (j - 1))
-            Btn.innerText = DiaTextLista[Week][j - 1]
-            SpanBtn.value = DiaTextLista[Week][j - 1]
+            Btn.innerText = DiaText[Week][j - 1]
+            SpanBtn.value = DiaText[Week][j - 1]
         }
         else{
-            NewDivBtn.setAttribute('name', (amountDaysLista[Week] - 1))
-            Btn.innerText = "Dia " + amountDaysLista[Week]
-            SpanBtn.value = "Dia " + amountDaysLista[Week]
-            DiaTextLista[Week][amountDaysLista[Week] - 1] = "Dia " + amountDaysLista[Week]
+            NewDivBtn.setAttribute('name', (amountDays[Week] - 1))
+            Btn.innerText = "Dia " + amountDays[Week]
+            SpanBtn.value = "Dia " + amountDays[Week]
+            DiaText[Week][amountDays[Week] - 1] = "Dia " + amountDays[Week]
         }
 
         th.appendChild(NewDivBtn)
@@ -366,46 +573,94 @@ function AddDaysLista(Button, Load, j){
     }
 }
 
-function DeleteDaysLista(Button){
-    let Week = Button.closest('#semana').getAttribute('name')
+function DeleteDays(Button, SectionPage){
+    let Week = Button.closest('.Week').getAttribute('name')
+    
+    let amountDays, DiaText, Page, dataBasePage, amountEjerciciosDay, textEjercicios, textSeries, textReps, textPeso, textRIR
 
-    if(amountDaysLista[Week] > 1){
+    if (SectionPage == "Lists") {
+        amountDays = amountDaysLista
+        DiaText = DiaTextLista
+        amountEjerciciosDay = amountEjerciciosDayLista
+        textEjercicios = textEjerciciosLista
+        textSeries = textSeriesLista
+        textReps = textRepsLista
+        textPeso = textPesoLista
+        textRIR = textRIRLista
+        Page = 'Lista'
+        dataBasePage = dataBase.ListaRutinas
+    }
+    else if (SectionPage == "Book") {
+        amountDays = amountDaysBook
+        DiaText = DiaTextBook
+        amountEjerciciosDay = amountEjerciciosDayBook
+        textEjercicios = textEjerciciosBook
+        textSeries = textSeriesBook
+        textReps = textRepsBook
+        textPeso = textPesoBook
+        textRIR = textRIRBook
+        Page = 'Book'
+        dataBasePage = dataBase.ListaBook
+    }
+
+    if(amountDays[Week] > 1){
         let div = Button.closest('#divButtons')
         let Day = parseInt(div.getAttribute('name'))
-        amountDaysLista[Week]--
+        amountDays[Week]--
 
-        for(let i = 0; i < amountEjerciciosDayLista[Week][Day]; i++){
-            localStorage.removeItem(`amountEjerciciosDayLista${Week}${Day}${i}`)
-            localStorage.removeItem(`textEjerciciosLista${Week}${Day}${i}`)
-            localStorage.removeItem(`textSeriesLista${Week}${Day}${i}`)
-            localStorage.removeItem(`textRepsLista${Week}${Day}${i}`)
-            localStorage.removeItem(`textRIRLista${Week}${Day}${i}`)
-            localStorage.removeItem(`DiaTextLista${Week}${Day}${i}`)
+        for(let i = 0; i < amountEjerciciosDay[Week][Day]; i++){
+            localStorage.removeItem(`amountEjerciciosDay${Page}${Week}${Day}${i}`)
+            localStorage.removeItem(`textEjercicios${Page}${Week}${Day}${i}`)
+            localStorage.removeItem(`textSeries${Page}${Week}${Day}${i}`)
+            localStorage.removeItem(`textReps${Page}${Week}${Day}${i}`)
+            localStorage.removeItem(`textRIR${Page}${Week}${Day}${i}`)
+            localStorage.removeItem(`DiaText${Page}${Week}${Day}${i}`)
         }
 
-        for(let i = 0; i < amountEjerciciosDayLista[Week][Day]; i++){
-            localStorage.removeItem(`amountEjerciciosDayLista${Week}${amountDaysLista}${i}`)
-            localStorage.removeItem(`textEjerciciosLista${Week}${amountDaysLista}${i}`)
-            localStorage.removeItem(`textSeriesLista${Week}${amountDaysLista}${i}`)
-            localStorage.removeItem(`textRepsLista${Week}${amountDaysLista}${i}`)
-            localStorage.removeItem(`textRIRLista${Week}${amountDaysLista}${i}`)
-            localStorage.removeItem(`DiaTextLista${Week}${amountDaysLista}${i}`)
+        for(let i = 0; i < amountEjerciciosDay[Week][Day]; i++){
+            localStorage.removeItem(`amountEjerciciosDay${Page}${Week}${amountDays}${i}`)
+            localStorage.removeItem(`textEjercicios${Page}${Week}${amountDays}${i}`)
+            localStorage.removeItem(`textSeries${Page}${Week}${amountDays}${i}`)
+            localStorage.removeItem(`textReps${Page}${Week}${amountDays}${i}`)
+            localStorage.removeItem(`textRIR${Page}${Week}${amountDays}${i}`)
+            localStorage.removeItem(`DiaText${Page}${Week}${amountDays}${i}`)
         }
 
-        amountEjerciciosDayLista[Week].splice(Day, 1)
-        textEjerciciosLista[Week].splice(Day, 1)
-        textSeriesLista[Week].splice(Day, 1)
-        textRepsLista[Week].splice(Day, 1)
-        textPesoLista[Week].splice(Day, 1)
-        textRIRLista[Week].splice(Day, 1)
-        DiaTextLista[Week].splice(Day, 1)
-        dataBase.ListaRutinas[Week].DIASNAME.splice(Day, 1)
-        dataBase.ListaRutinas[Week].CANTEJERCICIOSDIA.splice(Day, 1)
-        dataBase.ListaRutinas[Week].TEXTEJERCICIO.splice(Day, 1)
-        dataBase.ListaRutinas[Week].TEXTSERIES.splice(Day, 1)
-        dataBase.ListaRutinas[Week].TEXTREPS.splice(Day, 1)
-        dataBase.ListaRutinas[Week].TEXTPESO.splice(Day, 1)
-        dataBase.ListaRutinas[Week].TEXTRIR.splice(Day, 1)
+        amountEjerciciosDay[Week].splice(Day, 1)
+        textEjercicios[Week].splice(Day, 1)
+        textSeries[Week].splice(Day, 1)
+        textReps[Week].splice(Day, 1)
+        textPeso[Week].splice(Day, 1)
+        textRIR[Week].splice(Day, 1)
+        DiaText[Week].splice(Day, 1)
+        dataBasePage[Week].DIASNAME.splice(Day, 1)
+        dataBasePage[Week].CANTEJERCICIOSDIA.splice(Day, 1)
+        dataBasePage[Week].TEXTEJERCICIO.splice(Day, 1)
+        dataBasePage[Week].TEXTSERIES.splice(Day, 1)
+        dataBasePage[Week].TEXTREPS.splice(Day, 1)
+        dataBasePage[Week].TEXTPESO.splice(Day, 1)
+        dataBasePage[Week].TEXTRIR.splice(Day, 1)
+
+        if(SectionPage == "Lists"){
+            amountDaysLista = amountDays
+            DiaTextLista = DiaText
+            amountEjerciciosDayLista = amountEjerciciosDay
+            textEjerciciosLista = textEjercicios
+            textSeriesLista = textSeries
+            textRepsLista = textReps
+            textPesoLista = textPeso
+            textRIRLista = textRIR
+        }
+        else if(SectionPage == "Book"){
+            amountDaysBook = amountDays
+            DiaTextBook = DiaText
+            amountEjerciciosDayBook = amountEjerciciosDay
+            textEjerciciosBook = textEjercicios
+            textSeriesBook = textSeries
+            textRepsBook = textReps
+            textPesoBook = textPeso
+            textRIRBook = textRIR
+        }
 
         SaveData()
 
@@ -417,7 +672,7 @@ function DeleteDaysLista(Button){
             divButtons[i].setAttribute('name', (i - 1))
         }
 
-        if(amountDaysLista[Week] == 1){
+        if(amountDays[Week] == 1){
             divDivButtons.querySelector('.buttonLabelDay').classList.add('deleteOff')
             divDivButtons.querySelector('#BtnDeleteButtons').classList.add('off')
         }
@@ -427,11 +682,11 @@ function DeleteDaysLista(Button){
         let lastAddButton = divDivButtons.querySelectorAll('#divAdd')[divDivButtons.children.length - 1]
         lastAddButton.classList.remove('off')
 
-        if(amountDaysLista[Week] > 1){
+        if(amountDays[Week] > 1){
             divDivButtons.querySelectorAll('#divDelete')[divDivButtons.children.length - 1].classList.add('last')
         }
 
-        if(amountDaysLista[Week] == 6){
+        if(amountDays[Week] == 6){
             let addButtons = divDivButtons.querySelectorAll('#divAdd')
             let addButton = addButtons[addButtons.length - 1]
             addButton.classList.remove("off")
@@ -440,69 +695,147 @@ function DeleteDaysLista(Button){
         let Buttons = divDivButtons.querySelectorAll('#divButtons')
         let FirstButton = Buttons[0].querySelector('button')
         FirstButton.classList.add('on')
-        ButtonClickLista(FirstButton)
+        ButtonClick(FirstButton, "Lists")
     }
 }
 
-function AddEjercicio(Button, Load, j){
-    let Week = Button.closest('#semana').getAttribute('name')
-    let Day = Button.closest('#semana').querySelector('#divDivButtons').querySelector('.on').closest('#divButtons').getAttribute('name')
+function AddEjercicio(Button, Load, j, SectionPage){
+    let Week = Button.closest('.Week').getAttribute('name')
+    let Day = Button.closest('.Week').querySelector('#divDivButtons').querySelector('.on').closest('#divButtons').getAttribute('name')
     
+    let textEjercicios, textSeries, textReps, textPeso, textRIR, amountEjerciciosDay
+
+    if (SectionPage == "Lists") {
+        textEjercicios = textEjerciciosLista
+        textSeries = textSeriesLista
+        textReps = textRepsLista
+        textPeso = textPesoLista
+        textRIR = textRIRLista
+        amountEjerciciosDay = amountEjerciciosDayLista
+    }
+    else if (SectionPage == "Book") {
+        textEjercicios = textEjerciciosBook
+        textSeries = textSeriesBook
+        textReps = textRepsBook
+        textPeso = textPesoBook
+        textRIR = textRIRBook
+        amountEjerciciosDay = amountEjerciciosDayBook
+    }
+
     if(Load == false){
-        textEjerciciosLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
-        textSeriesLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
-        textRepsLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
-        textPesoLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
-        textRIRLista[Week][Day][amountEjerciciosDayLista[Week][Day]] = ""
-        amountEjerciciosDayLista[Week][Day]++
+        textEjercicios[Week][Day][amountEjerciciosDay[Week][Day]] = ""
+        textSeries[Week][Day][amountEjerciciosDay[Week][Day]] = ""
+        textReps[Week][Day][amountEjerciciosDay[Week][Day]] = ""
+        textPeso[Week][Day][amountEjerciciosDay[Week][Day]] = ""
+        textRIR[Week][Day][amountEjerciciosDay[Week][Day]] = ""
+        amountEjerciciosDay[Week][Day]++
+        
+        if(SectionPage == "Lists"){
+            amountEjerciciosDayLista = amountEjerciciosDay
+            textEjerciciosLista = textEjercicios
+            textSeriesLista = textSeries
+            textRepsLista = textReps
+            textPesoLista = textPeso
+            textRIRLista = textRIR
+        }
+        else if(SectionPage == "Book"){
+            amountEjerciciosDayBook = amountEjerciciosDay
+            textEjerciciosBook = textEjercicios
+            textSeriesBook = textSeries
+            textRepsBook = textReps
+            textPesoBook = textPeso
+            textRIRBook = textRIR
+        }
         SaveData()
     }
 
-    let divSemana = Button.closest('#semana')
+    let divSemana = Button.closest('.Week')
     let tBody = divSemana.querySelector('.tbodyBook')
     let trEjercicio = tBody.querySelector('.trBookEjercicio')
     let NewTrEjercicio = trEjercicio.cloneNode(true)
+    let DivShowSeries = NewTrEjercicio.querySelector('#DivShowSeries')
+    DivShowSeries.classList.remove('on')
 
     if(Load == true){
         NewTrEjercicio.setAttribute('name', (j))
         tBody.appendChild(NewTrEjercicio)
     }
     else{
-        NewTrEjercicio.setAttribute('name', (amountEjerciciosDayLista[Week][Day] - 1))
+        NewTrEjercicio.setAttribute('name', (amountEjerciciosDay[Week][Day] - 1))
         tBody.appendChild(NewTrEjercicio)
-        ButtonClickLista(divSemana.querySelector('#divDivButtons').querySelector('.on'))
+        ButtonClick(divSemana.querySelector('#divDivButtons').querySelector('.on'), SectionPage)
     }
 }
 
-function DeleteEjercicio(Button, Load){
-    let Week = Button.closest('#semana').getAttribute('name')
-    let Day = Button.closest('#semana').querySelector('#divDivButtons').querySelector('.on').closest('#divButtons').getAttribute('name')
+function DeleteEjercicio(Button, Load, SectionPage){
+    let Week = Button.closest('.Week').getAttribute('name')
+    let Day = Button.closest('.Week').querySelector('#divDivButtons').querySelector('.on').closest('#divButtons').getAttribute('name')
     
-    if(amountEjerciciosDayLista[Week][Day] > 1 || Load == true){
-        if(Load == false){
-            amountEjerciciosDayLista[Week][Day]--
-            textEjerciciosLista[Week][Day].splice(amountEjerciciosDayLista[Week][Day], 1)
-            textSeriesLista[Week][Day].splice(amountEjerciciosDayLista[Week][Day], 1)
-            textRepsLista[Week][Day].splice(amountEjerciciosDayLista[Week][Day], 1)
-            textRIRLista[Week][Day].splice(amountEjerciciosDayLista[Week][Day], 1)
-            dataBase.ListaRutinas[Week].TEXTEJERCICIO[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
-            dataBase.ListaRutinas[Week].TEXTSERIES[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
-            dataBase.ListaRutinas[Week].TEXTREPS[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
-            dataBase.ListaRutinas[Week].TEXTRIR[Day].splice(amountEjerciciosDayLista[Week][Day], 1)
+    let textEjercicios, textSeries, textReps, textPeso, textRIR, amountEjerciciosDay, dataBaseSectionPage
 
-            localStorage.removeItem(`textEjerciciosLista${Week}${Day}${amountEjerciciosDayLista[Week][Day]}`)
-            localStorage.removeItem(`textSeriesLista${Week}${Day}${amountEjerciciosDayLista[Week][Day]}`)
-            localStorage.removeItem(`textRepsLista${Week}${Day}${amountEjerciciosDayLista[Week][Day]}`)
-            localStorage.removeItem(`textRIRLista${Week}${Day}${amountEjerciciosDayLista[Week][Day]}`)
+    if (SectionPage == "Lists") {
+        textEjercicios = textEjerciciosLista
+        textSeries = textSeriesLista
+        textReps = textRepsLista
+        textPeso = textPesoLista
+        textRIR = textRIRLista
+        amountEjerciciosDay = amountEjerciciosDayLista
+        dataBaseSectionPage = dataBase.ListaRutinas
+    }
+    else if (SectionPage == "Book") {
+        textEjercicios = textEjerciciosBook
+        textSeries = textSeriesBook
+        textReps = textRepsBook
+        textPeso = textPesoBook
+        textRIR = textRIRBook
+        amountEjerciciosDay = amountEjerciciosDayBook
+        dataBaseSectionPage = dataBase.ListaBook
+    }
+
+    if(amountEjerciciosDay[Week][Day] > 1 || Load == true){
+        if(Load == false){
+            amountEjerciciosDay[Week][Day]--
+            textEjercicios[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
+            textSeries[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
+            textReps[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
+            textRIR[Week][Day].splice(amountEjerciciosDay[Week][Day], 1)
+            dataBaseSectionPage[Week].TEXTEJERCICIO[Day].splice(amountEjerciciosDay[Week][Day], 1)
+            dataBaseSectionPage[Week].TEXTSERIES[Day].splice(amountEjerciciosDay[Week][Day], 1)
+            dataBaseSectionPage[Week].TEXTREPS[Day].splice(amountEjerciciosDay[Week][Day], 1)
+            dataBaseSectionPage[Week].TEXTRIR[Day].splice(amountEjerciciosDay[Week][Day], 1)
+
+            localStorage.removeItem(`textEjerciciosLista${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
+            localStorage.removeItem(`textSeriesLista${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
+            localStorage.removeItem(`textRepsLista${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
+            localStorage.removeItem(`textRIRLista${Week}${Day}${amountEjerciciosDay[Week][Day]}`)
+
+                
+            if(SectionPage == "Lists"){
+                amountEjerciciosDayLista = amountEjerciciosDay
+                textEjerciciosLista = textEjercicios
+                textSeriesLista = textSeries
+                textRepsLista = textReps
+                textPesoLista = textPeso
+                textRIRLista = textRIR
+            }
+            else if(SectionPage == "Book"){
+                amountEjerciciosDayBook = amountEjerciciosDay
+                textEjerciciosBook = textEjercicios
+                textSeriesBook = textSeries
+                textRepsBook = textReps
+                textPesoBook = textPeso
+                textRIRBook = textRIR
+            }
+
             SaveData()
         }
-        let divSemana = Button.closest('#semana')
+        let divSemana = Button.closest('.Week')
         let tBody = divSemana.querySelector('.tbodyBook')
         tBody.removeChild(tBody.lastChild)
     }
 }
 
-function EditButtonsLista(Button){
+function EditButtons(Button, SectionPage){
     let divSemana = Button.closest('div')
     let labelSemana = divSemana.querySelector('input')
     let labelDays = divSemana.querySelectorAll('.buttonLabelDay')
@@ -513,7 +846,15 @@ function EditButtonsLista(Button){
     let btnDelete = divSemana.querySelectorAll('.buttonDelete')
     let EditIcon = divSemana.querySelector('#EditIcon')
     let Week = divSemana.getAttribute('name')
-    //alert(Week + amountDaysLista[Week])
+
+    let amountDays
+
+    if (SectionPage == "Lists") {
+        amountDays = amountDaysLista
+    }
+    else if (SectionPage == "Book") {
+        amountDays = amountDaysBook
+    }
 
     if(edit == false){
         labelSemana.classList.remove('off')
@@ -525,14 +866,14 @@ function EditButtonsLista(Button){
         }
 
 
-        if(amountDaysLista[Week] > 1){
+        if(amountDays[Week] > 1){
             for(let i = 0; i <= (btnDays.length - 1); i++){
                 btnDelete[i].classList.remove('off')
                 labelDays[i].classList.remove('deleteOff')
             }
         }
 
-        if(amountDaysLista[Week] < 7){
+        if(amountDays[Week] < 7){
             divAdd.classList.remove('off')  
         }
 
@@ -556,10 +897,18 @@ function EditButtonsLista(Button){
         }
 
         EditIcon.className = "fa-solid fa-pen-to-square"
+
+        if (SectionPage == "Lists") {
+            amountDaysLista = amountDays
+        }
+        else if (SectionPage == "Book") {
+            amountDaysBook = amountDays
+
+        }
+
         SaveData()
         edit = false
     }
-    //SaveData()
 }
 
 function EditText(TextInput, event){
@@ -569,68 +918,119 @@ function EditText(TextInput, event){
     Btn.innerText = TextInput.textContent
 }
 
-var SemanaTextLista = []
-var DiaTextLista = [[]]
-
-function EditTextSpanLista(TextInput, Type){
-    let Week = TextInput.closest('.PnlSemana').getAttribute('name')
+function EditTextSpan(TextInput, Type, SectionPage){
+    let Week = TextInput.closest('.Week').getAttribute('name')
     let Div = TextInput.closest('div')
     let Btn = Div.querySelector('button')
+    
+    let SemanaText, DiaText
+
+    if (SectionPage == "Lists") {
+        SemanaText = SemanaTextLista
+        DiaText = DiaTextLista
+    }
+    else if (SectionPage == "Book") {
+        SemanaText = SemanaTextBook
+        DiaText = DiaTextBook
+    }
+
     if(Type == "Semana"){
         Btn.innerText = TextInput.value
-        SemanaTextLista[Week] = TextInput.value
+        SemanaText[Week] = TextInput.value
     } else
     if(Type == "Dia"){
         Btn.innerText = TextInput.value
         let Day = TextInput.closest('div').getAttribute('name')
-        DiaTextLista[Week][Day] = TextInput.value
+        DiaText[Week][Day] = TextInput.value
     }
-    //SaveData()
+
+    if (SectionPage == "Lists") {
+        SemanaTextLista = SemanaText
+        DiaTextLista = DiaText
+    }
+    else if (SectionPage == "Book") {
+        SemanaTextBook = SemanaText
+        DiaTextBook = DiaText
+    }
 }
 
-var textEjerciciosLista =    [/* Semana */[/*Dia 1*/[""/*1er Ejercicio*/]]]
-var textSeriesLista =        [/* Semana */[/*Dia 1*/[""/*1er Series*/]]]
-var textRepsLista =          [/* Semana */[/*Dia 1*/[""/*1er Reps*/]]]
-var textPesoLista =          [/* Semana */[/*Dia 1*/[""/*1er Peso*/]]]
-var textRIRLista =           [/* Semana */[/*Dia 1*/[""/*1er RIR*/]]]
-var TextoCambiado = false
-
-function TextChanged(TextInput, Type){
+function TextChanged(TextInput, Type, SectionPage){
     let Week = TextInput.closest('#semana').getAttribute('name')
     let Day = TextInput.closest('#semana').querySelector('#divDivButtons').querySelector('.on').closest('#divButtons').getAttribute('name')
     let ExerciseID = TextInput.closest('tr').getAttribute('name')
+
+    let TextoCambiado, textEjercicios, textSeries, textReps, textPeso, textRIR
+
+    if (SectionPage == "Lists") {
+        TextoCambiado = TextoCambiadoLista
+        textEjercicios = textEjerciciosLista
+        textSeries = textSeriesLista
+        textReps = textRepsLista
+        textPeso = textPesoLista
+        textRIR = textRIRLista
+    }
+    else if (SectionPage == "Book") {
+        TextoCambiado = TextoCambiadoBook
+        textEjercicios = textEjerciciosBook
+        textSeries = textSeriesBook
+        textReps = textRepsBook
+        textPeso = textPesoBook
+        textRIR = textRIRBook
+    }
+
     TextoCambiado = true
 
     if(Type == "Ejercicio"){
-        textEjerciciosLista[Week][Day][ExerciseID] = TextInput.value
-        //alert(textEjercicios[Week][Day][ExerciseID])
+        textEjercicios[Week][Day][ExerciseID] = TextInput.value
     }
 
     if(Type == "Series"){
-        textSeriesLista[Week][Day][ExerciseID] = TextInput.value
+        textSeries[Week][Day][ExerciseID] = TextInput.value
         SeriesChanged(TextInput)
-        //alert(textEjerciciosLista[Week][Day][ExerciseID])
     }
 
     if(Type == "Reps"){
-        textRepsLista[Week][Day][ExerciseID] = TextInput.value
-        //alert(textEjercicios[Week][Day][ExerciseID])
+        textReps[Week][Day][ExerciseID] = TextInput.value
     }
 
     if(Type == "RIR"){
-        textRIRLista[Week][Day][ExerciseID] = TextInput.value
-        //alert(textEjercicios[Week][Day][ExerciseID])
+        textRIR[Week][Day][ExerciseID] = TextInput.value
     }
 
     if(Type == 'Peso'){
-        textPesoLista[Week][Day][ExerciseID] = TextInput.value
+        textPeso[Week][Day][ExerciseID] = TextInput.value
+    }
+
+    if(SectionPage == "Lists"){
+        TextoCambiadoLista = TextoCambiado
+        textEjerciciosLista = textEjercicios
+        textSeriesLista = textSeries
+        textRepsLista = textReps
+        textPesoLista = textPeso
+        textRIRLista = textRIR
+    }
+    else if(SectionPage == "Book"){
+        TextoCambiadoBook = TextoCambiado
+        textEjerciciosBook = textEjercicios
+        textSeriesBook = textSeries
+        textRepsBook = textReps
+        textPesoBook = textPeso
+        textRIRBook = textRIR
     }
 }
 
-function BlurData(){
-    if(TextoCambiado == true){
-        TextoCambiado = false
-        SaveData()
+function BlurData(SectionPage){
+    if(SectionPage == "Lists"){
+        if(TextoCambiadoLista == true){
+            TextoCambiadoLista = false
+            SaveData()
+        }
+    }
+    else if(SectionPage == "Book"){
+        if(TextoCambiadoBook == true){
+            TextoCambiadoBook = false
+            SaveData()
+        }
     }
 }
 
@@ -660,12 +1060,11 @@ var dataBase = {
         TEXTPESO: [[""]],
         TEXTRIR: [[""]],
         PASE: 0
+    }],
+    Settings: [{
+        SYNC: false
     }]
 }
-
-var usuarios = []
-var contraseñas = []
-var amountUsers
 
 function SaveData(){
     localStorage.setItem("amountWeeksLista", amountWeeksLista)
@@ -752,14 +1151,13 @@ function SaveData(){
                 dataBase.ListaRutinas[i].TEXTEJERCICIO[j][k] = textEjerciciosLista[i][j][k]
                 dataBase.ListaRutinas[i].TEXTSERIES[j][k] = textSeriesLista[i][j][k]
                 dataBase.ListaRutinas[i].TEXTREPS[j][k] = textRepsLista[i][j][k]
-                console.log(textPesoLista[i][j][k])
                 dataBase.ListaRutinas[i].TEXTPESO[j][k] = textPesoLista[i][j][k]
                 dataBase.ListaRutinas[i].TEXTRIR[j][k] = textRIRLista[i][j][k]
             }
         }
     }
 
-    for(let i = 0; i < amountWeeks; i++){
+    for(let i = 0; i < amountWeeksBook; i++){
 
         if(dataBase.ListaBook[i] == undefined){
             dataBase.ListaBook[i] = {
@@ -778,16 +1176,16 @@ function SaveData(){
         }
         
         dataBase.ListaBook[i].SEMANAID = i
-        dataBase.ListaBook[i].SEMANANAME = SemanaText[i]
+        dataBase.ListaBook[i].SEMANANAME = SemanaTextBook[i]
         dataBase.ListaBook[i].PASE = pase
 
-        for(let j = 0; j < amountDays[i]; j++){
+        for(let j = 0; j < amountDaysBook[i]; j++){
             
-            dataBase.ListaBook[i].CANTDIAS = amountDays[i]
-            dataBase.ListaBook[i].DIASNAME[j] = DiaText[i][j]
-            dataBase.ListaBook[i].CANTEJERCICIOSDIA[j] = amountEjerciciosDay[i][j]
+            dataBase.ListaBook[i].CANTDIAS = amountDaysBook[i]
+            dataBase.ListaBook[i].DIASNAME[j] = DiaTextBook[i][j]
+            dataBase.ListaBook[i].CANTEJERCICIOSDIA[j] = amountEjerciciosDayBook[i][j]
 
-            for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
+            for(let k = 0; k < amountEjerciciosDayBook[i][j]; k++){
                 if(dataBase.ListaBook[i].TEXTEJERCICIO[j] == undefined){
                     dataBase.ListaBook[i].TEXTEJERCICIO[j] = []
                 }
@@ -808,48 +1206,48 @@ function SaveData(){
                     dataBase.ListaBook[i].TEXTRIR[j] = []
                 }
 
-                dataBase.ListaBook[i].TEXTEJERCICIO[j][k] = textEjercicios[i][j][k]
-                dataBase.ListaBook[i].TEXTSERIES[j][k] = textSeries[i][j][k]
-                dataBase.ListaBook[i].TEXTREPS[j][k] = textReps[i][j][k]
-                dataBase.ListaBook[i].TEXTPESO[j][k] = textPeso[i][j][k]
-                dataBase.ListaBook[i].TEXTRIR[j][k] = textRIR[i][j][k]
+                dataBase.ListaBook[i].TEXTEJERCICIO[j][k] = textEjerciciosBook[i][j][k]
+                dataBase.ListaBook[i].TEXTSERIES[j][k] = textSeriesBook[i][j][k]
+                dataBase.ListaBook[i].TEXTREPS[j][k] = textRepsBook[i][j][k]
+                dataBase.ListaBook[i].TEXTPESO[j][k] = textPesoBook[i][j][k]
+                dataBase.ListaBook[i].TEXTRIR[j][k] = textRIRBook[i][j][k]
             }
         }
     }
 
-    localStorage.setItem("amountWeeks", amountWeeks)
+    localStorage.setItem("amountWeeks", amountWeeksBook)
     
-    for(let i = 0; i < amountWeeks; i++){
-        localStorage.setItem("SemanaText" + i, SemanaText[i])
+    for(let i = 0; i < amountWeeksBook; i++){
+        localStorage.setItem("SemanaText" + i, SemanaTextBook[i])
     }
 
-    for(let i = 0; i < amountWeeks; i++){
-        for(let j = 0; j < amountDays[i]; j++){
-            localStorage.setItem("DiaText" + i + "" + j, DiaText[i][j])
+    for(let i = 0; i < amountWeeksBook; i++){
+        for(let j = 0; j < amountDaysBook[i]; j++){
+            localStorage.setItem("DiaText" + i + "" + j, DiaTextBook[i][j])
         }
     }
 
-    for(let i = 0; i < amountDays.length; i++){
-        if(amountDays[i] == null){
-            amountDays[i] = 1 
+    for(let i = 0; i < amountDaysBook.length; i++){
+        if(amountDaysBook[i] == null){
+            amountDaysBook[i] = 1 
         }
-        localStorage.setItem("amountDays" + i, amountDays[i])
+        localStorage.setItem("amountDays" + i, amountDaysBook[i])
     }
 
-    for(let i = 0; i < amountWeeks; i++){
-        for(let j = 0; j < amountDays[i]; j++){
-            localStorage.setItem("amountEjerciciosDay" + i + j, amountEjerciciosDay[i][j])
+    for(let i = 0; i < amountWeeksBook; i++){
+        for(let j = 0; j < amountDaysBook[i]; j++){
+            localStorage.setItem("amountEjerciciosDay" + i + j, amountEjerciciosDayBook[i][j])
         }
     }
 
-    for(let i = 0; i < amountWeeks; i++){
-        for(let j = 0; j < amountDays[i]; j++){
-            for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
-                localStorage.setItem("textEjercicios" + i + j + k, textEjercicios[i][j][k])
-                localStorage.setItem("textSeries" + i + j + k, textSeries[i][j][k])
-                localStorage.setItem("textReps" + i + j + k, textReps[i][j][k])
-                localStorage.setItem("textPeso" + i + j + k, textPeso[i][j][k])
-                localStorage.setItem("textRIR" + i + j + k, textRIR[i][j][k])
+    for(let i = 0; i < amountWeeksBook; i++){
+        for(let j = 0; j < amountDaysBook[i]; j++){
+            for(let k = 0; k < amountEjerciciosDayBook[i][j]; k++){
+                localStorage.setItem("textEjercicios" + i + j + k, textEjerciciosBook[i][j][k])
+                localStorage.setItem("textSeries" + i + j + k, textSeriesBook[i][j][k])
+                localStorage.setItem("textReps" + i + j + k, textRepsBook[i][j][k])
+                localStorage.setItem("textPeso" + i + j + k, textPesoBook[i][j][k])
+                localStorage.setItem("textRIR" + i + j + k, textRIRBook[i][j][k])
             }
         }
     }
@@ -880,13 +1278,7 @@ function SaveData(){
         .then(data => console.log(data))
         .catch(error => console.error('Error:', error)); 
     }
-
-    //console.log(dataBase.ListaRutinas)
 }
-
-const gistId = 'ea76aea67dfe233b31662624d6d9cc43'; 
-const git1 = 'github_pat_11A7P7C2I0iL7J0a7NZWTT_05Umcb6TlNi'
-const git2 = 'tPXKjuwqcevZdPK51rrpe94BGwem3c9vOWSYTNJ4hxJLq0VD'
 
 async function LoadData(FirstTime, Again){
 
@@ -933,100 +1325,111 @@ async function LoadData(FirstTime, Again){
             let FileName = `${user}DataBase.json`
             const dataBaseRaw = data.files[FileName].content
             const dataBaseLoad = JSON.parse(dataBaseRaw)
-    
+
+            dataBase = dataBaseLoad
             amountWeeksLista = parseInt(dataBaseLoad.ListaRutinas.length)
-    
-            for(let i = 0; i < amountWeeksLista; i++){
-                amountDaysLista[i] = parseInt(dataBaseLoad.ListaRutinas[i].CANTDIAS)
-                SemanaTextLista[i] = dataBaseLoad.ListaRutinas[i].SEMANANAME
-    
-                if(typeof amountDaysLista[i] == undefined){
-                    amountDaysLista[i] = 1
+            amountWeeksBook = parseInt(dataBaseLoad.ListaBook.length)
+            SyncLists = dataBaseLoad.Settings.SYNC
+
+            for(let SectionPage = 0; SectionPage < 2; SectionPage++){
+
+                let amountWeeks, amountDays, SemanaText, dataBaseLoadPage, DiaText, amountEjerciciosDay, textEjercicios, textSeries, textReps, textPeso, textRIR
+
+                if(SectionPage == 0 /*Lista rutinas*/){
+                    amountWeeks = amountWeeksLista
+                    amountDays = amountDaysLista
+                    SemanaText = SemanaTextLista
+                    DiaText = DiaTextLista
+                    amountEjerciciosDay = amountEjerciciosDayLista
+                    dataBaseLoadPage = dataBaseLoad.ListaRutinas
+                    textEjercicios = textEjerciciosLista
+                    textSeries = textSeriesLista
+                    textReps = textRepsLista
+                    textPeso = textPesoLista
+                    textRIR = textRIRLista
                 }
-    
-                if(i != 0){
-                    DiaTextLista[i] = [[]]
-                    amountEjerciciosDayLista[i] = []
+                else if(SectionPage == 1 /*Cuaderno*/){
+                    amountWeeks = amountWeeksBook
+                    amountDays = amountDaysBook
+                    SemanaText = SemanaTextBook
+                    DiaText = DiaTextBook
+                    amountEjerciciosDay = amountEjerciciosDayBook
+                    dataBaseLoadPage = dataBaseLoad.ListaBook
+                    textEjercicios = textEjerciciosBook
+                    textSeries = textSeriesBook
+                    textReps = textRepsBook
+                    textPeso = textPesoBook
+                    textRIR = textRIRBook
                 }
-                for(let j = 0; j < amountDaysLista[i]; j++){
-                    DiaTextLista[i][j] = dataBaseLoad.ListaRutinas[i].DIASNAME[j]
-                    amountEjerciciosDayLista[i][j] = dataBaseLoad.ListaRutinas[i].CANTEJERCICIOSDIA[j]
-                }
-            }
-    
-            for(let i = 0; i < amountWeeksLista; i++){
-                if(i != 0){
-                    textEjerciciosLista[i] = [[]]
-                    textSeriesLista[i] = [[]]
-                    textRepsLista[i] = [[]]
-                    textPesoLista[i] = [[]]
-                    textRIRLista[i] = [[]]
-                }
-    
-                for(let j = 0; j < amountDaysLista[i]; j++){
-                    if(j != 0){
-                        textEjerciciosLista[i][j] = []
-                        textSeriesLista[i][j] = []
-                        textRepsLista[i][j] = []
-                        textPesoLista[i][j] = []
-                        textRIRLista[i][j] = []
+        
+                for(let i = 0; i < amountWeeks; i++){
+                    amountDays[i] = parseInt(dataBaseLoadPage[i].CANTDIAS)
+                    SemanaText[i] = dataBaseLoadPage[i].SEMANANAME
+        
+                    if(typeof amountDays[i] == undefined){
+                        amountDays[i] = 1
                     }
-                    for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
-                        //alert(localStorage.getItem(`textEjerciciosListaLista${i}${j}${k}`))
-                        textEjerciciosLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTEJERCICIO[j][k]
-                        textSeriesLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTSERIES[j][k]
-                        textRepsLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTREPS[j][k]
-                        textPesoLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTPESO[j][k]
-                        textRIRLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTRIR[j][k]
+        
+                    if(i != 0){
+                        DiaText[i] = [[]]
+                        amountEjerciciosDay[i] = []
+                    }
+                    for(let j = 0; j < amountDays[i]; j++){
+                        DiaText[i][j] = dataBaseLoadPage[i].DIASNAME[j]
+                        amountEjerciciosDay[i][j] = dataBaseLoadPage[i].CANTEJERCICIOSDIA[j]
                     }
                 }
-            }
-    
-            amountWeeks = parseInt(dataBaseLoad.ListaBook.length)
-    
-            for(let i = 0; i < amountWeeks; i++){
-                amountDays[i] = parseInt(dataBaseLoad.ListaBook[i].CANTDIAS)
-                SemanaText[i] = dataBaseLoad.ListaBook[i].SEMANANAME
-    
-                if(typeof amountDays[i] == undefined){
-                    amountDays[i] = 1
-                }
-    
-                if(i != 0){
-                    DiaText[i] = [[]]
-                    amountEjerciciosDay[i] = []
-                }
-                for(let j = 0; j < amountDays[i]; j++){
-                    DiaText[i][j] = dataBaseLoad.ListaBook[i].DIASNAME[j]
-                    amountEjerciciosDay[i][j] = dataBaseLoad.ListaBook[i].CANTEJERCICIOSDIA[j]
-                }
-            }
-    
-            for(let i = 0; i < amountWeeks; i++){
-                if(i != 0){
-                    textEjercicios[i] = [[]]
-                    textSeries[i] = [[]]
-                    textReps[i] = [[]]
-                    textPeso[i] = [[]]
-                    textRIR[i] = [[]]
-                }
-    
-                for(let j = 0; j < amountDays[i]; j++){
-                    if(j != 0){
-                        textEjercicios[i][j] = []
-                        textSeries[i][j] = []
-                        textReps[i][j] = []
-                        textPeso[i][j] = []
-                        textRIR[i][j] = []
+        
+                for(let i = 0; i < amountWeeks; i++){
+                    if(i != 0){
+                        textEjercicios[i] = [[]]
+                        textSeries[i] = [[]]
+                        textReps[i] = [[]]
+                        textPeso[i] = [[]]
+                        textRIR[i] = [[]]
                     }
-                    for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
-                        //alert(localStorage.getItem(`textEjercicios${i}${j}${k}`))
-                        textEjercicios[i][j][k] = dataBaseLoad.ListaBook[i].TEXTEJERCICIO[j][k]
-                        textSeries[i][j][k] = dataBaseLoad.ListaBook[i].TEXTSERIES[j][k]
-                        textReps[i][j][k] = dataBaseLoad.ListaBook[i].TEXTREPS[j][k]
-                        textPeso[i][j][k] = dataBaseLoad.ListaBook[i].TEXTPESO[j][k]
-                        textRIR[i][j][k] = dataBaseLoad.ListaBook[i].TEXTRIR[j][k]
+        
+                    for(let j = 0; j < amountDays[i]; j++){
+                        if(j != 0){
+                            textEjercicios[i][j] = []
+                            textSeries[i][j] = []
+                            textReps[i][j] = []
+                            textPeso[i][j] = []
+                            textRIR[i][j] = []
+                        }
+                        for(let k = 0; k < amountEjerciciosDay[i][j]; k++){
+                            textEjercicios[i][j][k] = dataBaseLoadPage[i].TEXTEJERCICIO[j][k]
+                            textSeries[i][j][k] = dataBaseLoadPage[i].TEXTSERIES[j][k]
+                            textReps[i][j][k] = dataBaseLoadPage[i].TEXTREPS[j][k]
+                            textPeso[i][j][k] = dataBaseLoadPage[i].TEXTPESO[j][k]
+                            textRIR[i][j][k] = dataBaseLoadPage[i].TEXTRIR[j][k]
+                        }
                     }
+                }
+
+                if(SectionPage == 0){
+                    amountWeeksLista = amountWeeks
+                    amountDaysLista = amountDays
+                    SemanaTextLista = SemanaText
+                    DiaTextLista = DiaText
+                    amountEjerciciosDayLista = amountEjerciciosDay
+                    textEjerciciosLista = textEjercicios
+                    textSeriesLista = textSeries
+                    textRepsLista = textReps
+                    textPesoLista = textPeso
+                    textRIRLista = textRIR
+                }
+                else if(SectionPage == 1){
+                    amountWeeksBook = amountWeeks
+                    amountDaysBook = amountDays
+                    SemanaTextBook = SemanaText
+                    DiaTextBook = DiaText
+                    amountEjerciciosDayBook = amountEjerciciosDay
+                    textEjerciciosBook = textEjercicios
+                    textSeriesBook = textSeries
+                    textRepsBook = textReps
+                    textPesoBook = textPeso
+                    textRIRBook = textRIR
                 }
             }
         } 
@@ -1088,7 +1491,6 @@ async function LoadData(FirstTime, Again){
                     textRIRLista[i][j] = []
                 }
                 for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
-                    //alert(localStorage.getItem(`textEjerciciosListaLista${i}${j}${k}`))
                     textEjerciciosLista[i][j][k] = localStorage.getItem(`textEjerciciosLista${i}${j}${k}`)
                     textSeriesLista[i][j][k] = localStorage.getItem(`textSeriesLista${i}${j}${k}`)
                     textRepsLista[i][j][k] = localStorage.getItem(`textRepsLista${i}${j}${k}`)
@@ -1160,8 +1562,8 @@ async function LoadData(FirstTime, Again){
 
     setTimeout(function (){
         if(FirstTime){
-            LoadDaysLista()
             LoadDays()
+            SyncListsFunction(document.querySelector('.SyncLists'), true)
         }
         if(!Again){
             document.querySelector('#loading').remove()
@@ -1171,175 +1573,72 @@ async function LoadData(FirstTime, Again){
 
 }
 
-/*function LoadData(FirstTime){
+function LoadDays(){
+    for(let SectionPage = 0; SectionPage <= 1; SectionPage++){
 
-    amountWeeksLista = localStorage.getItem("amountWeeksLista")
+        let amountWeeks, Page, amountDays, SemanaText, ClassAddWeek, ClassPnlSemana, DiaText, amountEjerciciosDay, textEjercicios, textSeries, textReps, textPeso, textRIR
 
-    if(amountWeeksLista == null){
-        amountWeeksLista = 1
-    }
-
-    for(let i = 0; i < amountWeeksLista; i++){
-        amountDaysLista[i] = localStorage.getItem("amountDaysLista" + i)
-
-        if(typeof amountDaysLista[i] == undefined){
-            amountDaysLista[i] = 1
+        if(SectionPage == 0 /*Lista rutinas*/){
+            amountWeeks = amountWeeksLista
+            amountDays = amountDaysLista
+            SemanaText = SemanaTextLista
+            DiaText = DiaTextLista
+            amountEjerciciosDay = amountEjerciciosDayLista
+            textEjercicios = textEjerciciosLista
+            textSeries = textSeriesLista
+            textReps = textRepsLista
+            textPeso = textPesoLista
+            textRIR = textRIRLista
+            ClassPnlSemana = '.PnlSemana'
+            Page = 'Lists'
+            ClassAddWeek = '.AddWeek'
         }
-    }
-
-    for(let i = 0; i < amountWeeksLista; i++){
-        SemanaTextLista[i] = localStorage.getItem("SemanaTextLista" + i)
-    }
-
-    for(let i = 0; i < amountWeeksLista; i++){
-        if(i != 0){
-            DiaTextLista[i] = [[]]
-        }
-        for(let j = 0; j < amountDaysLista[i]; j++){
-            DiaTextLista[i][j] = localStorage.getItem(`DiaTextLista${i}${j}`)
-        }
-    }
-
-    for(let i = 0; i < amountWeeksLista; i++){
-        if(i != 0){
-            amountEjerciciosDayLista[i] = []
-        }
-        for(let j = 0; j < amountDaysLista[i]; j++){
-            amountEjerciciosDayLista[i][j] = localStorage.getItem(`amountEjerciciosDayLista${i}${j}`)
-        }
-    }
-
-    for(let i = 0; i < amountWeeksLista; i++){
-        if(i != 0){
-            textEjerciciosLista[i] = [[]]
-            textSeriesLista[i] = [[]]
-            textRepsLista[i] = [[]]
-            textRIRLista[i] = [[]]
-        }
-        for(let j = 0; j < amountDaysLista[i]; j++){
-            if(j != 0){
-                textEjerciciosLista[i][j] = []
-                textSeriesLista[i][j] = []
-                textRepsLista[i][j] = []
-                textRIRLista[i][j] = []
-            }
-            for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
-                //alert(localStorage.getItem(`textEjerciciosListaLista${i}${j}${k}`))
-                textEjerciciosLista[i][j][k] = localStorage.getItem(`textEjerciciosLista${i}${j}${k}`)
-                textSeriesLista[i][j][k] = localStorage.getItem(`textSeriesLista${i}${j}${k}`)
-                textRepsLista[i][j][k] = localStorage.getItem(`textRepsLista${i}${j}${k}`)
-                textRIRLista[i][j][k] = localStorage.getItem(`textRIRLista${i}${j}${k}`)
-            }
-        }
-    }
-
-    fetch(`https://api.github.com/gists/${gistId}`, {
-        headers: {
-            'Authorization': `token ${githubToken}`
-          }
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Accede al contenido del archivo en el Gist
-        const gistContent = data.files['database.json'].content;
-        var dataBaseLoad= JSON.parse(gistContent)
-
-        amountWeeksLista = parseInt(dataBaseLoad.ListaRutinas.length)
-
-        for(let i = 0; i < amountWeeksLista; i++){
-            amountDaysLista[i] = parseInt(dataBaseLoad.ListaRutinas[i].CANTDIAS)
-            console.log(amountDaysLista)
-            SemanaTextLista[i] = dataBaseLoad.ListaRutinas[i].SEMANANAME
-
-            if(typeof amountDaysLista[i] == undefined){
-                amountDaysLista[i] = 1
-            }
-
-            if(i != 0){
-                DiaTextLista[i] = [[]]
-                amountEjerciciosDayLista[i] = []
-            }
-            for(let j = 0; j < amountDaysLista[i]; j++){
-                DiaTextLista[i][j] = dataBaseLoad.ListaRutinas[i].DIASNAME[j]
-                amountEjerciciosDayLista[i][j] = dataBaseLoad.ListaRutinas[i].CANTEJERCICIOSDIA[j]
-            }
+        else if(SectionPage == 1 /*Cuaderno*/){
+            amountWeeks = amountWeeksBook
+            amountDays = amountDaysBook
+            SemanaText = SemanaTextBook
+            DiaText = DiaTextBook
+            amountEjerciciosDay = amountEjerciciosDayBook
+            textEjercicios = textEjerciciosBook
+            textSeries = textSeriesBook
+            textReps = textRepsBook
+            textPeso = textPesoBook
+            textRIR = textRIRBook
+            ClassPnlSemana = '.PnlSemanaBook'
+            Page = 'Book'
+            ClassAddWeek = '.AddWeekBook'
         }
 
-        for(let i = 0; i < amountWeeksLista; i++){
-            if(i != 0){
-                textEjerciciosLista[i] = [[]]
-                textSeriesLista[i] = [[]]
-                textRepsLista[i] = [[]]
-                textRIRLista[i] = [[]]
-            }
-
-            for(let j = 0; j < amountDaysLista[i]; j++){
-                if(j != 0){
-                    textEjerciciosLista[i][j] = []
-                    textSeriesLista[i][j] = []
-                    textRepsLista[i][j] = []
-                    textRIRLista[i][j] = []
-                }
-                for(let k = 0; k < amountEjerciciosDayLista[i][j]; k++){
-                    //alert(localStorage.getItem(`textEjerciciosListaLista${i}${j}${k}`))
-                    textEjerciciosLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTEJERCICIO[j][k]
-                    textSeriesLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTSERIES[j][k]
-                    textRepsLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTREPS[j][k]
-                    textRIRLista[i][j][k] = dataBaseLoad.ListaRutinas[i].TEXTRIR[j][k]
-                }
-            }
-        }
-        console.log(dataBaseLoad);
-        console.log('data: ',amountWeeksLista)
-
-    })
-    .catch(error => console.error('Error:', error));
-
-
-    console.log('data fuera: ',amountWeeksLista)
-
-
-    if(FirstTime){
-        LoadDaysLista()
-    }
-}*/
-
-function LoadDaysLista(){
-
-    if(SemanaTextLista[0] != null && SemanaTextLista[0] != "null"){
-        document.querySelector('.PnlSemana').querySelector('input').value = SemanaTextLista[0]
-        document.querySelector('.PnlSemana').querySelector('button').innerText = SemanaTextLista[0]
-    }
-    
-
-    for(let i = 2; i <= amountWeeksLista; i++){
-        AddWeekLista(document.querySelector('.AddWeek'), true, i)
-    } 
-
-    for(let i = 0; i <= amountWeeksLista; i++){
-        for(let j = 2; j <= amountDaysLista[i]; j++){
-            AddDaysLista(document.querySelectorAll('.PnlSemana')[i].querySelector('#BtnAddButtons'), true, j)
-        }
-    }
-
-    for(let i = 0; i < amountWeeksLista; i++){
-        for(let j = 1; j < amountEjerciciosDayLista[i][0]; j++){
-            AddEjercicio(document.querySelectorAll('.PnlSemana')[i].querySelector('#BtnAddEjercicios'), true, j)
-        }
-    }
-
-    for(let i = 0; i < amountWeeksLista; i++){
-        if(DiaTextLista[i][0] != null && DiaTextLista[i][0] != "null" && DiaTextLista[i][0] != undefined && DiaTextLista[i][0] != "undefined"){
-            document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaTextLista[i][0]
-            document.querySelectorAll('.PnlSemana')[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaTextLista[i][0]
+        if(SemanaText[0] != null && SemanaText[0] != "null"){
+            document.querySelector(`${ClassPnlSemana}`).querySelector('input').value = SemanaText[0]
+            document.querySelector(`${ClassPnlSemana}`).querySelector('button').innerText = SemanaText[0]
         }
         
+        for(let i = 2; i <= amountWeeks; i++){
+            AddWeeks(document.querySelector(`${ClassAddWeek}`), true, i, Page)
+        } 
+    
+        for(let i = 0; i <= amountWeeks; i++){
+            for(let j = 2; j <= amountDays[i]; j++){
+                AddDays(document.querySelectorAll(`${ClassPnlSemana}`)[i].querySelector('#BtnAddButtons'), true, j, Page)
+            }
+        }
+    
+        for(let i = 0; i < amountWeeks; i++){
+            for(let j = 1; j < amountEjerciciosDay[i][0]; j++){
+                AddEjercicio(document.querySelectorAll(`${ClassPnlSemana}`)[i].querySelector('#BtnAddEjercicios'), true, j, Page)
+            }
+        }
+    
+        for(let i = 0; i < amountWeeks; i++){
+            if(DiaText[i][0] != null && DiaText[i][0] != "null" && DiaText[i][0] != undefined && DiaText[i][0] != "undefined"){
+                document.querySelectorAll(`${ClassPnlSemana}`)[i].querySelector('#divButtons[name="0"]').querySelector('input').value = DiaText[i][0]
+                document.querySelectorAll(`${ClassPnlSemana}`)[i].querySelector('#divButtons[name="0"]').querySelector('button').innerText = DiaText[i][0]
+            }
+            
+        }
     }
 }
-
-var user
-var pw
-var recordar
 
 document.getElementById('RegisterForm').addEventListener("submit", function (event) {
     event.preventDefault();
@@ -1408,8 +1707,6 @@ document.getElementById('SignForm').addEventListener("submit", function (event) 
 
 })
 
-var logueado = false
-
 var usersFormat = {
     users: [],
     password: []
@@ -1454,13 +1751,35 @@ function Logueado(Evento){
     }
 }
 
+function SyncListsFunction(Button, Load){
+    if(!Load){
+        SyncLists = !SyncLists
+    
+        if(SyncLists == true){
+            Button.querySelector('#toggleOff').classList.add('toggleOn')
+        }
+        else{
+            Button.querySelector('#toggleOff').classList.remove('toggleOn')
+        }
+    
+        dataBase.Settings.SYNC = SyncLists
+        SaveData()
+    }
+    else if (Load){
+        if(SyncLists == true){
+            Button.querySelector('#toggleOff').classList.add('toggleOn')
+        }
+        else{
+            Button.querySelector('#toggleOff').classList.remove('toggleOn')
+        }
+    }
+}
+
 function LogOut(){
     localStorage.removeItem('user')
     localStorage.removeItem('pw')
     location.reload()
 }
-
-Popover = false
 
 function AccountClick(){
     if (!Popover){
@@ -1501,8 +1820,6 @@ function SeriesChanged(Input){
         tdInput.querySelector('#DivShowSeries').classList.remove('on')
     }
 }
-
-var SeriesShown = false
 
 function ShowSeries(Button){
     let trBook = Button.closest('tr')
@@ -1594,7 +1911,7 @@ function ShowSeries(Button){
 
 function MoreSeriesTextChanged(Input){
     if(Input.id == 'InputReps'){
-        TextoCambiado = true
+        TextoCambiadoLista = true
         let MoreSeries = Input.closest('#MoreSeries')
         let NumberReps = []
         let IHaveToJoin = false
@@ -1736,14 +2053,9 @@ function MoreSeriesTextChanged(Input){
     }
 }
 
-const toastTrigger = document.getElementById('liveToastBtn')
-const toastLiveExample = document.getElementById('liveToast')
-
 if (toastTrigger) {
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
   toastTrigger.addEventListener('click', () => {
     toastBootstrap.show()
   })
 }
-
-const container = document.getElementById('calendar');

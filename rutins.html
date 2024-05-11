@@ -41,8 +41,13 @@
                     </button>
                     <ul class="Popover">
                         <li class="title">Usuario <hr></li>
+                        <button class="SyncLists" onclick="SyncListsFunction(this)">
+                            <span id="toggleOff" class="material-symbols-outlined">toggle_off</span>
+                            <span class="material-symbols-outlined toggleNone">toggle_on</span>
+                            <span>Sync Lists</span>
+                        </button>
                         <button class="logOut" onclick="LogOut()">
-                            <span class="material-symbols-outlined">logout</span> 
+                            <span id="iconLogOut" class="material-symbols-outlined">logout</span> 
                             <span>Log Out</span> 
                         </button>
                     </ul>
@@ -63,7 +68,7 @@
             </ul>
         </section>
 
-        <div id="pagerutinas">
+        <div id="pagerutinas" class="SectionPage">
 
             <h1 class="fs-4">Lista de rutinas<hr class="centrado"></h1>
 
@@ -73,10 +78,10 @@
                 </div>
             </div>
 
-            <div id="DivSemanasLista" class="off">
-                <div id="semana" class="PnlSemana" name="0">
-                    <input id="LabelSemana"  class="ButtonLabelBook off" oninput="EditTextSpanLista(this, 'Semana')" type="text" value="Semana 1">
-                    <button id="BtnSemanaSlide" onclick="ButtonSemanaSlideLista(this)" class="ButtonLabelBook">Semana 1</button>
+            <div id="DivSemanasLista" class="off DivAllWeeks">
+                <div id="semana" class="PnlSemana Week" name="0">
+                    <input id="LabelSemana"  class="ButtonLabelBook off" oninput="EditTextSpan(this, 'Semana', 'Lists')" type="text" value="Semana 1">
+                    <button id="BtnSemanaSlide" onclick="ButtonSemanaSlide(this, 'Lists')" class="ButtonLabelBook">Semana 1</button>
     
                     <section class="SectionTable">
                         <table id="tablebook">
@@ -84,15 +89,15 @@
                                 <tr class="trBook">
                                     <th id="divDivButtons">
                                         <div id="divButtons" name="0">
-                                            <input id="LabelDia"  class="buttonLabelDay deleteOff off" oninput="EditTextSpanLista(this, 'Dia')" type="text" value="Dia 1">
-                                            <button class="buttonBook deleteOff on" onclick="ButtonClickLista(this)">Dia 1</button>
+                                            <input id="LabelDia"  class="buttonLabelDay deleteOff off" oninput="EditTextSpan(this, 'Dia', 'Lists')" type="text" value="Dia 1">
+                                            <button class="buttonBook deleteOff on" onclick="ButtonClick(this, 'Lists')">Dia 1</button>
                                             <div id="divDelete">
-                                                <button id="BtnDeleteButtons" onclick="DeleteDaysLista(this)" class="buttonDelete buttonAddDeleteBook off">
+                                                <button id="BtnDeleteButtons" onclick="DeleteDays(this, 'Lists')" class="buttonDelete buttonAddDeleteBook off">
                                                     <i id="minus"class="fa-solid fa-xmark"></i>
                                                 </button>
                                             </div>
                                             <div id="divAdd" class="off">
-                                                <button id="BtnAddButtons" onclick="AddDaysLista(this, false)" class="buttonAddDeleteBook"><i id="addBook" class="fa-solid fa-plus"></i></button>
+                                                <button id="BtnAddButtons" onclick="AddDays(this, false, 0, 'Lists')" class="buttonAddDeleteBook"><i id="addBook" class="fa-solid fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </th>
@@ -108,32 +113,32 @@
                                     <th class="thBook">RIR</th>
                                 </tr>
                                 <tr class="trBookEjercicio" name="0">
-                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurData()" oninput="TextChanged(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurData('Lists')" oninput="TextChanged(this, 'Ejercicio', 'Lists')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td class="tdBook tdSeries">
-                                        <input id="InputSeries" onblur="BlurData()" oninput="TextChanged(this, 'Series')" class="InputDatos" type="text" placeholder="...">
+                                        <input id="InputSeries" onblur="BlurData('Lists')" oninput="TextChanged(this, 'Series', 'Lists')" class="InputDatos" type="text" placeholder="...">
                                         <div id="DivShowSeries">
                                             <button id="BtnExpandSeries" class="material-symbols-outlined BtnShowSeries" onclick="ShowSeries(this)">expand_more</button>
                                             <button id="BtnRetractSeries" class="material-symbols-outlined BtnShowSeries off" onclick="ShowSeries(this)">expand_less</button>
                                         </div>  
                                     </td>
-                                    <td class="tdBook"><input id="InputReps" onblur="BlurData()" oninput="TextChanged(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook"><input id="InputPeso" onblur="BlurData()" oninput="TextChanged(this, 'Peso')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurData()" oninput="TextChanged(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputReps" onblur="BlurData('Lists')" oninput="TextChanged(this, 'Reps', 'Lists')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputPeso" onblur="BlurData('Lists')" oninput="TextChanged(this, 'Peso', 'Lists')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurData('Lists')" oninput="TextChanged(this, 'RIR', 'Lists')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td id="MoreSeries"></td>
                                 </tr>
                             </tbody>
                         </table>
                         
                         <section id="SectionButtons">
-                            <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook btnDelete" onclick="DeleteEjercicio(this, false)" >
+                            <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook btnDelete" onclick="DeleteEjercicio(this, false, 'Lists')" >
                                 <i class="fa-solid fa-minus"></i>
                             </button>
             
-                            <button id="BtnEditButtons" onclick="EditButtonsLista(this)" class="buttonAddDeleteBook">
+                            <button id="BtnEditButtons" onclick="EditButtons(this, 'Lists')" class="buttonAddDeleteBook">
                                 <i id="EditIcon" class="fa-solid fa-pen-to-square"></i>
                             </button>
                             
-                            <button id="BtnAddEjercicios" class="buttonAddDeleteBook btnAdd" onclick="AddEjercicio(this, false)" >
+                            <button id="BtnAddEjercicios" class="buttonAddDeleteBook btnAdd" onclick="AddEjercicio(this, false, 0, 'Lists')" >
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </section>
@@ -142,24 +147,24 @@
             </div>
             
             <div class="DivBtnDelAdd">
-                <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook" onclick="DeleteWeekLista(this)" >
+                <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook" onclick="DeleteWeeks(this, 'Lists')" >
                     <i class="fa-solid fa-minus"></i>
                 </button>
     
-                <button id="BtnAddEjercicios" class="buttonAddDeleteBook AddWeek" onclick="AddWeekLista(this, false, 0)" >
+                <button id="BtnAddEjercicios" class="buttonAddDeleteBook AddWeek" onclick="AddWeeks(this, false, 0, 'Lists')" >
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
         </div>  
 
-        <div id="pagebook">
+        <div id="pagebook" class="SectionPage">
 
             <h1 class="fs-4">Cuaderno de entrenamiento<hr class="centrado"></h1>
 
-            <div id="DivSemanasBook">
-                <div id="semana" class="PnlSemanaBook"  name="0">
-                    <input id="LabelSemana"  class="ButtonLabelBook off" oninput="EditTextSpan(this, 'Semana')" type="text" value="Semana 1">
-                    <button id="BtnSemanaSlide" onclick="ButtonSemanaSlideBook(this)" class="ButtonLabelBook">Semana 1</button>
+            <div id="DivSemanasBook" class="DivAllWeeks">
+                <div id="semana" class="PnlSemanaBook Week"  name="0">
+                    <input id="LabelSemana"  class="ButtonLabelBook off" oninput="EditTextSpan(this, 'Semana', 'Book')" type="text" value="Semana 1">
+                    <button id="BtnSemanaSlide" onclick="ButtonSemanaSlide(this, 'Book')" class="ButtonLabelBook">Semana 1</button>
     
                     <section class="SectionTable">
                         <table id="tablebook">
@@ -167,15 +172,15 @@
                                 <tr class="trBook">
                                     <th id="divDivButtons">
                                         <div id="divButtons" name="0">
-                                            <input id="LabelDia"  class="buttonLabelDay deleteOff off" oninput="EditTextSpan(this, 'Dia')" type="text" value="Dia 1">
-                                            <button class="buttonBook deleteOff on" onclick="ButtonClick(this)">Dia 1</button>
+                                            <input id="LabelDia"  class="buttonLabelDay deleteOff off" oninput="EditTextSpan(this, 'Dia', 'Book')" type="text" value="Dia 1">
+                                            <button class="buttonBook deleteOff on" onclick="ButtonClick(this, 'Book')">Dia 1</button>
                                             <div id="divDelete">
-                                                <button id="BtnDeleteButtons" onclick="DeleteDays(this)" class="buttonDelete buttonAddDeleteBook off">
+                                                <button id="BtnDeleteButtons" onclick="DeleteDays(this, 'Book')" class="buttonDelete buttonAddDeleteBook off">
                                                     <i id="minus"class="fa-solid fa-xmark"></i>
                                                 </button>
                                             </div>
                                             <div id="divAdd" class="off">
-                                                <button id="BtnAddButtons" onclick="AddDays(this, false)" class="buttonAddDeleteBook"><i id="addBook" class="fa-solid fa-plus"></i></button>
+                                                <button id="BtnAddButtons" onclick="AddDays(this, false, 0, 'Book')" class="buttonAddDeleteBook"><i id="addBook" class="fa-solid fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </th>
@@ -191,32 +196,32 @@
                                     <th class="thBook">RIR</th>
                                 </tr>
                                 <tr class="trBookEjercicio" name="0">
-                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Ejercicio')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdEjercicio" class="tdBook"><input id="InputExcercise" onblur="BlurData('Book')" oninput="TextChanged(this, 'Ejercicio', 'Book')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td class="tdBook tdSeries">
-                                        <input id="InputSeries" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Series')" class="InputDatos" type="text" placeholder="...">
+                                        <input id="InputSeries" onblur="BlurData('Book')" oninput="TextChanged(this, 'Series', 'Book')" class="InputDatos" type="text" placeholder="...">
                                         <div id="DivShowSeries">
                                             <button id="BtnExpandSeries" class="material-symbols-outlined BtnShowSeries" onclick="ShowSeries(this)">expand_more</button>
                                             <button id="BtnRetractSeries" class="material-symbols-outlined BtnShowSeries off" onclick="ShowSeries(this)">expand_less</button>
                                         </div>  
                                     </td>
-                                    <td class="tdBook"><input id="InputReps" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Reps')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td class="tdBook"><input id="InputPeso" onblur="BlurDataBook()" oninput="TextChangedB(this, 'Peso')" class="InputDatos" type="text" placeholder="..."></td>
-                                    <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurDataBook()" oninput="TextChangedB(this, 'RIR')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputReps" onblur="BlurData('Book')" oninput="TextChanged(this, 'Reps', 'Book')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td class="tdBook"><input id="InputPeso" onblur="BlurData('Book')" oninput="TextChanged(this, 'Peso', 'Book')" class="InputDatos" type="text" placeholder="..."></td>
+                                    <td id="tdLast" class="tdBook"><input id="InputRIR" onblur="BlurData('Book')" oninput="TextChanged(this, 'RIR', 'Book')" class="InputDatos" type="text" placeholder="..."></td>
                                     <td id="MoreSeries" class="Book"></td>
                                 </tr>
                             </tbody>
                         </table>
                         
                         <section id="SectionButtons">
-                            <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook btnDelete" onclick="DeleteEjercicioBook(this, false)" >
+                            <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook btnDelete" onclick="DeleteEjercicio(this, false, 'Book')" >
                                 <i class="fa-solid fa-minus"></i>
                             </button>
             
-                            <button id="BtnEditButtons" onclick="EditButtons(this)" class="buttonAddDeleteBook">
+                            <button id="BtnEditButtons" onclick="EditButtons(this, 'Book')" class="buttonAddDeleteBook">
                                 <i id="EditIcon" class="fa-solid fa-pen-to-square"></i>
                             </button>
                             
-                            <button id="BtnAddEjercicios" class="buttonAddDeleteBook btnAdd" onclick="AddEjercicioBook(this, false)" >
+                            <button id="BtnAddEjercicios" class="buttonAddDeleteBook btnAdd" onclick="AddEjercicio(this, false, 0, 'Book')" >
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </section>
@@ -225,11 +230,11 @@
             </div>
             
             <div class="DivBtnDelAdd">
-                <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook" onclick="DeleteWeek(this)" >
+                <button id="BtnDeleteEjercicios" class="buttonAddDeleteBook" onclick="DeleteWeeks(this, 'Book')" >
                     <i class="fa-solid fa-minus"></i>
                 </button>
     
-                <button id="BtnAddEjercicios" class="buttonAddDeleteBook AddWeekBook" onclick="AddWeek(this, false, 0)" >
+                <button id="BtnAddEjercicios" class="buttonAddDeleteBook AddWeekBook" onclick="AddWeeks(this, false, 0, 'Book')" >
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
